@@ -1,5 +1,4 @@
 {
-<<<<<<< HEAD
   "name": "simak-kii",
   "version": "0.1.0",
   "private": true,
@@ -28,37 +27,5 @@
     "eslint-config-next": "16.1.6",
     "tailwindcss": "^4",
     "typescript": "^5"
-=======
-  "name": "kii",
-  "version": "0.1.0",
-  "private": true,
-  "scripts": {
-    "dev": "next dev --turbopack",
-    "build": "next build",
-    "start": "next start",
-    "lint": "next lint"
-  },
-  "dependencies": {
-    "firebase": "^12.0.0",
-    "js-cookie": "^3.0.5",
-    "jspdf": "^3.0.1",
-    "jspdf-autotable": "^5.0.2",
-    "lucide-react": "^0.536.0",
-    "next": "15.4.4",
-    "react": "19.1.0",
-    "react-dom": "19.1.0",
-    "react-icons": "^5.5.0",
-    "react-toastify": "^11.0.5",
-    "recharts": "^3.1.2",
-    "sweetalert2": "^11.22.2",
-    "uuid": "^11.1.0",
-    "xlsx": "^0.18.5"
-  },
-  "devDependencies": {
-    "@eslint/eslintrc": "^3",
-    "cross-env": "^10.0.0",
-    "eslint": "^9",
-    "eslint-config-next": "15.4.4"
->>>>>>> 59b1000a0be30b4e10dcf13e90a9dd12258962f8
   }
 }
