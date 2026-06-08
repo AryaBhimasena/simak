@@ -1,0 +1,158 @@
+/* ===========================
+   ABSENSI PAGE
+=========================== */
+.absensi-header {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 12px;
+  flex-shrink: 0; /* header tidak ikut menyusut */
+}
+
+.absensi-title-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.absensi-title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #1f2937;
+}
+
+/* Tombol simpan */
+.save-button {
+  background: #2563eb;
+  color: #fff;
+  padding: 8px 16px;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  border: none;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.save-button:hover {
+  background: #1d4ed8;
+}
+
+/* Filter Row */
+.header-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.filter-dropdown {
+  padding: 8px 12px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  font-size: 0.9rem;
+  min-width: 180px;
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.filter-dropdown:focus {
+  border-color: #2563eb;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.2);
+}
+
+/* Separator */
+.separator {
+  width: 100%;
+  height: 1px;
+  background-color: #e5e7eb;
+  margin: 12px 0;
+}
+
+/* Content Section (scroll di dalam app-card) */
+.absensi-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  /* HAPUS tinggi berbasis vh agar ikut tinggi app-card */
+  /* height: calc(100vh - 180px); */
+  min-height: 0;     /* penting agar child boleh overflow */
+  overflow: hidden;  /* cegah scroll ganda */
+}
+
+/* Table Wrapper (scrollable only here) */
+.absensi-table-wrapper {
+  flex: 1;
+  min-height: 0;     /* penting untuk flex container */
+  overflow-y: auto;  /* scroll di sini */
+  border-radius: 8px;
+  border: 1px solid #e5e7eb;
+  background: #ffffff;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+  padding: 8px;
+}
+
+/* Table */
+.absensi-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9rem;
+  min-width: 1200px;
+}
+
+.absensi-table th,
+.absensi-table td {
+  padding: 10px 12px;
+  border-bottom: 1px solid #e5e7eb;
+  text-align: center;
+  white-space: nowrap;
+}
+
+.absensi-table th {
+  background-color: #f9fafb;
+  color: #374151;
+  font-weight: 600;
+  font-size: 0.9rem;
+  position: sticky;
+  top: 0;
+  z-index: 1;
+}
+
+.absensi-table tbody tr:hover {
+  background-color: #f3f4f6;
+}
+
+/* Inputs inside table */
+.absensi-table input,
+.absensi-table select {
+  width: 100%;
+  padding: 4px 6px;
+  font-size: 0.85rem;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  outline: none;
+  box-sizing: border-box;
+}
+
+.absensi-table input:focus,
+.absensi-table select:focus {
+  border-color: #2563eb;
+  box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.2);
+}
+
+.absensi-table input[type="time"],
+.absensi-table input[readonly] {
+  text-align: center;
+}
+
+/* Kolom khusus */
+.absensi-table th.nama,
+.absensi-table td.nama {
+  min-width: 200px; /* lebih panjang untuk nama */
+  text-align: left;
+}
+
+.absensi-table th.jam,
+.absensi-table td.jam {
+  width: 120px; /* seragam untuk jam masuk, keluar, total, lembur */
+}
