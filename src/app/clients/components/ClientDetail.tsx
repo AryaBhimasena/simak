@@ -2,9 +2,84 @@
 
 import { useMemo, useState } from "react";
 
+/* ====================================== */
+/* TYPES */
+/* ====================================== */
+
+type Contract = {
+  idKontrak?: string;
+  nomorKontrak?: string;
+
+  kategoriTk?: string;
+
+  startDate?: string;
+  endDate?: string;
+
+  statusKontrak?: string;
+
+  managementFee?: number;
+
+  gajiPokok?: number;
+
+  tunjanganJabatan?: number;
+  tunjanganMakan?: number;
+  tunjanganTransportasi?: number;
+
+  tarifBkoReguler?: number;
+  tarifBkoResign?: number;
+  tarifBkoCuti?: number;
+
+  peralatan?: number;
+  thr?: number;
+  seragam?: number;
+
+  liburNasional?: number;
+  liburSabtuMinggu?: number;
+
+  bpjsNaker?: number;
+  bpjsKesehatan?: number;
+
+  cutOffGaji?: string;
+  cutOffInvoice?: string;
+
+  contractorOverhead?: number;
+
+  ritDalamKota?: number;
+  ritLuarKota?: number;
+
+  dokumenKontrak?: string;
+  dokumenBreakdown?: string;
+};
+
+type Client = {
+  id?: string;
+
+  kodeClients?: string;
+  namaClients?: string;
+
+  namaGedung?: string;
+
+  alamatClients?: string;
+  kotaClients?: string;
+  kodePos?: string;
+
+  kontakClients?: string;
+
+  pic?: string;
+  kontakPic?: string;
+
+  npwp?: string;
+
+  contracts?: Contract[];
+};
+
+type ClientDetailProps = {
+  client?: Client | null;
+};
+
 export default function ClientDetail({
   client,
-}) {
+}: ClientDetailProps) {
 
   /* ====================================== */
   /* SCROLL */
@@ -12,7 +87,7 @@ export default function ClientDetail({
 
   const scrollToSection = (
     sectionId: string
-  ) => {
+  ): void => {
 
     const element =
       document.getElementById(
@@ -33,7 +108,7 @@ export default function ClientDetail({
   /* CONTRACTS */
   /* ====================================== */
 
-  const contracts =
+  const contracts: Contract[] =
     Array.isArray(
       client?.contracts
     )
@@ -44,8 +119,10 @@ export default function ClientDetail({
   /* SELECTED CONTRACT */
   /* ====================================== */
 
-  const [selectedContractIndex, setSelectedContractIndex] =
-    useState(0);
+  const [
+    selectedContractIndex,
+    setSelectedContractIndex,
+  ] = useState<number>(0);
 
   const selectedContract =
     contracts?.[
@@ -57,8 +134,8 @@ export default function ClientDetail({
   /* ====================================== */
 
   const formatNumber = (
-    value: any
-  ) => {
+    value: unknown
+  ): string => {
 
     const parsed =
       Number(value || 0);
@@ -74,8 +151,8 @@ export default function ClientDetail({
   /* ====================================== */
 
   const formatCurrency = (
-    value: any
-  ) => {
+    value: unknown
+  ): string => {
 
     return `Rp ${formatNumber(
       value
@@ -88,13 +165,15 @@ export default function ClientDetail({
   /* ====================================== */
 
   const formatDate = (
-    value: any
-  ) => {
+    value: unknown
+  ): string => {
 
     if (!value) return "-";
 
     const date =
-      new Date(value);
+      new Date(
+        String(value)
+      );
 
     if (
       Number.isNaN(
@@ -102,7 +181,7 @@ export default function ClientDetail({
       )
     ) {
 
-      return value;
+      return String(value);
 
     }
 
@@ -124,8 +203,20 @@ export default function ClientDetail({
   const contractRemaining =
     useMemo(() => {
 
+      const endDateValue =
+        selectedContract &&
+        typeof selectedContract ===
+          "object"
+          ? (
+              selectedContract as Record<
+                string,
+                unknown
+              >
+            ).endDate
+          : undefined;
+
       if (
-        !selectedContract?.endDate
+        !endDateValue
       ) {
 
         return "-";
@@ -137,16 +228,25 @@ export default function ClientDetail({
 
       const endDate =
         new Date(
-          selectedContract.endDate
+          String(
+            endDateValue
+          )
         );
 
       const diffMonth =
-        (endDate.getFullYear() - today.getFullYear()) * 12 +
         (
-          endDate.getMonth() - today.getMonth()
+          endDate.getFullYear() -
+          today.getFullYear()
+        ) *
+          12 +
+        (
+          endDate.getMonth() -
+          today.getMonth()
         );
 
-      if (diffMonth <= 0) {
+      if (
+        diffMonth <= 0
+      ) {
 
         return "Berakhir";
 
@@ -159,6 +259,7 @@ export default function ClientDetail({
     ]);
 
   return (
+	<>
     <div className="simakClientPage__detailPanel">
 
       {/* ====================================== */}
@@ -792,5 +893,6 @@ export default function ClientDetail({
       </div>
 
     </div>
+	</>
   );
 }

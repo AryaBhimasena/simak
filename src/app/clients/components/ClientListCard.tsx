@@ -1,16 +1,36 @@
 "use client";
 
+/* ====================================== */
+/* TYPES */
+/* ====================================== */
+
+type Contract = {
+  statusKontrak?: string;
+  kategoriTk?: string;
+};
+
+type Client = {
+  namaClients?: string;
+  contracts?: Contract[];
+};
+
+type ClientListCardProps = {
+  client?: Client | null;
+  active?: boolean;
+  onClick?: () => void;
+};
+
 export default function ClientListCard({
   client,
-  active,
+  active = false,
   onClick,
-}) {
+}: ClientListCardProps) {
 
   /* ====================================== */
   /* CONTRACTS */
   /* ====================================== */
 
-  const contracts =
+  const contracts: Contract[] =
     Array.isArray(
       client?.contracts
     )

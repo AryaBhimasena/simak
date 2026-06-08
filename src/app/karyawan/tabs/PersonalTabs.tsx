@@ -83,7 +83,7 @@ export function PenempatanTab() {
 
   return (
     <div className="simakEmployeePage__grid">
-      <Input label="Penempatan" name="penempatan" value={form.penempatan_nama} onChange={handleChange} />
+      <Input label="Penempatan" name="penempatan" value={form.penempatan} onChange={handleChange} />
       <Input label="Basic Salary" type="number" name="basic_salary" value={form.basic_salary} onChange={handleChange} />
       <Input label="Tunjangan Makan" type="number" name="tunjangan_makan" value={form.tunjangan_makan} onChange={handleChange} />
       <Input label="Tunjangan Transport" type="number" name="tunjangan_transport" value={form.tunjangan_transport} onChange={handleChange} />

@@ -10,11 +10,38 @@ import {
 
 import TabButton from "./TabButton";
 
-import {
-  TabType,
-} from "../page";
+import { TabType } from "../page";
 
-const TABS = [
+import { useDataKaryawan } from "@/lib/useDataKaryawan";
+
+import {
+  ComponentType,
+} from "react";
+
+/* ====================================== */
+/* TYPES */
+/* ====================================== */
+
+type EmployeeDetailCardProps = {
+  form: ReturnType<
+    typeof useDataKaryawan
+  >["form"];
+  activeTab: TabType;
+  setActiveTab: (
+    tab: TabType
+  ) => void;
+};
+
+/* ====================================== */
+/* TABS */
+/* ====================================== */
+
+type TabItem = {
+  label: string;
+  value: TabType;
+};
+
+const TABS: TabItem[] = [
   {
     label: "Personal",
     value: "personal",
@@ -37,22 +64,26 @@ const TABS = [
   },
 ];
 
-const TAB_CONTENT: Record<
-  TabType,
-  () => JSX.Element
-> = {
+/* ====================================== */
+/* TAB CONTENT */
+/* ====================================== */
+
+const TAB_CONTENT = {
   personal: PersonalTab,
   keluarga: KeluargaTab,
   kepegawaian: KepegawaianTab,
   penempatan: PenempatanTab,
   dokumen: DokumenTab,
-};
+} satisfies Record<
+  TabType,
+  ComponentType
+>;
 
 export default function EmployeeDetailCard({
   form,
   activeTab,
   setActiveTab,
-}: any) {
+}: EmployeeDetailCardProps) {
   const ActiveTabComponent =
     TAB_CONTENT[activeTab];
 
@@ -85,7 +116,7 @@ export default function EmployeeDetailCard({
 
       {/* EMPTY */}
 
-      {!form.id_karyawan ? (
+      {!form?.id_karyawan ? (
         <div className="simakEmployeePage__emptyDetail">
 
           <h2>
@@ -112,17 +143,17 @@ export default function EmployeeDetailCard({
             <div>
 
               <h2>
-                {form.nama ||
+                {form?.nama ??
                   "Nama Karyawan"}
               </h2>
 
               <p>
-                {form.jabatan ||
+                {form?.jabatan ??
                   "-"}
 
                 {" • "}
 
-                {form.penempatan ||
+                {form?.penempatan ??
                   "-"}
               </p>
 

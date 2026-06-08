@@ -2,11 +2,18 @@
 
 import "@/style/components/app-header.css";
 
-export default function AppHeader() {
+type AppHeaderProps = {
+  title?: string;
+};
+
+export default function AppHeader({
+  title = "SIMAK",
+}: AppHeaderProps) {
   return (
     <header className="simakLayout__header">
       <div>
-        <h1 className="simakLayout__appTitle">SIMAK</h1>
+        <h1 className="simakLayout__appTitle">{title}</h1>
+
         <p className="simakLayout__appSubtitle">
           Sistem Informasi Management & Administratif KII
         </p>

@@ -96,7 +96,7 @@ export default function EmployeePage() {
   const penempatanOptions = Array.from(
     new Set(
       karyawanList
-        .map((k) => k.penempatan_nama)
+        .map((k) => k.penempatan)
         .filter(Boolean)
     )
   );
@@ -108,7 +108,7 @@ export default function EmployeePage() {
       const nama = k.nama || "";
 
       const penempatan =
-        k.penempatan_nama || "";
+        k.penempatan || "";
 
       const currentStatus =
         employeeStatusMap[

@@ -36,7 +36,7 @@ export default function ProfitLossSection() {
 
             <tr className="simakDash__financeGroup">
 
-              <td colSpan="6">
+              <td colSpan={6}>
 
                 <div className="simakDash__financeGroupContent">
 
@@ -84,7 +84,7 @@ export default function ProfitLossSection() {
 
             <tr className="simakDash__financeGroup">
 
-              <td colSpan="6">
+              <td colSpan={6}>
 
                 <div className="simakDash__financeGroupContent">
 
@@ -102,7 +102,7 @@ export default function ProfitLossSection() {
 
             <tr>
 
-              <td colSpan="4">
+              <td colSpan={4}>
                 Pembayaran Gaji
               </td>
 
@@ -116,7 +116,7 @@ export default function ProfitLossSection() {
 
             <tr>
 
-              <td colSpan="4">
+              <td colSpan={4}>
                 Pembayaran BPJS Tenaga Kerja
               </td>
 
@@ -130,7 +130,7 @@ export default function ProfitLossSection() {
 
             <tr>
 
-              <td colSpan="4">
+              <td colSpan={4}>
                 Pembayaran Pajak
               </td>
 
@@ -152,7 +152,7 @@ export default function ProfitLossSection() {
 
             <tr className="simakDash__financeSummary">
 
-              <td colSpan="4">
+              <td colSpan={4}>
                 Total Laba / Rugi
               </td>
 

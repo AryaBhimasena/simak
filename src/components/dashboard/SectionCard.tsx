@@ -1,11 +1,24 @@
-export default function SectionCard({ title, items }) {
+type SectionCardProps = {
+  title: string;
+  items: string[];
+};
+
+export default function SectionCard({
+  title,
+  items,
+}: SectionCardProps) {
   return (
     <div className="simakDash__sectionCard">
-      <h3 className="simakDash__sectionTitle">{title}</h3>
+      <h3 className="simakDash__sectionTitle">
+        {title}
+      </h3>
 
       <ul className="simakDash__sectionList">
         {items.map((item, index) => (
-          <li key={index} className="simakDash__sectionItem">
+          <li
+            key={index}
+            className="simakDash__sectionItem"
+          >
             {item}
           </li>
         ))}
