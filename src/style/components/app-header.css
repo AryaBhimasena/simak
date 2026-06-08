@@ -1,0 +1,225 @@
+/* ====================================== */
+/* SIMAK APP HEADER */
+/* ====================================== */
+
+.simakLayout__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  gap: 24px;
+
+  padding:
+    28px
+    40px
+    20px;
+}
+
+/* ====================================== */
+/* BRAND */
+/* ====================================== */
+
+.simakLayout__brand {
+  min-width: 0;
+}
+
+.simakLayout__appTitle {
+  margin: 0;
+
+  font-size: 28px;
+  font-weight: 700;
+  letter-spacing: 0.3px;
+  line-height: 1.1;
+
+  color: var(--simak-text);
+}
+
+.simakLayout__appSubtitle {
+  margin-top: 8px;
+
+  font-size: 13px;
+  line-height: 1.6;
+
+  color: var(--simak-text-soft);
+}
+
+/* ====================================== */
+/* USER INFO */
+/* ====================================== */
+
+.simakLayout__userInfo {
+  position: relative;
+
+  display: flex;
+  align-items: center;
+  gap: 14px;
+
+  flex-shrink: 0;
+
+  padding:
+    10px
+    14px;
+
+  border-radius: 22px;
+
+  backdrop-filter: blur(10px) saturate(120%);
+  -webkit-backdrop-filter: blur(10px) saturate(120%);
+
+  background:
+    rgba(255,255,255,0.72);
+
+  border:
+    1px solid var(--simak-border);
+
+  box-shadow:
+    0 6px 18px rgba(15,23,42,0.06),
+    0 2px 6px rgba(15,23,42,0.04);
+
+  transition:
+    transform 0.18s ease,
+    box-shadow 0.18s ease,
+    border-color 0.18s ease;
+
+  transform: translateZ(0);
+
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+.simakLayout__userInfo:hover {
+  transform: translate3d(0, -1px, 0);
+
+  box-shadow:
+    0 12px 24px rgba(15,23,42,0.08),
+    0 4px 10px rgba(15,23,42,0.05);
+
+  border-color:
+    rgba(220,38,38,0.12);
+}
+
+.simakLayout__userMeta {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+
+  min-width: 0;
+}
+
+.simakLayout__userLabel {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.3px;
+
+  color: var(--simak-text-muted);
+
+  text-transform: uppercase;
+}
+
+.simakLayout__userName {
+  font-size: 13px;
+  font-weight: 700;
+
+  color: var(--simak-text);
+
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* ====================================== */
+/* AVATAR */
+/* ====================================== */
+
+.simakLayout__avatar {
+  position: relative;
+
+  width: 42px;
+  height: 42px;
+
+  border-radius: 50%;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  flex-shrink: 0;
+
+  background:
+    linear-gradient(
+      135deg,
+      var(--simak-primary),
+      #ef4444
+    );
+
+  color: #ffffff;
+
+  font-size: 14px;
+  font-weight: 700;
+
+  box-shadow:
+    0 10px 22px rgba(220,38,38,0.18);
+
+  overflow: hidden;
+}
+
+.simakLayout__avatar::after {
+  content: "";
+
+  position: absolute;
+  inset: 0;
+
+  border-radius: inherit;
+
+  background:
+    linear-gradient(
+      180deg,
+      rgba(255,255,255,0.18),
+      transparent
+    );
+}
+
+/* ====================================== */
+/* RESPONSIVE */
+/* ====================================== */
+
+@media (max-width: 768px) {
+
+  .simakLayout__header {
+    padding:
+      24px
+      18px
+      18px;
+
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .simakLayout__appTitle {
+    font-size: 24px;
+  }
+
+  .simakLayout__appSubtitle {
+    font-size: 12px;
+  }
+
+  .simakLayout__userInfo {
+    width: 100%;
+
+    justify-content: space-between;
+  }
+}
+
+/* ====================================== */
+/* REDUCED MOTION */
+/* ====================================== */
+
+@media (prefers-reduced-motion: reduce) {
+
+  .simakLayout__userInfo {
+    transition: none !important;
+  }
+
+  .simakLayout__userInfo:hover {
+    transform: none;
+  }
+}

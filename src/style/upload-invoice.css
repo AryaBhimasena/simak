@@ -1,0 +1,78 @@
+.uploadPage {
+  padding: 24px;
+}
+
+.uploadPage__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+}
+
+.uploadPage__header h1 {
+  margin: 0;
+}
+
+.uploadPage__syncButton {
+  padding: 10px 16px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.uploadPage__filterBar {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.uploadPage__filterBar label {
+  font-weight: 600;
+}
+
+.uploadPage__filterBar select {
+  min-width: 320px;
+  padding: 10px;
+}
+
+.uploadPage__count {
+  margin-left: auto;
+  font-weight: 600;
+}
+
+.uploadPage__tableWrapper {
+  overflow-x: auto;
+}
+
+.uploadPage__table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.uploadPage__table th,
+.uploadPage__table td {
+  border: 1px solid #ddd;
+  padding: 10px;
+  vertical-align: middle;
+}
+
+.uploadPage__table th {
+  position: sticky;
+  top: 0;
+  background: #f7f7f7;
+  z-index: 1;
+}
+
+.uploadPage__invoiceInput {
+  width: 120px;
+  padding: 8px;
+}
+
+.uploadPage__link {
+  text-decoration: none;
+}
+
+.uploadPage__link:hover {
+  text-decoration: underline;
+}

@@ -1,65 +1,120 @@
-import Image from "next/image";
+"use client";
 
-export default function Home() {
+import { useState } from "react";
+import { useRouter } from "next/navigation";
+import { Eye, EyeOff, LogIn, Loader2 } from "lucide-react";
+import "@/style/login-page.css";
+
+export default function Page() {
+  const [showPassword, setShowPassword] = useState(false);
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState("");
+
+  const router = useRouter();
+
+  const handleLogin = async (e) => {
+    e.preventDefault();
+    setError("");
+    setIsLoading(true);
+
+    // Simulasi request API
+    setTimeout(() => {
+      if (username === "iyaz" && password === "123") {
+        router.push("/dashboard");
+      } else {
+        setError("Username atau password salah");
+        setIsLoading(false);
+      }
+    }, 1200);
+  };
+
   return (
-    <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex min-h-screen w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
+    <div className="simakLogin__wrapper">
+      <div className="simakLogin__card">
+
+        <div className="simakLogin__header">
+          <h1 className="simakLogin__title">SIMAK</h1>
+          <p className="simakLogin__subtitle">
+            Sistem Informasi Management dan Administratif KII
           </p>
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+
+        <form className="simakLogin__form" onSubmit={handleLogin}>
+
+          {/* Username */}
+          <div className="simakLogin__field">
+            <label className="simakLogin__label">Username</label>
+            <div className="simakLogin__inputWrapper">
+              <input
+                type="text"
+                placeholder="Masukkan username"
+                className="simakLogin__input"
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
+                disabled={isLoading}
+              />
+            </div>
+          </div>
+
+          {/* Password */}
+          <div className="simakLogin__field">
+            <label className="simakLogin__label">Password</label>
+
+            <div className="simakLogin__inputWrapper">
+              <input
+                type={showPassword ? "text" : "password"}
+                placeholder="••••••••"
+                className="simakLogin__input"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                disabled={isLoading}
+              />
+
+              <button
+                type="button"
+                onClick={() => setShowPassword(!showPassword)}
+                className="simakLogin__inputIcon"
+                disabled={isLoading}
+              >
+                {showPassword ? <EyeOff size={17} /> : <Eye size={17} />}
+              </button>
+            </div>
+          </div>
+
+          {/* Error */}
+          {error && (
+            <div className="simakLogin__error">
+              {error}
+            </div>
+          )}
+
+          {/* Button */}
+          <button
+            type="submit"
+            className={`simakLogin__button ${isLoading ? "simakLogin__button--loading" : ""}`}
+            disabled={isLoading}
           >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
-      </main>
+            {isLoading ? (
+              <>
+                <Loader2 size={18} className="simakLogin__spinner" />
+                <span>Memproses...</span>
+              </>
+            ) : (
+              <>
+                <LogIn size={18} />
+                <span>Masuk</span>
+              </>
+            )}
+          </button>
+
+          <div className="simakLogin__footer">
+            © {new Date().getFullYear()} KII Company
+          </div>
+
+        </form>
+      </div>
     </div>
   );
 }

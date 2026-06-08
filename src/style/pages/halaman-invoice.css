@@ -1,0 +1,948 @@
+/* ====================================== */
+/* ROOT */
+/* ====================================== */
+
+.simakInvoicePage__wrapper {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.simakInvoicePage__main {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.simakInvoicePage__content {
+  flex: 1;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+/* ====================================== */
+/* HERO */
+/* ====================================== */
+
+/* ====================================== */
+/* PAGE HEADER */
+/* ====================================== */
+
+.simakInvoicePage__pageHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 24px;
+
+  padding: 18px 24px;
+
+  background: white;
+
+  border-radius: 20px;
+
+  border: 1px solid #e2e8f0;
+}
+
+.simakInvoicePage__pageHeaderLeft {
+  flex: 1;
+}
+
+.simakInvoicePage__pageTitle {
+  font-size: 22px;
+  font-weight: 800;
+  color: #0f172a;
+}
+
+.simakInvoicePage__pageDescription {
+  margin-top: 4px;
+
+  font-size: 13px;
+
+  color: #64748b;
+}
+
+.simakInvoicePage__tabs {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+}
+
+.simakInvoicePage__tab {
+  height: 44px;
+
+  padding: 0 18px;
+
+  border: none;
+  border-radius: 14px;
+
+  background: white;
+
+  cursor: pointer;
+
+  font-weight: 600;
+
+  transition: 0.2s;
+}
+
+.simakInvoicePage__tab:hover {
+  transform: translateY(-1px);
+}
+
+.simakInvoicePage__tab--active {
+  background: #dc2626;
+  color: white;
+}
+
+/* ====================================== */
+/* PANEL */
+/* ====================================== */
+
+.simakInvoicePage__panel {
+  background: rgba(255, 255, 255, 0.72);
+
+  backdrop-filter: blur(18px);
+
+  border-radius: 26px;
+
+  padding: 24px;
+
+  border: 1px solid rgba(226, 232, 240, 0.8);
+
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.simakInvoicePage__panelHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+}
+
+.simakInvoicePage__panelTitle {
+  font-size: 20px;
+  font-weight: 700;
+  color: #0f172a;
+}
+
+.simakInvoicePage__panelSubtitle {
+  margin-top: 4px;
+  color: #64748b;
+}
+
+/* ====================================== */
+/* MONTH */
+/* ====================================== */
+
+.simakInvoicePage__monthPicker {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.simakInvoicePage__monthBtn {
+  width: 42px;
+  height: 42px;
+
+  border: none;
+  border-radius: 14px;
+
+  background: white;
+
+  cursor: pointer;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.simakInvoicePage__monthInfo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  padding: 10px 16px;
+
+  background: white;
+
+  border-radius: 14px;
+}
+
+.simakInvoicePage__monthName {
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.simakInvoicePage__yearName {
+  font-size: 12px;
+  color: #64748b;
+}
+
+/* ====================================== */
+/* SUMMARY */
+/* ====================================== */
+
+.simakInvoicePage__summaryGrid {
+  display: grid;
+  grid-template-columns: repeat(
+    4,
+    minmax(0, 1fr)
+  );
+  gap: 16px;
+}
+
+.simakInvoicePage__summaryCard {
+  background: white;
+
+  border-radius: 20px;
+
+  padding: 18px;
+
+  border: 1px solid #e2e8f0;
+}
+
+.simakInvoicePage__summaryLabel {
+  font-size: 12px;
+  color: #64748b;
+}
+
+.simakInvoicePage__summaryValue {
+  margin-top: 10px;
+
+  font-size: 24px;
+  font-weight: 800;
+
+  color: #0f172a;
+}
+
+.simakInvoicePage__summary {
+  display: flex;
+  align-items: center;
+}
+
+.simakInvoicePage__summaryBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+
+  padding: 10px 14px;
+
+  border-radius: 14px;
+
+  background: #f8fafc;
+
+  font-size: 13px;
+  font-weight: 600;
+}
+
+/* ====================================== */
+/* FILTER */
+/* ====================================== */
+
+.simakInvoicePage__toolbar {
+  display: flex;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+
+.simakInvoicePage__searchBox {
+  flex: 1;
+
+  min-width: 280px;
+
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  padding: 0 14px;
+
+  height: 46px;
+
+  background: white;
+
+  border: 1px solid #e2e8f0;
+
+  border-radius: 14px;
+}
+
+.simakInvoicePage__searchBox input {
+  flex: 1;
+  border: none;
+  outline: none;
+  background: transparent;
+}
+
+.simakInvoicePage__filterSelect {
+  min-width: 180px;
+
+  height: 46px;
+
+  border-radius: 14px;
+
+  border: 1px solid #e2e8f0;
+
+  padding: 0 14px;
+
+  background: white;
+}
+
+/* ====================================== */
+/* TABLE */
+/* ====================================== */
+
+.simakInvoicePage__tableWrapper {
+  overflow-x: auto;
+}
+
+.simakInvoicePage__table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.simakInvoicePage__table thead th {
+  padding: 16px;
+
+  text-align: left;
+
+  font-size: 12px;
+  font-weight: 700;
+
+  color: #64748b;
+
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.simakInvoicePage__table tbody td {
+  padding: 16px;
+
+  border-bottom: 1px solid #f1f5f9;
+
+  vertical-align: middle;
+}
+
+.simakInvoicePage__invoiceCell {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.simakInvoicePage__invoiceIcon {
+  width: 40px;
+  height: 40px;
+
+  border-radius: 14px;
+
+  background: #fef2f2;
+
+  color: #dc2626;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.simakInvoicePage__invoiceId {
+  font-weight: 700;
+}
+
+.simakInvoicePage__invoiceSub {
+  font-size: 12px;
+  color: #64748b;
+}
+
+.simakInvoicePage__clientName {
+  font-weight: 600;
+}
+
+.simakInvoicePage__amount {
+  font-weight: 700;
+  color: #0f172a;
+}
+
+/* ====================================== */
+/* STATUS */
+/* ====================================== */
+
+.simakInvoicePage__status {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  min-width: 120px;
+
+  padding: 8px 12px;
+
+  border-radius: 999px;
+
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.simakInvoicePage__status--paid {
+  background: #dcfce7;
+  color: #15803d;
+}
+
+.simakInvoicePage__status--unpaid {
+  background: #fef2f2;
+  color: #dc2626;
+}
+
+/* ====================================== */
+/* ACTION */
+/* ====================================== */
+
+.simakInvoicePage__actionGroup {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  
+  flex-wrap: nowrap;
+}
+
+.simakInvoicePage__detailBtn,
+.simakInvoicePage__payBtn {
+  height: 40px;
+
+  padding: 0 14px;
+
+  border-radius: 12px;
+
+  border: none;
+
+  cursor: pointer;
+
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+
+  font-weight: 600;
+}
+
+.simakInvoicePage__detailBtn {
+  background: #eff6ff;
+  color: #2563eb;
+}
+
+.simakInvoicePage__payBtn {
+  background: #dc2626;
+  color: white;
+}
+
+.simakInvoicePage__downloadBtn {
+  height: 40px;
+
+  padding: 0 14px;
+
+  border: none;
+
+  border-radius: 12px;
+
+  background: #f1f5f9;
+
+  color: #334155;
+
+  cursor: pointer;
+
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+
+  font-weight: 600;
+
+  transition: 0.2s;
+}
+
+.simakInvoicePage__downloadBtn:hover {
+  background: #e2e8f0;
+}
+
+.simakInvoicePage__detailBtn,
+.simakInvoicePage__payBtn,
+.simakInvoicePage__downloadBtn {
+  white-space: nowrap;
+}
+
+/* ====================================== */
+/* DEVELOPMENT */
+/* ====================================== */
+
+.simakInvoicePage__development {
+  text-align: center;
+
+  padding: 80px 24px;
+
+  background: white;
+
+  border-radius: 24px;
+}
+
+.simakInvoicePage__developmentIcon {
+  margin-bottom: 18px;
+}
+
+/* ====================================== */
+/* MODAL */
+/* ====================================== */
+
+.simakInvoicePage__modalOverlay {
+  position: fixed;
+  inset: 0;
+
+  background: rgba(15, 23, 42, 0.45);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  z-index: 999;
+}
+
+.simakInvoicePage__modal {
+  width: 100%;
+  max-width: 760px;
+
+  max-height: 90vh;
+
+  overflow-y: auto;
+
+  background: white;
+
+  border-radius: 26px;
+
+  padding: 24px;
+  scrollbar-width: thin;
+  scrollbar-color: #dc2626 #f1f5f9;
+}
+
+.simakInvoicePage__modal--large {
+  max-width: 1080px;
+}
+
+.simakInvoicePage__modalHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  margin-bottom: 24px;
+}
+
+.simakInvoicePage__modalTitle {
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.simakInvoicePage__modalSubtitle {
+  color: #64748b;
+}
+
+.simakInvoicePage__closeBtn {
+  width: 42px;
+  height: 42px;
+
+  border: none;
+  border-radius: 14px;
+
+  background: #f8fafc;
+
+  cursor: pointer;
+}
+
+.simakInvoicePage__modal::-webkit-scrollbar {
+  width: 10px;
+}
+
+.simakInvoicePage__modal::-webkit-scrollbar-track {
+  background: #f1f5f9;
+
+  border-radius: 999px;
+}
+
+.simakInvoicePage__modal::-webkit-scrollbar-thumb {
+  background: linear-gradient(
+    180deg,
+    #ef4444,
+    #dc2626
+  );
+
+  border-radius: 999px;
+
+  border: 2px solid #f1f5f9;
+}
+
+.simakInvoicePage__modal::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(
+    180deg,
+    #dc2626,
+    #b91c1c
+  );
+}
+
+/* ====================================== */
+/* DETAIL */
+/* ====================================== */
+
+.simakInvoicePage__detailSection {
+  margin-bottom: 24px;
+}
+
+.simakInvoicePage__detailSection h3 {
+  margin-bottom: 14px;
+  font-size: 16px;
+}
+
+.simakInvoicePage__detailGrid {
+  display: grid;
+  grid-template-columns: repeat(
+    3,
+    minmax(0, 1fr)
+  );
+  gap: 16px;
+}
+
+.simakInvoicePage__detailGrid div,
+.simakInvoicePage__breakdown div,
+.simakInvoicePage__paymentReference div {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+
+  padding: 14px;
+
+  background: #f8fafc;
+
+  border-radius: 14px;
+}
+
+.simakInvoicePage__detailGrid span,
+.simakInvoicePage__breakdown span,
+.simakInvoicePage__paymentReference span {
+  font-size: 12px;
+  color: #64748b;
+}
+
+.simakInvoicePage__breakdown {
+  display: grid;
+  grid-template-columns: repeat(
+    2,
+    minmax(0, 1fr)
+  );
+  gap: 14px;
+}
+
+.simakInvoicePage__paymentReference {
+  display: grid;
+  grid-template-columns: repeat(
+    2,
+    minmax(0, 1fr)
+  );
+  gap: 14px;
+
+  margin-bottom: 20px;
+}
+
+.simakInvoicePage__summaryBox {
+  display: grid;
+  grid-template-columns: repeat(
+    3,
+    minmax(0, 1fr)
+  );
+  gap: 14px;
+}
+
+.simakInvoicePage__summaryBox div {
+  background: #f8fafc;
+
+  border-radius: 14px;
+
+  padding: 16px;
+
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+/* ====================================== */
+/* FORM */
+/* ====================================== */
+
+.simakInvoicePage__formGrid {
+  display: grid;
+  grid-template-columns: repeat(
+    2,
+    minmax(0, 1fr)
+  );
+  gap: 16px;
+
+  margin-bottom: 20px;
+}
+
+.simakInvoicePage__inputGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.simakInvoicePage__inputGroup label {
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.simakInvoicePage__inputGroup input {
+  height: 46px;
+
+  border-radius: 14px;
+
+  border: 1px solid #e2e8f0;
+
+  padding: 0 14px;
+}
+
+/* ====================================== */
+/* DIFFERENCE */
+/* ====================================== */
+
+.simakInvoicePage__differenceCard {
+  background: #f8fafc;
+
+  border-radius: 20px;
+
+  padding: 18px;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  margin-bottom: 20px;
+}
+
+.simakInvoicePage__differenceLabel {
+  font-size: 12px;
+  color: #64748b;
+}
+
+.simakInvoicePage__differenceValue {
+  margin-top: 6px;
+
+  font-size: 22px;
+  font-weight: 800;
+}
+
+.simakInvoicePage__differenceBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+
+  background: #dcfce7;
+
+  color: #15803d;
+
+  padding: 10px 14px;
+
+  border-radius: 999px;
+
+  font-size: 12px;
+  font-weight: 700;
+}
+
+/* ====================================== */
+/* ACTION MODAL */
+/* ====================================== */
+
+.simakInvoicePage__modalAction {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+}
+
+.simakInvoicePage__cancelBtn,
+.simakInvoicePage__saveBtn {
+  height: 46px;
+
+  padding: 0 20px;
+
+  border: none;
+
+  border-radius: 14px;
+
+  font-weight: 700;
+
+  cursor: pointer;
+}
+
+.simakInvoicePage__cancelBtn {
+  background: #e2e8f0;
+}
+
+.simakInvoicePage__saveBtn {
+  background: #dc2626;
+  color: white;
+}
+
+/* ====================================== */
+/* RESPONSIVE */
+/* ====================================== */
+
+@media (max-width: 992px) {
+
+  .simakInvoicePage__hero {
+    flex-direction: column;
+  }
+
+  .simakInvoicePage__summaryGrid {
+    grid-template-columns: repeat(
+      2,
+      minmax(0, 1fr)
+    );
+  }
+
+  .simakInvoicePage__detailGrid,
+  .simakInvoicePage__summaryBox,
+  .simakInvoicePage__paymentReference,
+  .simakInvoicePage__formGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .simakInvoicePage__breakdown {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 640px) {
+
+  .simakInvoicePage__summaryGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .simakInvoicePage__toolbar {
+    flex-direction: column;
+  }
+
+  .simakInvoicePage__filterSelect {
+    width: 100%;
+  }
+
+  .simakInvoicePage__actionGroup {
+    flex-direction: column;
+  }
+}
+
+.simakInvoicePage__uploadInfo {
+  grid-column: 1 / -1;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 16px;
+
+  padding: 16px 18px;
+
+  background: #f8fafc;
+
+  border: 1px solid #e2e8f0;
+
+  border-radius: 16px;
+}
+
+.simakInvoicePage__uploadInfoLabel {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.simakInvoicePage__uploadInfoTitle {
+  font-size: 12px;
+  color: #64748b;
+}
+
+.simakInvoicePage__uploadInfoValue {
+  font-size: 14px;
+  font-weight: 700;
+  color: #0f172a;
+}
+
+.simakInvoicePage__folderBadge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  height: 36px;
+
+  padding: 0 14px;
+
+  border-radius: 999px;
+
+  background: #fef2f2;
+
+  color: #dc2626;
+
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.simakInvoicePage__inputGroup select {
+  height: 46px;
+
+  border-radius: 14px;
+
+  border: 1px solid #e2e8f0;
+
+  padding: 0 14px;
+
+  background: white;
+
+  outline: none;
+
+  font-size: 14px;
+}
+
+.simakInvoicePage__inputGroup select:focus {
+  border-color: #dc2626;
+
+  box-shadow:
+    0 0 0 4px
+    rgba(220, 38, 38, 0.08);
+}
+
+.simakInvoicePage__inputGroup input[type="file"] {
+  height: auto;
+
+  padding: 10px;
+
+  background: white;
+
+  border: 1px dashed #cbd5e1;
+
+  border-radius: 14px;
+}
+
+.simakInvoicePage__inputGroup input[type="file"]:hover {
+  border-color: #dc2626;
+}
+
+.simakInvoicePage__modalHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  margin-bottom: 24px;
+  padding-bottom: 18px;
+
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.simakInvoicePage__modalAction {
+  display: flex;
+  justify-content: flex-end;
+
+  gap: 12px;
+
+  padding-top: 18px;
+
+  border-top: 1px solid #e2e8f0;
+}

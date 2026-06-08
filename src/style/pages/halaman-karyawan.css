@@ -1,0 +1,337 @@
+/* ====================================== */
+/* IMPORT COMPONENT CSS */
+/* ====================================== */
+
+@import "./karyawan/employee-list-card.css";
+@import "./karyawan/employee-detail-card.css";
+@import "./karyawan/employee-tab.css";
+
+/* ====================================== */
+/* SIMAK EMPLOYEE PAGE */
+/* ====================================== */
+
+.simakEmployeePage__wrapper {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.simakEmployeePage__main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+
+  /* Optimasi repaint */
+  min-height: 0;
+}
+
+.simakEmployeePage__content {
+  flex: 1;
+  padding: 0 40px 32px;
+
+  overflow: hidden;
+
+  /* Optimasi compositing */
+  contain: layout style paint;
+}
+
+/* ====================================== */
+/* LAYOUT */
+/* ====================================== */
+
+.simakEmployeePage__layout {
+  display: grid;
+  grid-template-columns: 1.05fr 1fr;
+  gap: 24px;
+
+  height: 100%;
+  overflow: hidden;
+
+  /* Mencegah repaint antar panel */
+  contain: layout;
+}
+
+/* ====================================== */
+/* PANEL BASE */
+/* ====================================== */
+
+.simakEmployeePage__listPanel,
+.simakEmployeePage__detailPanel {
+  position: relative;
+
+  display: flex;
+  flex-direction: column;
+
+  height: 100%;
+  padding: 24px;
+
+  overflow: hidden;
+
+  border: 1px solid var(--simak-border);
+  border-radius: 26px;
+
+  /* Glassmorphism lebih ringan */
+  background: rgba(255, 255, 255, 0.82);
+
+  /* backdrop-filter sangat berat di GPU rendah */
+  /* gunakan saturate kecil agar visual tetap mirip */
+  backdrop-filter: blur(8px) saturate(115%);
+  -webkit-backdrop-filter: blur(8px) saturate(115%);
+
+  /* Shadow lebih ringan */
+  box-shadow:
+    0 4px 12px rgba(15, 23, 42, 0.05),
+    0 1px 3px rgba(15, 23, 42, 0.04);
+
+  /* Hindari transition all implicit */
+  transition:
+    box-shadow 0.18s ease,
+    border-color 0.18s ease;
+
+  /* Optimasi rendering */
+  contain: content;
+
+  /* Force compositing ringan */
+  transform: translateZ(0);
+
+  /* Mencegah flicker */
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+.simakEmployeePage__listPanel:hover,
+.simakEmployeePage__detailPanel:hover {
+  /* Hilangkan animasi transform besar */
+  box-shadow:
+    0 10px 24px rgba(15, 23, 42, 0.08),
+    0 2px 6px rgba(15, 23, 42, 0.06);
+}
+
+/* ====================================== */
+/* BUTTON */
+/* ====================================== */
+
+.simakEmployeePage__btnAdd,
+.simakEmployeePage__btnPrimary {
+  position: relative;
+
+  height: 42px;
+  padding: 0 18px;
+
+  border: none;
+  border-radius: 14px;
+
+  background: linear-gradient(
+    135deg,
+    var(--simak-primary),
+    #ef4444
+  );
+
+  color: #ffffff;
+  font-size: 13px;
+  font-weight: 600;
+
+  cursor: pointer;
+
+  /* Optimasi */
+  will-change: transform;
+
+  transform: translateZ(0);
+
+  transition:
+    transform 0.16s ease,
+    filter 0.16s ease,
+    box-shadow 0.16s ease;
+
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+.simakEmployeePage__btnAdd:hover,
+.simakEmployeePage__btnPrimary:hover {
+  /* translate lebih kecil = lebih smooth */
+  transform: translate3d(0, -1px, 0);
+
+  /* Hindari shadow blur besar */
+  box-shadow: 0 6px 14px rgba(220, 38, 38, 0.18);
+
+  /* Lebih ringan dibanding shadow besar */
+  filter: brightness(1.03);
+}
+
+/* ====================================== */
+/* FORM */
+/* ====================================== */
+
+.simakEmployeePage__grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 20px;
+}
+
+.simakEmployeePage__field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+
+  min-width: 0;
+}
+
+.simakEmployeePage__field--full {
+  grid-column: span 2;
+}
+
+.simakEmployeePage__field label {
+  color: var(--simak-text);
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.simakEmployeePage__field input,
+.simakEmployeePage__field textarea,
+.simakEmployeePage__field select {
+  width: 100%;
+  min-height: 46px;
+
+  padding: 12px 14px;
+
+  border: 1px solid var(--simak-border-soft);
+  border-radius: 14px;
+
+  outline: none;
+
+  /* Background solid semi transparan lebih ringan */
+  background: rgba(255, 255, 255, 0.9);
+
+  color: var(--simak-text);
+  font-size: 13px;
+
+  /* Optimasi animasi */
+  transition:
+    border-color 0.16s ease,
+    background-color 0.16s ease,
+    box-shadow 0.16s ease;
+
+  /* Hindari repaint besar */
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+.simakEmployeePage__field textarea {
+  min-height: 100px;
+  resize: vertical;
+}
+
+.simakEmployeePage__field input::placeholder,
+.simakEmployeePage__field textarea::placeholder {
+  color: var(--simak-text-muted);
+}
+
+.simakEmployeePage__field input:focus,
+.simakEmployeePage__field textarea:focus,
+.simakEmployeePage__field select:focus {
+  border-color: rgba(220, 38, 38, 0.28);
+
+  background: rgba(255, 255, 255, 0.98);
+
+  /* Shadow focus diperkecil */
+  box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.05);
+}
+
+/* ====================================== */
+/* LOW PERFORMANCE DEVICE OPTIMIZATION */
+/* ====================================== */
+
+/*
+  Device low-end / GPU rendah:
+  - hilangkan blur berat
+  - hilangkan animasi mahal
+  - disable hover expensive
+*/
+
+@media (prefers-reduced-motion: reduce) {
+
+  .simakEmployeePage__listPanel,
+  .simakEmployeePage__detailPanel,
+  .simakEmployeePage__btnAdd,
+  .simakEmployeePage__btnPrimary,
+  .simakEmployeePage__field input,
+  .simakEmployeePage__field textarea,
+  .simakEmployeePage__field select {
+    transition: none !important;
+    animation: none !important;
+  }
+
+  .simakEmployeePage__btnAdd:hover,
+  .simakEmployeePage__btnPrimary:hover {
+    transform: none;
+  }
+}
+
+/*
+  Fallback browser/device lama
+*/
+
+@supports not (
+  (backdrop-filter: blur(1px)) or
+  (-webkit-backdrop-filter: blur(1px))
+) {
+
+  .simakEmployeePage__listPanel,
+  .simakEmployeePage__detailPanel {
+    background: rgba(255, 255, 255, 0.96);
+  }
+}
+
+/*
+  GPU rendah biasanya struggle pada blur besar
+  blur diperkecil otomatis di layar kecil
+*/
+
+@media (max-width: 1024px) {
+
+  .simakEmployeePage__listPanel,
+  .simakEmployeePage__detailPanel {
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+  }
+}
+
+/* ====================================== */
+/* RESPONSIVE */
+/* ====================================== */
+
+@media (max-width: 1200px) {
+
+  .simakEmployeePage__layout {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+
+  .simakEmployeePage__content {
+    padding: 0 18px 24px;
+  }
+
+  .simakEmployeePage__grid {
+    grid-template-columns: 1fr;
+  }
+
+  .simakEmployeePage__field--full {
+    grid-column: span 1;
+  }
+
+  .simakEmployeePage__listHeader,
+  .simakEmployeePage__detailHeader,
+  .simakEmployeePage__profileHeader {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .simakEmployeePage__listPanel,
+  .simakEmployeePage__detailPanel {
+    padding: 18px;
+    border-radius: 22px;
+  }
+}

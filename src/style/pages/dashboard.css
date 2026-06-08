@@ -1,0 +1,697 @@
+/* ====================================== */
+/* WRAPPER */
+/* ====================================== */
+
+.simakDash__wrapper {
+  min-height: 100vh;
+
+  background:
+    #f5f7fb;
+
+  padding-bottom: 40px;
+}
+
+/* ====================================== */
+/* CONTAINER */
+/* ====================================== */
+
+.simakDash__container {
+  padding:
+    32px
+    40px
+    40px
+    40px;
+}
+
+/* ====================================== */
+/* HERO SECTION */
+/* ====================================== */
+
+.simakDash__heroSection {
+  display: grid;
+  grid-template-columns:
+    minmax(0, 1.3fr)
+    minmax(320px, 420px);
+
+  gap: 24px;
+
+  margin-bottom: 24px;
+}
+
+.simakDash__heroLeft,
+.simakDash__heroRight {
+  border:
+    1px solid rgba(15, 23, 42, 0.06);
+
+  border-radius: 28px;
+
+  background:
+    #ffffff;
+
+  box-shadow:
+    0 10px 30px rgba(15, 23, 42, 0.04);
+}
+
+/* ====================================== */
+/* HERO LEFT */
+/* ====================================== */
+
+.simakDash__heroLeft {
+  padding: 40px;
+}
+
+.simakDash__heroBadge {
+  width: fit-content;
+
+  padding:
+    8px
+    14px;
+
+  border-radius: 999px;
+
+  background:
+    rgba(37, 99, 235, 0.08);
+
+  color:
+    #2563eb;
+
+  font-size: 13px;
+  font-weight: 600;
+
+  margin-bottom: 20px;
+}
+
+.simakDash__heroTitle {
+  margin: 0;
+
+  color:
+    #0f172a;
+
+  font-size: 40px;
+  font-weight: 700;
+  line-height: 1.1;
+
+  letter-spacing: -1px;
+}
+
+.simakDash__heroDescription {
+  margin:
+    18px
+    0
+    0
+    0;
+
+  max-width: 680px;
+
+  color:
+    #64748b;
+
+  font-size: 15px;
+  line-height: 1.8;
+}
+
+/* ====================================== */
+/* QUICK ACTION */
+/* ====================================== */
+
+.simakDash__quickActions {
+  display: flex;
+  gap: 14px;
+
+  margin-top: 32px;
+}
+
+.simakDash__primaryAction,
+.simakDash__secondaryAction {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  border: none;
+  outline: none;
+
+  cursor: pointer;
+
+  border-radius: 16px;
+
+  padding:
+    14px
+    20px;
+
+  font-size: 14px;
+  font-weight: 600;
+
+  transition:
+    all
+    0.2s ease;
+}
+
+.simakDash__primaryAction {
+  background:
+    #0f172a;
+
+  color:
+    #ffffff;
+}
+
+.simakDash__primaryAction:hover {
+  transform:
+    translateY(-2px);
+}
+
+.simakDash__secondaryAction {
+  background:
+    #eef2ff;
+
+  color:
+    #1e293b;
+}
+
+.simakDash__secondaryAction:hover {
+  transform:
+    translateY(-2px);
+}
+
+/* ====================================== */
+/* HERO RIGHT */
+/* ====================================== */
+
+.simakDash__heroRight {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 28px;
+}
+
+.simakDash__cashflowCard {
+  width: 100%;
+
+  border-radius: 24px;
+
+  padding: 28px;
+
+  background:
+    linear-gradient(
+      145deg,
+      #0f172a,
+      #1e293b
+    );
+
+  color:
+    #ffffff;
+}
+
+.simakDash__cashflowHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  margin-bottom: 22px;
+}
+
+.simakDash__cashflowHeader span {
+  font-size: 14px;
+  color:
+    rgba(255, 255, 255, 0.7);
+}
+
+.simakDash__growthBadge {
+  padding:
+    6px
+    12px;
+
+  border-radius: 999px;
+
+  background:
+    rgba(255, 255, 255, 0.12);
+
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.simakDash__cashflowAmount {
+  font-size: 38px;
+  font-weight: 700;
+
+  letter-spacing: -1px;
+}
+
+.simakDash__cashflowStats {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+
+  margin-top: 28px;
+}
+
+.simakDash__cashflowItem {
+  flex: 1;
+}
+
+.simakDash__cashflowItem label {
+  display: block;
+
+  margin-bottom: 8px;
+
+  color:
+    rgba(255, 255, 255, 0.6);
+
+  font-size: 13px;
+}
+
+.simakDash__cashflowItem strong {
+  font-size: 18px;
+}
+
+.simakDash__cashflowDivider {
+  width: 1px;
+  height: 40px;
+
+  background:
+    rgba(255, 255, 255, 0.1);
+}
+
+/* ====================================== */
+/* MAIN GRID */
+/* ====================================== */
+
+.simakDash__mainGrid {
+  display: grid;
+  grid-template-columns:
+    minmax(0, 1.4fr)
+    400px;
+
+  gap: 24px;
+}
+
+/* ====================================== */
+/* SECTION CARD */
+/* ====================================== */
+
+.simakDash__sectionCard {
+  border:
+    1px solid rgba(15, 23, 42, 0.06);
+
+  border-radius: 28px;
+
+  background:
+    #ffffff;
+
+  box-shadow:
+    0 10px 30px rgba(15, 23, 42, 0.04);
+
+  padding: 28px;
+}
+
+.simakDash__leftContent,
+.simakDash__rightSidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+/* ====================================== */
+/* SECTION HEADER */
+/* ====================================== */
+
+.simakDash__sectionHeader {
+  margin-bottom: 24px;
+}
+
+.simakDash__sectionHeader h3 {
+  margin: 0;
+
+  color:
+    #0f172a;
+
+  font-size: 22px;
+  font-weight: 700;
+
+  letter-spacing: -0.4px;
+}
+
+.simakDash__sectionHeader p {
+  margin:
+    8px
+    0
+    0
+    0;
+
+  color:
+    #64748b;
+
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+/* ====================================== */
+/* OVERVIEW GRID */
+/* ====================================== */
+
+.simakDash__overviewGrid {
+  display: grid;
+  grid-template-columns:
+    repeat(3, minmax(0, 1fr));
+
+  gap: 18px;
+}
+
+.simakDash__overviewCard {
+  position: relative;
+
+  overflow: hidden;
+
+  border-radius: 22px;
+
+  padding: 24px;
+
+  min-height: 180px;
+}
+
+.simakDash__overviewCard--income {
+  background:
+    linear-gradient(
+      145deg,
+      #ecfeff,
+      #dbeafe
+    );
+}
+
+.simakDash__overviewCard--receivable {
+  background:
+    linear-gradient(
+      145deg,
+      #fff7ed,
+      #ffedd5
+    );
+}
+
+.simakDash__overviewCard--expense {
+  background:
+    linear-gradient(
+      145deg,
+      #f8fafc,
+      #e2e8f0
+    );
+}
+
+.simakDash__overviewIcon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 48px;
+  height: 48px;
+
+  border-radius: 16px;
+
+  background:
+    rgba(255, 255, 255, 0.6);
+
+  margin-bottom: 22px;
+}
+
+.simakDash__overviewContent span {
+  display: block;
+
+  color:
+    #475569;
+
+  font-size: 13px;
+  font-weight: 600;
+
+  margin-bottom: 10px;
+}
+
+.simakDash__overviewContent h2 {
+  margin: 0;
+
+  color:
+    #0f172a;
+
+  font-size: 28px;
+  font-weight: 700;
+
+  line-height: 1.2;
+
+  letter-spacing: -0.8px;
+}
+
+.simakDash__overviewContent small {
+  display: block;
+
+  margin-top: 12px;
+
+  color:
+    #64748b;
+
+  font-size: 13px;
+}
+
+/* ====================================== */
+/* LIABILITY */
+/* ====================================== */
+
+.simakDash__liabilityList {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.simakDash__liabilityItem {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 20px;
+
+  padding:
+    18px
+    20px;
+
+  border-radius: 20px;
+
+  background:
+    #f8fafc;
+}
+
+.simakDash__liabilityLeft {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+
+  min-width: 0;
+}
+
+.simakDash__liabilityIcon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 48px;
+  height: 48px;
+
+  border-radius: 16px;
+
+  background:
+    #ffffff;
+
+  color:
+    #334155;
+
+  flex-shrink: 0;
+}
+
+.simakDash__liabilityLeft h4 {
+  margin: 0;
+
+  color:
+    #0f172a;
+
+  font-size: 15px;
+  font-weight: 700;
+}
+
+.simakDash__liabilityLeft span {
+  display: block;
+
+  margin-top: 6px;
+
+  color:
+    #64748b;
+
+  font-size: 13px;
+}
+
+.simakDash__liabilityRight {
+  color:
+    #0f172a;
+
+  font-size: 16px;
+  font-weight: 700;
+
+  white-space: nowrap;
+}
+
+.simakDash__liabilityRight--danger {
+  color:
+    #dc2626;
+}
+
+/* ====================================== */
+/* INVOICE LIST */
+/* ====================================== */
+
+.simakDash__invoiceList {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.simakDash__invoiceItem {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 16px;
+
+  padding:
+    18px
+    20px;
+
+  border-radius: 18px;
+
+  background:
+    #f8fafc;
+}
+
+.simakDash__invoiceItem h4 {
+  margin: 0;
+
+  color:
+    #0f172a;
+
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.simakDash__invoiceItem span {
+  display: block;
+
+  margin-top: 6px;
+
+  color:
+    #64748b;
+
+  font-size: 12px;
+}
+
+.simakDash__invoiceItem strong {
+  color:
+    #dc2626;
+
+  font-size: 14px;
+
+  white-space: nowrap;
+}
+
+/* ====================================== */
+/* EXPENSE */
+/* ====================================== */
+
+.simakDash__expenseList {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.simakDash__expenseItem {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  padding:
+    16px
+    18px;
+
+  border-radius: 18px;
+
+  background:
+    #f8fafc;
+}
+
+.simakDash__expenseLabel {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  color:
+    #334155;
+
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.simakDash__expenseItem strong {
+  color:
+    #0f172a;
+
+  font-size: 14px;
+}
+
+/* ====================================== */
+/* RESPONSIVE */
+/* ====================================== */
+
+@media (max-width: 1280px) {
+
+  .simakDash__overviewGrid {
+    grid-template-columns:
+      1fr;
+  }
+
+}
+
+@media (max-width: 1100px) {
+
+  .simakDash__heroSection,
+  .simakDash__mainGrid {
+    grid-template-columns:
+      1fr;
+  }
+
+}
+
+@media (max-width: 768px) {
+
+  .simakDash__container {
+    padding:
+      20px;
+  }
+
+  .simakDash__heroLeft,
+  .simakDash__sectionCard {
+    padding: 22px;
+  }
+
+  .simakDash__heroTitle {
+    font-size: 30px;
+  }
+
+  .simakDash__quickActions {
+    flex-direction: column;
+  }
+
+  .simakDash__cashflowAmount {
+    font-size: 30px;
+  }
+
+  .simakDash__liabilityItem,
+  .simakDash__invoiceItem,
+  .simakDash__expenseItem {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+}

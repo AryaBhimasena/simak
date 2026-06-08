@@ -1,0 +1,533 @@
+/* =========================================================
+   ATTENDANCE MODAL
+   style/pages/absensi/attendance-modal.css
+========================================================= */
+
+/* =========================================================
+   OVERLAY
+========================================================= */
+
+.simakAttendanceModal__overlay {
+  position: fixed;
+  inset: 0;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  padding: 28px;
+
+  background: rgba(15, 23, 42, 0.55);
+  backdrop-filter: blur(12px);
+
+  z-index: 9999;
+}
+
+/* =========================================================
+   CONTAINER
+========================================================= */
+
+.simakAttendanceModal__container {
+  width: min(96vw, 1800px);
+  height: min(92vh, 980px);
+
+  display: flex;
+  flex-direction: column;
+
+  overflow: hidden;
+
+  border-radius: 32px;
+
+  background: rgba(255, 255, 255, 0.97);
+
+  border: 1px solid rgba(255, 255, 255, 0.8);
+
+  box-shadow:
+    0 30px 80px rgba(15, 23, 42, 0.18),
+    0 8px 24px rgba(15, 23, 42, 0.08);
+
+  animation: simakAttendanceModalFade .25s ease;
+}
+
+@keyframes simakAttendanceModalFade {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* =========================================================
+   HEADER
+========================================================= */
+
+.simakAttendanceModal__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 24px;
+
+  padding: 30px 34px 24px;
+
+  border-bottom:
+    1px solid rgba(148, 163, 184, 0.12);
+
+  flex-shrink: 0;
+}
+
+.simakAttendanceModal__eyebrow {
+  display: inline-flex;
+  align-items: center;
+
+  height: 30px;
+
+  padding: 0 14px;
+
+  border-radius: 999px;
+
+  background: rgba(220, 38, 38, 0.08);
+
+  color: var(--simak-primary);
+
+  font-size: 12px;
+  font-weight: 700;
+
+  margin-bottom: 14px;
+}
+
+.simakAttendanceModal__title {
+  margin: 0;
+
+  font-size: 30px;
+  font-weight: 800;
+
+  color: var(--simak-text);
+
+  letter-spacing: -0.5px;
+}
+
+.simakAttendanceModal__subtitle {
+  margin-top: 10px;
+
+  color: var(--simak-text-soft);
+
+  font-size: 14px;
+  line-height: 1.7;
+}
+
+.simakAttendanceModal__closeBtn {
+  width: 44px;
+  height: 44px;
+
+  flex-shrink: 0;
+
+  border: none;
+  cursor: pointer;
+
+  border-radius: 14px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background: rgba(241, 245, 249, 1);
+
+  color: var(--simak-text-soft);
+
+  transition: .2s ease;
+}
+
+.simakAttendanceModal__closeBtn:hover {
+  background: rgba(220, 38, 38, 0.08);
+  color: var(--simak-primary);
+}
+
+/* =========================================================
+   EMPLOYEE INFO
+========================================================= */
+
+.simakAttendanceModal__info {
+  margin: 24px 34px 0;
+
+  padding: 22px 26px;
+
+  display: grid;
+  grid-template-columns:
+    repeat(3, minmax(0, 1fr));
+
+  gap: 22px;
+
+  border-radius: 22px;
+
+  background: rgba(248, 250, 252, 0.95);
+
+  border:
+    1px solid rgba(148, 163, 184, 0.10);
+
+  flex-shrink: 0;
+}
+
+.simakAttendanceModal__infoItem {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.simakAttendanceModal__infoItem label {
+  font-size: 11px;
+  font-weight: 700;
+
+  letter-spacing: .5px;
+  text-transform: uppercase;
+
+  color: var(--simak-text-soft);
+}
+
+.simakAttendanceModal__infoItem span {
+  font-size: 15px;
+  font-weight: 700;
+
+  color: var(--simak-text);
+
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* =========================================================
+   ACTION BAR
+========================================================= */
+
+.simakAttendanceModal__actionBar {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+
+  padding: 22px 34px;
+
+  flex-shrink: 0;
+}
+
+.simakAttendanceModal__saveBtn {
+  height: 46px;
+
+  padding: 0 22px;
+
+  border: none;
+  cursor: pointer;
+
+  border-radius: 14px;
+
+  font-size: 13px;
+  font-weight: 700;
+
+  color: white;
+
+  background:
+    linear-gradient(
+      135deg,
+      var(--simak-primary),
+      #ef4444
+    );
+
+  transition: .2s ease;
+}
+
+.simakAttendanceModal__saveBtn:hover {
+  transform: translateY(-1px);
+}
+
+.simakAttendanceModal__cancelBtn {
+  height: 46px;
+
+  padding: 0 22px;
+
+  border: none;
+  cursor: pointer;
+
+  border-radius: 14px;
+
+  font-size: 13px;
+  font-weight: 700;
+
+  color: var(--simak-text);
+
+  background: rgba(241, 245, 249, 1);
+
+  transition: .2s ease;
+}
+
+.simakAttendanceModal__cancelBtn:hover {
+  transform: translateY(-1px);
+}
+
+/* =========================================================
+   TABLE WRAPPER
+========================================================= */
+
+.simakAttendanceModal__tableWrapper {
+  flex: 1;
+
+  margin: 0 34px 34px;
+
+  overflow: auto;
+
+  border-radius: 22px;
+
+  border:
+    1px solid rgba(148, 163, 184, 0.12);
+
+  background: white;
+}
+
+/* =========================================================
+   SCROLLBAR
+========================================================= */
+
+.simakAttendanceModal__tableWrapper::-webkit-scrollbar {
+  width: 12px;
+  height: 12px;
+}
+
+.simakAttendanceModal__tableWrapper::-webkit-scrollbar-track {
+  background: rgba(241, 245, 249, 1);
+}
+
+.simakAttendanceModal__tableWrapper::-webkit-scrollbar-thumb {
+  background: rgba(148, 163, 184, 0.55);
+
+  border-radius: 999px;
+
+  border: 2px solid rgba(241, 245, 249, 1);
+}
+
+.simakAttendanceModal__tableWrapper::-webkit-scrollbar-thumb:hover {
+  background: rgba(100, 116, 139, 0.8);
+}
+
+/* =========================================================
+   TABLE
+========================================================= */
+
+.simakAttendanceModal__table {
+  width: 100%;
+
+  border-collapse: separate;
+  border-spacing: 0;
+
+  min-width: 1450px;
+}
+
+/* =========================================================
+   TABLE HEADER
+========================================================= */
+
+.simakAttendanceModal__table thead th {
+  position: sticky;
+  top: 0;
+
+  z-index: 20;
+
+  padding: 16px 10px;
+
+  background: rgba(248, 250, 252, 0.95);
+
+  color: var(--simak-text);
+
+  font-size: 12px;
+  font-weight: 800;
+
+  text-align: center;
+
+  white-space: nowrap;
+
+  border-bottom:
+    1px solid rgba(148, 163, 184, 0.12);
+}
+
+/* =========================================================
+   TABLE BODY
+========================================================= */
+
+.simakAttendanceModal__table tbody tr:nth-child(even) {
+  background: rgba(248, 250, 252, 0.55);
+}
+
+.simakAttendanceModal__table tbody tr:hover {
+  background: rgba(220, 38, 38, 0.035);
+}
+
+.simakAttendanceModal__table td {
+  padding: 10px 8px;
+
+  text-align: center;
+
+  border-bottom:
+    1px solid rgba(148, 163, 184, 0.08);
+
+  vertical-align: middle;
+}
+
+.simakAttendanceModal__table td:first-child,
+.simakAttendanceModal__table td:nth-child(2) {
+  font-size: 13px;
+  font-weight: 700;
+
+  color: var(--simak-text);
+}
+
+/* =========================================================
+   FORM CONTROL
+========================================================= */
+
+.simakAttendanceModal__table input,
+.simakAttendanceModal__table select {
+  width: 100%;
+  height: 36px;
+
+  border-radius: 10px;
+
+  border:
+    1px solid rgba(148, 163, 184, 0.14);
+
+  background: white;
+
+  padding: 0 10px;
+
+  outline: none;
+
+  font-size: 12px;
+
+  color: var(--simak-text);
+
+  transition: .2s ease;
+}
+
+.simakAttendanceModal__table input:focus,
+.simakAttendanceModal__table select:focus {
+  border-color:
+    rgba(220, 38, 38, 0.25);
+
+  box-shadow:
+    0 0 0 4px rgba(220, 38, 38, 0.08);
+}
+
+/* =========================================================
+   COLUMN SIZE
+========================================================= */
+
+.simakAttendanceModal__table th:nth-child(1),
+.simakAttendanceModal__table td:nth-child(1) {
+  min-width: 110px;
+}
+
+.simakAttendanceModal__table th:nth-child(2),
+.simakAttendanceModal__table td:nth-child(2) {
+  min-width: 110px;
+}
+
+.simakAttendanceModal__table th:nth-child(3),
+.simakAttendanceModal__table td:nth-child(3) {
+  min-width: 110px;
+}
+
+.simakAttendanceModal__table th:nth-child(4),
+.simakAttendanceModal__table td:nth-child(4) {
+  min-width: 120px;
+}
+
+/* jam masuk */
+
+.simakAttendanceModal__table th:nth-child(5),
+.simakAttendanceModal__table td:nth-child(5) {
+  width: 95px;
+  min-width: 95px;
+}
+
+/* jam keluar */
+
+.simakAttendanceModal__table th:nth-child(6),
+.simakAttendanceModal__table td:nth-child(6) {
+  width: 95px;
+  min-width: 95px;
+}
+
+/* jam lembur */
+
+.simakAttendanceModal__table th:nth-child(7),
+.simakAttendanceModal__table td:nth-child(7) {
+  width: 90px;
+  min-width: 90px;
+}
+
+/* konversi */
+
+.simakAttendanceModal__table th:nth-child(8),
+.simakAttendanceModal__table td:nth-child(8) {
+  width: 90px;
+  min-width: 90px;
+}
+
+/* bko */
+
+.simakAttendanceModal__table th:nth-child(9),
+.simakAttendanceModal__table td:nth-child(9) {
+  min-width: 180px;
+}
+
+/* keterangan */
+
+.simakAttendanceModal__table th:nth-child(10),
+.simakAttendanceModal__table td:nth-child(10) {
+  min-width: 180px;
+}
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media (max-width: 1200px) {
+  .simakAttendanceModal__info {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  .simakAttendanceModal__overlay {
+    padding: 12px;
+  }
+
+  .simakAttendanceModal__container {
+    width: 100%;
+    height: 96vh;
+
+    border-radius: 22px;
+  }
+
+  .simakAttendanceModal__header {
+    padding: 22px;
+  }
+
+  .simakAttendanceModal__info {
+    margin: 18px 22px 0;
+    padding: 18px;
+  }
+
+  .simakAttendanceModal__actionBar {
+    padding: 18px 22px;
+    flex-direction: column;
+  }
+
+  .simakAttendanceModal__saveBtn,
+  .simakAttendanceModal__cancelBtn {
+    width: 100%;
+  }
+
+  .simakAttendanceModal__tableWrapper {
+    margin: 0 22px 22px;
+  }
+}

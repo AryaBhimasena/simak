@@ -1,0 +1,607 @@
+/* ====================================== */
+/* EMPLOYEE LIST CARD */
+/* ====================================== */
+
+/* ====================================== */
+/* LIST HEADER */
+/* ====================================== */
+
+.simakEmployeePage__listHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+
+  margin-bottom: 20px;
+}
+
+.simakEmployeePage__listActions {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.simakEmployeePage__listSubtitle {
+  margin-top: 4px;
+
+  color: var(--simak-text-soft);
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+/* ====================================== */
+/* TOOLBAR */
+/* ====================================== */
+
+.simakEmployeePage__toolbar {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 14px;
+
+  margin-bottom: 18px;
+  padding: 18px;
+
+  border: 1px solid rgba(255, 255, 255, 0.65);
+  border-radius: 20px;
+
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.62),
+    rgba(255, 255, 255, 0.48)
+  );
+
+  backdrop-filter: var(--simak-blur);
+
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.5),
+    0 10px 30px rgba(15, 23, 42, 0.04);
+}
+
+/* ====================================== */
+/* SEARCH */
+/* ====================================== */
+
+.simakEmployeePage__search {
+  flex: 1;
+  min-width: 240px;
+  height: 44px;
+
+  padding: 0 16px;
+
+  border: 1px solid var(--simak-border-soft);
+  border-radius: 14px;
+
+  outline: none;
+
+  background: rgba(255, 255, 255, 0.78);
+
+  color: var(--simak-text);
+  font-size: 13px;
+  font-weight: 500;
+
+  transition:
+    background 0.2s ease,
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.simakEmployeePage__search::placeholder {
+  color: var(--simak-text-muted);
+}
+
+.simakEmployeePage__search:hover,
+.simakEmployeePage__search:focus {
+  border-color: rgba(220, 38, 38, 0.3);
+
+  background: rgba(255, 255, 255, 0.94);
+
+  box-shadow: 0 0 0 4px rgba(220, 38, 38, 0.06);
+}
+
+/* ====================================== */
+/* TOOLBAR SELECT */
+/* ====================================== */
+
+.simakEmployeePage__toolbarSelect {
+  min-width: 190px;
+  height: 44px;
+
+  padding:
+    0
+    42px
+    0
+    14px;
+
+  border: 1px solid rgba(148, 163, 184, 0.14);
+  border-radius: 14px;
+
+  outline: none;
+
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+
+  background:
+    linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.9),
+      rgba(255, 255, 255, 0.72)
+    );
+
+  background-image:
+    linear-gradient(
+      45deg,
+      transparent 50%,
+      var(--simak-text-soft) 50%
+    ),
+    linear-gradient(
+      135deg,
+      var(--simak-text-soft) 50%,
+      transparent 50%
+    );
+
+  background-position:
+    calc(100% - 18px) 18px,
+    calc(100% - 12px) 18px;
+
+  background-size:
+    6px 6px,
+    6px 6px;
+
+  background-repeat: no-repeat;
+
+  color: var(--simak-text);
+  font-size: 13px;
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition:
+    background 0.2s ease,
+    border-color 0.2s ease,
+    box-shadow 0.2s ease,
+    transform 0.2s ease;
+}
+
+.simakEmployeePage__toolbarSelect:hover {
+  border-color: rgba(220, 38, 38, 0.24);
+
+  background-color: rgba(255, 255, 255, 0.96);
+}
+
+.simakEmployeePage__toolbarSelect:focus {
+  border-color: rgba(220, 38, 38, 0.34);
+
+  box-shadow: 0 0 0 4px rgba(220, 38, 38, 0.06);
+}
+
+.simakEmployeePage__toolbarSelect option {
+  color: var(--simak-text);
+  background: #ffffff;
+}
+
+/* ====================================== */
+/* INFO BAR */
+/* ====================================== */
+
+.simakEmployeePage__infoBar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 16px;
+
+  margin-bottom: 16px;
+}
+
+.simakEmployeePage__recordInfo {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+
+  color: var(--simak-text-soft);
+  font-size: 13px;
+}
+
+.simakEmployeePage__recordInfo strong {
+  color: var(--simak-text);
+  font-weight: 700;
+}
+
+/* ====================================== */
+/* RECORD SELECTOR */
+/* ====================================== */
+
+.simakEmployeePage__recordSelector {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  padding: 8px 12px;
+
+  border: 1px solid rgba(148, 163, 184, 0.14);
+  border-radius: 14px;
+
+  background: rgba(255, 255, 255, 0.7);
+
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.55);
+}
+
+.simakEmployeePage__recordSelector span {
+  color: var(--simak-text-soft);
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.simakEmployeePage__recordSelector select {
+  min-width: 72px;
+  height: 34px;
+
+  padding: 0 12px;
+
+  border: 1px solid rgba(148, 163, 184, 0.16);
+  border-radius: 10px;
+
+  outline: none;
+
+  background: rgba(255, 255, 255, 0.92);
+
+  color: var(--simak-text);
+  font-size: 12px;
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition:
+    background 0.2s ease,
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.simakEmployeePage__recordSelector select:hover {
+  border-color: rgba(220, 38, 38, 0.25);
+}
+
+.simakEmployeePage__recordSelector select:focus {
+  border-color: rgba(220, 38, 38, 0.35);
+
+  box-shadow: 0 0 0 4px rgba(220, 38, 38, 0.06);
+}
+
+/* ====================================== */
+/* TABLE */
+/* ====================================== */
+
+.simakEmployeePage__tableWrapper {
+  flex: 1;
+  overflow-y: auto;
+}
+
+.simakEmployeePage__table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.simakEmployeePage__table th {
+  position: sticky;
+  top: 0;
+  z-index: 5;
+
+  padding: 14px 10px;
+
+  border-bottom: 1px solid rgba(148, 163, 184, 0.12);
+
+  background: rgba(255, 255, 255, 0.92);
+
+  color: var(--simak-text-soft);
+  font-size: 12px;
+  font-weight: 700;
+  text-align: left;
+}
+
+.simakEmployeePage__table td {
+  padding: 14px 10px;
+
+  border-bottom: 1px solid rgba(148, 163, 184, 0.08);
+
+  color: var(--simak-text);
+  font-size: 13px;
+  vertical-align: middle;
+}
+
+.simakEmployeePage__row {
+  cursor: pointer;
+
+  transition:
+    background 0.2s ease,
+    transform 0.2s ease;
+}
+
+.simakEmployeePage__row:hover {
+  background: rgba(220, 38, 38, 0.05);
+}
+
+.simakEmployeePage__row--active {
+  background: rgba(220, 38, 38, 0.08);
+}
+
+/* ====================================== */
+/* INLINE STATUS SWITCH */
+/* ====================================== */
+
+.simakEmployeePage__inlineStatusSwitch {
+  position: relative;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between;
+
+  width: 126px;
+  height: 40px;
+
+  padding: 0 14px;
+
+  border: none;
+  border-radius: 999px;
+
+  overflow: hidden;
+  isolation: isolate;
+
+  cursor: pointer;
+
+  background:
+    linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.9),
+      rgba(255, 255, 255, 0.72)
+    );
+
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.75),
+    inset 0 0 0 1px rgba(148, 163, 184, 0.14),
+    0 6px 18px rgba(15, 23, 42, 0.06);
+
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease,
+    background 0.2s ease;
+}
+
+.simakEmployeePage__inlineStatusSwitch:hover {
+  transform: translateY(-1px);
+
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.8),
+    inset 0 0 0 1px rgba(148, 163, 184, 0.18),
+    0 10px 24px rgba(15, 23, 42, 0.08);
+}
+
+/* LABEL */
+
+.simakEmployeePage__inlineStatusLabel {
+  position: relative;
+  z-index: 1;
+
+  width: 50%;
+
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.2px;
+
+  transition:
+    color 0.25s ease,
+    opacity 0.25s ease;
+}
+
+.simakEmployeePage__inlineStatusLabel--left {
+  text-align: left;
+}
+
+.simakEmployeePage__inlineStatusLabel--right {
+  text-align: right;
+}
+
+/* THUMB */
+
+.simakEmployeePage__inlineStatusThumb {
+  position: absolute;
+  top: 4px;
+  left: 4px;
+  z-index: 2;
+
+  width: 58px;
+  height: 32px;
+
+  border-radius: 999px;
+
+  transition:
+    transform 0.28s cubic-bezier(0.4, 0, 0.2, 1),
+    background 0.25s ease,
+    box-shadow 0.25s ease;
+
+  box-shadow:
+    0 4px 12px rgba(15, 23, 42, 0.16),
+    inset 0 1px 0 rgba(255, 255, 255, 0.4);
+}
+
+/* ACTIVE */
+
+.simakEmployeePage__inlineStatusSwitch--active
+.simakEmployeePage__inlineStatusThumb {
+  transform: translateX(60px);
+
+  box-shadow:
+    0 6px 18px rgba(34, 197, 94, 0.28),
+    inset 0 1px 0 rgba(255, 255, 255, 0.35);
+}
+
+.simakEmployeePage__inlineStatusSwitch--active
+.simakEmployeePage__inlineStatusLabel--left {
+  color: #ffffff;
+}
+
+.simakEmployeePage__inlineStatusSwitch--active
+.simakEmployeePage__inlineStatusLabel--right {
+  color: rgba(21, 128, 61, 0.72);
+}
+
+/* INACTIVE */
+
+.simakEmployeePage__inlineStatusSwitch--inactive
+.simakEmployeePage__inlineStatusThumb {
+  transform: translateX(0);
+
+  box-shadow:
+    0 6px 18px rgba(239, 68, 68, 0.24),
+    inset 0 1px 0 rgba(255, 255, 255, 0.35);
+}
+
+.simakEmployeePage__inlineStatusSwitch--inactive
+.simakEmployeePage__inlineStatusLabel--right {
+  color: #ffffff;
+}
+
+.simakEmployeePage__inlineStatusSwitch--inactive
+.simakEmployeePage__inlineStatusLabel--left {
+  color: rgba(185, 28, 28, 0.68);
+}
+
+/* ====================================== */
+/* PAGINATION */
+/* ====================================== */
+
+.simakEmployeePage__pagination {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+
+  margin-top: 18px;
+  padding-top: 18px;
+
+  border-top: 1px solid rgba(148, 163, 184, 0.12);
+}
+
+.simakEmployeePage__paginationInfo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  min-width: 180px;
+  height: 42px;
+  padding: 0 18px;
+
+  border: 1px solid rgba(148, 163, 184, 0.12);
+  border-radius: 14px;
+
+  background: rgba(255, 255, 255, 0.72);
+
+  color: var(--simak-text);
+  font-size: 13px;
+  font-weight: 600;
+
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.55);
+}
+
+.simakEmployeePage__paginationButton {
+  height: 42px;
+  padding: 0 18px;
+
+  border: 1px solid rgba(148, 163, 184, 0.12);
+  border-radius: 14px;
+
+  background: rgba(255, 255, 255, 0.72);
+
+  color: var(--simak-text);
+  font-size: 13px;
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition:
+    background 0.2s ease,
+    border-color 0.2s ease,
+    box-shadow 0.2s ease,
+    color 0.2s ease,
+    transform 0.2s ease;
+}
+
+.simakEmployeePage__paginationButton:hover:not(:disabled) {
+  border-color: rgba(220, 38, 38, 0.2);
+
+  background: rgba(255, 255, 255, 0.95);
+
+  color: var(--simak-primary);
+
+  transform: translateY(-1px);
+
+  box-shadow: 0 10px 24px rgba(15, 23, 42, 0.05);
+}
+
+.simakEmployeePage__paginationButton:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+/* ====================================== */
+/* EMPTY */
+/* ====================================== */
+
+.simakEmployeePage__empty {
+  padding: 40px 20px !important;
+
+  color: var(--simak-text-soft);
+  font-size: 13px;
+  text-align: center;
+}
+
+/* ====================================== */
+/* SCROLLBAR */
+/* ====================================== */
+
+.simakEmployeePage__tableWrapper::-webkit-scrollbar {
+  width: 8px;
+}
+
+.simakEmployeePage__tableWrapper::-webkit-scrollbar-thumb {
+  border-radius: 999px;
+  background: rgba(148, 163, 184, 0.4);
+}
+
+/* ====================================== */
+/* RESPONSIVE */
+/* ====================================== */
+
+@media (max-width: 900px) {
+
+  .simakEmployeePage__toolbar {
+    align-items: stretch;
+  }
+
+  .simakEmployeePage__search,
+  .simakEmployeePage__toolbarSelect {
+    width: 100%;
+    min-width: unset;
+  }
+
+  .simakEmployeePage__infoBar {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .simakEmployeePage__recordSelector {
+    justify-content: space-between;
+  }
+
+  .simakEmployeePage__pagination {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .simakEmployeePage__paginationInfo,
+  .simakEmployeePage__paginationButton {
+    width: 100%;
+  }
+}

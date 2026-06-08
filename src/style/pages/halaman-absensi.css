@@ -1,0 +1,521 @@
+/* =======================================================
+   SIMAK ATTENDANCE PAGE
+======================================================= */
+
+.simakAttendancePage__wrapper {
+  min-height: 100vh;
+}
+
+.simakAttendancePage__main {
+  width: 100%;
+}
+
+.simakAttendancePage__content {
+  padding: 0 40px 40px;
+}
+
+/* =======================================================
+   HERO
+======================================================= */
+
+.simakAttendancePage__hero {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 24px;
+
+  margin-bottom: 24px;
+
+  padding: 30px;
+
+  border-radius: 28px;
+
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.65),
+    rgba(255, 255, 255, 0.4)
+  );
+
+  backdrop-filter: var(--simak-blur);
+
+  border: 1px solid var(--simak-border);
+
+  box-shadow: var(--simak-shadow);
+}
+
+.simakAttendancePage__eyebrow {
+  display: inline-flex;
+  align-items: center;
+
+  height: 32px;
+
+  padding: 0 14px;
+
+  border-radius: 999px;
+
+  background: rgba(220, 38, 38, 0.08);
+
+  color: var(--simak-primary);
+
+  font-size: 12px;
+  font-weight: 700;
+
+  margin-bottom: 16px;
+}
+
+.simakAttendancePage__title {
+  margin: 0;
+
+  font-size: 34px;
+  font-weight: 800;
+  line-height: 1.1;
+
+  color: var(--simak-text);
+
+  letter-spacing: -0.6px;
+}
+
+.simakAttendancePage__subtitle {
+  margin-top: 12px;
+
+  max-width: 520px;
+
+  color: var(--simak-text-soft);
+
+  font-size: 14px;
+  line-height: 1.7;
+}
+
+/* =======================================================
+   INSIGHT
+======================================================= */
+
+.simakAttendancePage__insight {
+  display: flex;
+  gap: 16px;
+}
+
+.simakAttendancePage__insightCard {
+  min-width: 180px;
+
+  padding: 18px;
+
+  border-radius: 20px;
+
+  background: rgba(255, 255, 255, 0.65);
+
+  border: 1px solid rgba(255, 255, 255, 0.7);
+
+  backdrop-filter: blur(14px);
+}
+
+.simakAttendancePage__insightCard span {
+  display: block;
+
+  font-size: 12px;
+  font-weight: 600;
+
+  color: var(--simak-text-soft);
+
+  margin-bottom: 8px;
+}
+
+.simakAttendancePage__insightCard strong {
+  font-size: 30px;
+  font-weight: 800;
+
+  color: var(--simak-text);
+}
+
+/* =======================================================
+   PANEL
+======================================================= */
+
+.simakAttendancePage__panel {
+  padding: 24px;
+
+  border-radius: 28px;
+
+  background: var(--simak-surface);
+
+  backdrop-filter: var(--simak-blur);
+
+  border: 1px solid var(--simak-border);
+
+  box-shadow: var(--simak-shadow);
+}
+
+/* =======================================================
+   TOOLBAR
+======================================================= */
+
+.simakAttendancePage__toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 24px;
+
+  margin-bottom: 24px;
+}
+
+.simakAttendancePage__toolbarLeft {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+
+  flex: 1;
+}
+
+.simakAttendancePage__toolbarRight {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 8px;
+}
+
+.simakAttendancePage__toolbarTop {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.simakAttendancePage__toolbarBottom {
+  font-size: 12px;
+  color: var(--simak-text-soft);
+}
+
+.simakAttendancePage__search {
+  flex: 1;
+
+  min-width: 280px;
+
+  height: 44px;
+
+  padding: 0 16px;
+
+  border-radius: 14px;
+
+  border: 1px solid rgba(148,163,184,.15);
+
+  background: white;
+}
+
+.simakAttendancePage__filter {
+  width: 260px;
+  height: 44px;
+
+  padding: 0 14px;
+
+  border-radius: 14px;
+
+  border: 1px solid rgba(148,163,184,.15);
+
+  background: white;
+}
+
+.simakAttendancePage__monthSelector {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.simakAttendancePage__monthInfo {
+  min-width: 170px;
+  height: 44px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 0 16px;
+
+  border-radius: 14px;
+
+  background: white;
+
+  border: 1px solid rgba(148,163,184,.15);
+
+  font-size: 13px;
+  font-weight: 700;
+}
+
+/* =======================================================
+   PAGINATION
+======================================================= */
+
+.simakAttendancePage__pagination {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.simakAttendancePage__pageInfo {
+  min-width: 80px;
+
+  text-align: center;
+
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.simakAttendancePage__pageBtn {
+  width: 40px;
+  height: 40px;
+
+  border: none;
+
+  border-radius: 12px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  cursor: pointer;
+
+  background: white;
+
+  border: 1px solid rgba(148,163,184,.15);
+
+  color: var(--simak-text-soft);
+
+  transition: all .2s ease;
+}
+
+.simakAttendancePage__pageBtn:hover {
+  color: var(--simak-primary);
+
+  border-color: rgba(220,38,38,.2);
+
+  background: rgba(220,38,38,.04);
+}
+
+.simakAttendancePage__pageBtn:disabled {
+  opacity: .4;
+  cursor: not-allowed;
+}
+
+.simakAttendancePage__result {
+  font-size: 12px;
+  font-weight: 500;
+
+  color: var(--simak-text-soft);
+}
+
+.simakAttendancePage__result strong {
+  color: var(--simak-primary);
+}
+
+/* =======================================================
+   TABLE
+======================================================= */
+
+.simakAttendancePage__tableWrapper {
+  overflow-x: auto;
+
+  border-radius: 20px;
+
+  border: 1px solid rgba(148, 163, 184, 0.12);
+}
+
+.simakAttendancePage__table {
+  width: 100%;
+
+  border-collapse: separate;
+  border-spacing: 0;
+
+  background: white;
+}
+
+/* =======================================================
+   TABLE HEADER
+======================================================= */
+
+.simakAttendancePage__table thead tr:first-child th {
+  background: rgba(248, 250, 252, 1);
+
+  font-size: 12px;
+  font-weight: 800;
+
+  color: var(--simak-text);
+
+  border-bottom: 1px solid rgba(148, 163, 184, 0.12);
+}
+
+.simakAttendancePage__table thead tr:last-child th {
+  background: rgba(252, 252, 252, 1);
+
+  font-size: 11px;
+  font-weight: 700;
+
+  color: var(--simak-text-soft);
+}
+
+.simakAttendancePage__table th {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+
+  padding: 14px 12px;
+
+  text-align: center;
+
+  white-space: nowrap;
+
+  border-right: 1px solid rgba(148, 163, 184, 0.08);
+}
+
+.simakAttendancePage__table th:first-child {
+  border-left: none;
+}
+
+/* =======================================================
+   TABLE BODY
+======================================================= */
+
+.simakAttendancePage__table td {
+  padding: 14px 12px;
+
+  font-size: 13px;
+
+  color: var(--simak-text);
+
+  text-align: center;
+
+  border-bottom: 1px solid rgba(148, 163, 184, 0.08);
+
+  white-space: nowrap;
+}
+
+.simakAttendancePage__table tbody tr:nth-child(even) {
+  background: rgba(248, 250, 252, 0.55);
+}
+
+.simakAttendancePage__table tbody tr:hover {
+  background: rgba(220, 38, 38, 0.04);
+}
+
+.simakAttendancePage__table td:nth-child(2) {
+  text-align: left;
+}
+
+.simakAttendancePage__table td:nth-child(3) {
+  text-align: left;
+}
+
+/* =======================================================
+   EMPLOYEE
+======================================================= */
+
+.simakAttendancePage__employeeName {
+  font-weight: 700;
+
+  color: var(--simak-text);
+}
+
+/* =======================================================
+   ACTION BUTTON
+======================================================= */
+
+.simakAttendancePage__actions {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 6px;
+}
+
+.simakAttendancePage__actionBtn {
+  width: 34px;
+  height: 34px;
+
+  border: none;
+
+  border-radius: 10px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  cursor: pointer;
+
+  background: rgba(255, 255, 255, 0.9);
+
+  color: var(--simak-text-soft);
+
+  border: 1px solid rgba(148, 163, 184, 0.12);
+
+  transition: all 0.2s ease;
+}
+
+.simakAttendancePage__actionBtn:hover {
+  background: rgba(220, 38, 38, 0.08);
+
+  color: var(--simak-primary);
+}
+
+.simakAttendancePage__actionBtn--danger:hover {
+  background: rgba(220, 38, 38, 0.12);
+
+  color: #dc2626;
+}
+
+/* =======================================================
+   RESPONSIVE
+======================================================= */
+
+@media (max-width: 1200px) {
+
+  .simakAttendancePage__toolbar {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .simakAttendancePage__toolbarLeft {
+    width: 100%;
+  }
+
+  .simakAttendancePage__toolbarRight {
+    width: 100%;
+
+    align-items: flex-start;
+  }
+
+}
+
+@media (max-width: 900px) {
+  .simakAttendancePage__hero {
+    flex-direction: column;
+  }
+
+  .simakAttendancePage__insight {
+    width: 100%;
+  }
+
+  .simakAttendancePage__insightCard {
+    flex: 1;
+  }
+
+  .simakAttendanceModal__grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .simakAttendanceModal__field--full {
+    grid-column: span 2;
+  }
+}
+
+@media (max-width:768px) {
+
+  .simakAttendancePage__toolbarLeft {
+    flex-direction: column;
+  }
+
+  .simakAttendancePage__search,
+  .simakAttendancePage__filter {
+    width: 100%;
+  }
+
+  .simakAttendancePage__toolbarTop {
+    flex-wrap: wrap;
+  }
+
+}

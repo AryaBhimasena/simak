@@ -1,0 +1,337 @@
+/* style/pages/absensi/rekap-absen.css */
+
+.simakRekapAbsen {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.simakRekapAbsen__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.simakRekapAbsen__eyebrow {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: #8b5cf6;
+  margin-bottom: 10px;
+}
+
+.simakRekapAbsen__title {
+  font-size: 30px;
+  font-weight: 800;
+  color: #ffffff;
+  margin-bottom: 10px;
+}
+
+.simakRekapAbsen__subtitle {
+  font-size: 14px;
+  line-height: 1.7;
+  color: #94a3b8;
+  max-width: 700px;
+}
+
+.simakRekapAbsen__summaryGrid {
+  display: grid;
+  grid-template-columns: repeat(
+    auto-fit,
+    minmax(220px, 1fr)
+  );
+  gap: 18px;
+}
+
+.simakRekapAbsen__summaryCard {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 22px;
+  border-radius: 24px;
+  background:
+    linear-gradient(
+      135deg,
+      rgba(15, 23, 42, 0.95),
+      rgba(30, 41, 59, 0.92)
+    );
+  border: 1px solid
+    rgba(148, 163, 184, 0.12);
+}
+
+.simakRekapAbsen__summaryIcon {
+  width: 52px;
+  height: 52px;
+  border-radius: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background:
+    rgba(139, 92, 246, 0.15);
+  color: #c4b5fd;
+}
+
+.simakRekapAbsen__summaryLabel {
+  font-size: 13px;
+  color: #94a3b8;
+  margin-bottom: 6px;
+}
+
+.simakRekapAbsen__summaryValue {
+  font-size: 24px;
+  font-weight: 800;
+  color: #ffffff;
+}
+
+.simakRekapAbsen__filterBar {
+  display: flex;
+  justify-content: space-between;
+  gap: 18px;
+  flex-wrap: wrap;
+}
+
+.simakRekapAbsen__search {
+  flex: 1;
+  min-width: 260px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 0 18px;
+  height: 54px;
+  border-radius: 18px;
+  background:
+    rgba(15, 23, 42, 0.88);
+  border: 1px solid
+    rgba(148, 163, 184, 0.12);
+  color: #94a3b8;
+}
+
+.simakRekapAbsen__search input {
+  flex: 1;
+  border: none;
+  outline: none;
+  background: transparent;
+  color: #ffffff;
+  font-size: 14px;
+}
+
+.simakRekapAbsen__search input::placeholder {
+  color: #64748b;
+}
+
+.simakRekapAbsen__periodControl {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.simakRekapAbsen__periodBtn {
+  width: 46px;
+  height: 46px;
+  border: none;
+  border-radius: 14px;
+  cursor: pointer;
+  background:
+    rgba(15, 23, 42, 0.9);
+  border: 1px solid
+    rgba(148, 163, 184, 0.12);
+  color: #e2e8f0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: 0.2s ease;
+}
+
+.simakRekapAbsen__periodBtn:hover {
+  transform: translateY(-2px);
+  background:
+    rgba(30, 41, 59, 0.95);
+}
+
+.simakRekapAbsen__periodLabel {
+  height: 46px;
+  padding: 0 18px;
+  border-radius: 14px;
+  background:
+    rgba(15, 23, 42, 0.9);
+  border: 1px solid
+    rgba(148, 163, 184, 0.12);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: #ffffff;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.simakRekapAbsen__panel {
+  border-radius: 28px;
+  overflow: hidden;
+  background:
+    linear-gradient(
+      180deg,
+      rgba(15, 23, 42, 0.96),
+      rgba(15, 23, 42, 0.88)
+    );
+  border: 1px solid
+    rgba(148, 163, 184, 0.1);
+}
+
+.simakRekapAbsen__tableWrapper {
+  width: 100%;
+  overflow-x: auto;
+}
+
+.simakRekapAbsen__table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 1100px;
+}
+
+.simakRekapAbsen__table thead {
+  background:
+    rgba(30, 41, 59, 0.7);
+}
+
+.simakRekapAbsen__table th {
+  padding: 18px;
+  text-align: left;
+  font-size: 13px;
+  font-weight: 700;
+  color: #cbd5e1;
+  white-space: nowrap;
+}
+
+.simakRekapAbsen__table td {
+  padding: 18px;
+  border-top: 1px solid
+    rgba(148, 163, 184, 0.08);
+  color: #f8fafc;
+  font-size: 14px;
+  vertical-align: middle;
+}
+
+.simakRekapAbsen__table tbody tr {
+  transition: 0.2s ease;
+}
+
+.simakRekapAbsen__table tbody tr:hover {
+  background:
+    rgba(30, 41, 59, 0.35);
+}
+
+.simakRekapAbsen__employee {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.simakRekapAbsen__employeeAvatar {
+  width: 44px;
+  height: 44px;
+  border-radius: 14px;
+  background:
+    linear-gradient(
+      135deg,
+      #8b5cf6,
+      #6366f1
+    );
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #ffffff;
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.simakRekapAbsen__employeeName {
+  font-size: 14px;
+  font-weight: 700;
+  color: #ffffff;
+  margin-bottom: 4px;
+}
+
+.simakRekapAbsen__employeeSub {
+  font-size: 12px;
+  color: #94a3b8;
+}
+
+.simakRekapAbsen__location {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #cbd5e1;
+}
+
+.simakRekapAbsen__badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 14px;
+  border-radius: 999px;
+  background:
+    rgba(239, 68, 68, 0.15);
+  color: #fca5a5;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.simakRekapAbsen__actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.simakRekapAbsen__actionBtn {
+  width: 40px;
+  height: 40px;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  background:
+    rgba(51, 65, 85, 0.7);
+  color: #f8fafc;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: 0.2s ease;
+}
+
+.simakRekapAbsen__actionBtn:hover {
+  transform: translateY(-2px);
+  background:
+    rgba(71, 85, 105, 0.9);
+}
+
+.simakRekapAbsen__actionBtn--export {
+  background:
+    rgba(16, 185, 129, 0.16);
+  color: #6ee7b7;
+}
+
+.simakRekapAbsen__empty {
+  text-align: center;
+  padding: 40px !important;
+  color: #94a3b8 !important;
+}
+
+@media (max-width: 768px) {
+  .simakRekapAbsen__title {
+    font-size: 24px;
+  }
+
+  .simakRekapAbsen__filterBar {
+    flex-direction: column;
+  }
+
+  .simakRekapAbsen__periodControl {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .simakRekapAbsen__periodLabel {
+    flex: 1;
+    justify-content: center;
+  }
+}

@@ -1,26 +1,146 @@
-@import "tailwindcss";
+/* ====================================== */
+/* SIMAK GLOBAL SYSTEM */
+/* ====================================== */
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+
+  /* ================= COLORS ================= */
+
+  --simak-bg:
+    #eef2f7;
+
+  --simak-bg-secondary:
+    #e7edf5;
+
+  --simak-surface:
+    rgba(255,255,255,0.58);
+
+  --simak-surface-strong:
+    rgba(255,255,255,0.72);
+
+  --simak-border:
+    rgba(255,255,255,0.7);
+
+  --simak-border-soft:
+    rgba(148,163,184,0.18);
+
+  /* ================= TEXT ================= */
+
+  --simak-text:
+    #1e293b;
+
+  --simak-text-soft:
+    #64748b;
+
+  --simak-text-muted:
+    #94a3b8;
+
+  /* ================= BRAND ================= */
+
+  --simak-primary:
+    #dc2626;
+
+  --simak-primary-hover:
+    #b91c1c;
+
+  /* ================= STATUS ================= */
+
+  --simak-success:
+    #16a34a;
+
+  --simak-danger:
+    #dc2626;
+
+  --simak-warning:
+    #f59e0b;
+
+  /* ================= EFFECT ================= */
+
+  --simak-shadow:
+    0 10px 40px rgba(15,23,42,0.08);
+
+  --simak-shadow-hover:
+    0 20px 50px rgba(15,23,42,0.12);
+
+  --simak-blur:
+    blur(18px);
+
+  --simak-radius:
+    24px;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+/* ====================================== */
+/* RESET */
+/* ====================================== */
+
+* {
+  box-sizing: border-box;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html,
+body {
+  padding: 0;
+  margin: 0;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family:
+    var(--font-geist-sans),
+    sans-serif;
+
+  background:
+    radial-gradient(
+      circle at top right,
+      rgba(220,38,38,0.08),
+      transparent 20%
+    ),
+    linear-gradient(
+      135deg,
+      var(--simak-bg),
+      var(--simak-bg-secondary)
+    );
+
+  color: var(--simak-text);
+
+  min-height: 100vh;
+
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+/* ====================================== */
+/* SCROLLBAR */
+/* ====================================== */
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(148,163,184,0.4);
+  border-radius: 999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(100,116,139,0.6);
+}
+
+/* ====================================== */
+/* BASE */
+/* ====================================== */
+
+button,
+input,
+textarea,
+select {
+  font: inherit;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
 }

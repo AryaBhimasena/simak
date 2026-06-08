@@ -1,0 +1,963 @@
+/* ========================================== */
+/* DETAIL PANEL */
+/* ========================================== */
+
+.simakClientPage__detailPanel {
+  display: flex;
+  flex-direction: column;
+
+  min-width: 0;
+
+  height: calc(100vh - 140px);
+
+  border:
+    1px solid rgba(220, 38, 38, 0.08);
+
+  border-radius: 18px;
+
+  background:
+    rgba(255, 255, 255, 0.52);
+
+  backdrop-filter:
+    blur(14px);
+
+  overflow: hidden;
+}
+
+/* ========================================== */
+/* HEADER */
+/* ========================================== */
+
+.simakClientPage__detailHeader {
+  display: flex;
+
+  align-items: flex-start;
+  justify-content: space-between;
+
+  gap: 20px;
+
+  flex-shrink: 0;
+
+  padding:
+    22px
+    22px
+    18px;
+
+  border-bottom:
+    1px solid rgba(220, 38, 38, 0.06);
+}
+
+.simakClientPage__headerLeft {
+  flex: 1;
+
+  min-width: 0;
+}
+
+.simakClientPage__headerRight {
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-end;
+
+  gap: 10px;
+
+  flex-shrink: 0;
+
+  max-width: 52%;
+  overflow-x: auto;
+
+  scrollbar-width: none;
+}
+
+.simakClientPage__headerRight::-webkit-scrollbar {
+  display: none;
+}
+
+/* ========================================== */
+/* TITLE */
+/* ========================================== */
+
+.simakClientPage__title {
+  font-size: 22px;
+  font-weight: 700;
+
+  line-height: 1.35;
+
+  color:
+    var(--simak-text);
+}
+
+.simakClientPage__subtitle {
+  margin-top: 5px;
+
+  font-size: 12px;
+  font-weight: 500;
+
+  line-height: 1.5;
+
+  color:
+    var(--simak-text-soft);
+}
+
+/* ====================================== */
+/* CONTRACT TABS */
+/* ====================================== */
+
+.simakClientPage__contractTabs {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  flex-wrap: wrap;
+}
+
+/* ====================================== */
+/* EMPTY TAB */
+/* ====================================== */
+
+.simakClientPage__emptyTab {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  min-height: 48px;
+
+  padding:
+    0
+    18px;
+
+  border-radius: 16px;
+
+  background:
+    rgba(255,255,255,0.42);
+
+  border:
+    1px dashed rgba(148,163,184,0.18);
+
+  color:
+    var(--simak-text-soft);
+
+  font-size: 12px;
+  font-weight: 600;
+
+  letter-spacing: 0.2px;
+}
+
+/* ====================================== */
+/* CONTRACT TAB */
+/* ====================================== */
+
+.simakClientPage__contractTab {
+  height: 42px;
+
+  padding:
+    0
+    18px;
+
+  border-radius: 14px;
+
+  border:
+    1px solid rgba(255,255,255,0.55);
+
+  background:
+    rgba(255,255,255,0.5);
+
+  backdrop-filter:
+    blur(12px);
+
+  color:
+    var(--simak-text-soft);
+
+  font-size: 12px;
+  font-weight: 700;
+
+  letter-spacing: 0.2px;
+
+  white-space: nowrap;
+
+  cursor: pointer;
+
+  transition:
+    background 0.2s ease,
+    border-color 0.2s ease,
+    color 0.2s ease,
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+/* ====================================== */
+/* CONTRACT TAB HOVER */
+/* ====================================== */
+
+.simakClientPage__contractTab:hover {
+  transform: translateY(-2px);
+
+  background:
+    rgba(255,255,255,0.78);
+
+  border-color:
+    rgba(220,38,38,0.12);
+
+  color:
+    var(--simak-primary);
+
+  box-shadow:
+    0 10px 22px rgba(15,23,42,0.06);
+}
+
+/* ====================================== */
+/* CONTRACT TAB ACTIVE */
+/* ====================================== */
+
+.simakClientPage__contractTab--active {
+  background:
+    rgba(220,38,38,1);
+
+  border-color:
+    rgba(220,38,38,0.14);
+
+  color:
+    #ffffff;
+
+  box-shadow:
+    0 10px 24px rgba(220,38,38,0.10);
+}
+
+/* ====================================== */
+/* RESPONSIVE */
+/* ====================================== */
+
+@media (max-width: 768px) {
+
+  .simakClientPage__contractTabs {
+    width: 100%;
+
+    overflow-x: auto;
+
+    flex-wrap: nowrap;
+
+    padding-bottom: 2px;
+
+    scrollbar-width: none;
+  }
+
+  .simakClientPage__contractTabs::-webkit-scrollbar {
+    display: none;
+  }
+
+  .simakClientPage__contractTab {
+    flex-shrink: 0;
+
+    height: 40px;
+
+    padding:
+      0
+      16px;
+
+    font-size: 11px;
+  }
+
+  .simakClientPage__emptyTab {
+    width: 100%;
+  }
+}
+
+/* ========================================== */
+/* SECTION NAVIGATION */
+/* ========================================== */
+
+.simakClientPage__sectionNav {
+  display: flex;
+
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 14px;
+
+  flex-shrink: 0;
+
+  padding:
+    12px
+    22px;
+
+  border-bottom:
+    1px solid rgba(220, 38, 38, 0.06);
+
+  background:
+    rgba(255, 255, 255, 0.42);
+
+}
+
+.simakClientPage__sectionNavList {
+  display: flex;
+
+  align-items: center;
+
+  gap: 8px;
+
+  overflow-x: auto;
+
+  scrollbar-width: none;
+}
+
+.simakClientPage__sectionNavList::-webkit-scrollbar {
+  display: none;
+}
+
+/* ========================================== */
+/* SECTION BUTTON */
+/* ========================================== */
+
+.simakClientPage__sectionButton {
+  flex-shrink: 0;
+
+  height: 36px;
+
+  padding:
+    0 14px;
+
+  border:
+    1px solid rgba(148, 163, 184, 0.14);
+
+  border-radius: 10px;
+
+  background:
+    rgba(255, 255, 255, 0.72);
+
+  cursor: pointer;
+
+  white-space: nowrap;
+
+  font-size: 12px;
+  font-weight: 600;
+
+  color:
+    var(--simak-text-soft);
+
+  transition:
+    background 0.15s ease,
+    border-color 0.15s ease,
+    color 0.15s ease,
+    transform 0.15s ease;
+}
+
+.simakClientPage__sectionButton:hover {
+  transform: translateY(-1px);
+
+  background:
+    rgba(255, 255, 255, 0.92);
+
+  border-color:
+    rgba(220, 38, 38, 0.12);
+
+  color:
+    var(--simak-text);
+}
+
+.simakClientPage__sectionButton--active {
+  border-color:
+    rgba(220, 38, 38, 0.12);
+
+  background:
+    rgba(220, 38, 38, 0.06);
+
+  color:
+    var(--simak-primary);
+}
+
+/* ========================================== */
+/* BUTTON PRIMARY */
+/* ========================================== */
+
+.simakClientPage__btnPrimary {
+  flex-shrink: 0;
+
+  height: 38px;
+
+  padding:
+    0 16px;
+
+  border: none;
+  border-radius: 10px;
+
+  background:
+    var(--simak-primary);
+
+  cursor: pointer;
+
+  font-size: 12px;
+  font-weight: 600;
+
+  color: white;
+
+  transition:
+    transform 0.15s ease,
+    opacity 0.15s ease;
+}
+
+.simakClientPage__btnPrimary:hover {
+  transform: translateY(-1px);
+
+  opacity: 0.92;
+}
+
+/* ========================================== */
+/* BODY */
+/* ========================================== */
+
+.simakClientPage__body {
+  flex: 1;
+
+  overflow-y: auto;
+  overflow-x: hidden;
+
+  padding:
+    20px;
+
+  scroll-behavior: smooth;
+
+  scrollbar-width: thin;
+
+  scrollbar-color:
+    rgba(220, 38, 38, 0.32)
+    transparent;
+}
+
+/* ========================================== */
+/* CUSTOM SCROLLBAR */
+/* ========================================== */
+
+.simakClientPage__body::-webkit-scrollbar {
+  width: 8px;
+}
+
+.simakClientPage__body::-webkit-scrollbar-track {
+  border-radius: 999px;
+
+  background:
+    rgba(255, 255, 255, 0.18);
+}
+
+.simakClientPage__body::-webkit-scrollbar-thumb {
+  border:
+    2px solid transparent;
+
+  border-radius: 999px;
+
+  background:
+    linear-gradient(
+      180deg,
+      rgba(220, 38, 38, 0.38),
+      rgba(185, 28, 28, 0.52)
+    );
+
+  background-clip: padding-box;
+}
+
+/* ========================================== */
+/* SECTION CONTAINER */
+/* ========================================== */
+
+.simakClientPage__sectionContainer {
+  display: flex;
+  flex-direction: column;
+
+  gap: 18px;
+}
+
+/* ========================================== */
+/* SECTION CARD */
+/* ========================================== */
+
+.simakClientPage__sectionCard {
+  padding:
+    18px;
+
+  border:
+    1px solid rgba(220, 38, 38, 0.06);
+
+  border-radius: 18px;
+
+  background:
+    rgba(255, 255, 255, 0.44);
+
+  backdrop-filter:
+    blur(12px);
+}
+
+/* ========================================== */
+/* SECTION TITLE */
+/* ========================================== */
+
+.simakClientPage__sectionTitle {
+  margin-bottom: 18px;
+
+  font-size: 15px;
+  font-weight: 700;
+
+  color:
+    var(--simak-text);
+}
+
+/* ========================================== */
+/* GRID */
+/* ========================================== */
+
+.simakClientPage__grid {
+  display: grid;
+
+  grid-template-columns:
+    repeat(3, minmax(0, 1fr));
+
+  gap: 16px;
+}
+
+/* ========================================== */
+/* FIELD */
+/* ========================================== */
+
+.simakClientPage__field {
+  display: flex;
+  flex-direction: column;
+
+  gap: 7px;
+
+  min-width: 0;
+}
+
+.simakClientPage__field--full {
+  grid-column: 1 / -1;
+}
+
+.simakClientPage__field--span2,
+.simakClientPage__field--double {
+  grid-column: span 2;
+}
+
+.simakClientPage__field label {
+  font-size: 11px;
+  font-weight: 700;
+
+  letter-spacing: 0.2px;
+
+  color:
+    var(--simak-text-soft);
+}
+
+.simakClientPage__field input,
+.simakClientPage__field textarea {
+  width: 100%;
+
+  min-height: 42px;
+
+  padding:
+    10px
+    12px;
+
+  border:
+    1px solid rgba(148, 163, 184, 0.14);
+
+  border-radius: 12px;
+
+  outline: none;
+
+  font-size: 13px;
+  font-weight: 500;
+
+  color:
+    var(--simak-text);
+
+  background:
+    rgba(255, 255, 255, 0.78);
+}
+
+.simakClientPage__field input[readonly],
+.simakClientPage__field textarea[readonly] {
+  cursor: default;
+}
+
+.simakClientPage__field textarea {
+  resize: vertical;
+
+  min-height: 96px;
+
+  line-height: 1.55;
+}
+
+/* ========================================== */
+/* CONTRACT LIST */
+/* ========================================== */
+
+.simakClientPage__contractList {
+  display: flex;
+  flex-direction: column;
+
+  gap: 16px;
+}
+
+/* ========================================== */
+/* EMPTY CONTRACT */
+/* ========================================== */
+
+.simakClientPage__emptyContract {
+  padding:
+    24px;
+
+  border-radius: 14px;
+
+  text-align: center;
+
+  font-size: 13px;
+  font-weight: 500;
+
+  color:
+    var(--simak-text-soft);
+
+  background:
+    rgba(255, 255, 255, 0.42);
+
+  border:
+    1px dashed rgba(148, 163, 184, 0.18);
+}
+
+/* ========================================== */
+/* CONTRACT CARD */
+/* ========================================== */
+
+.simakClientPage__contractCard {
+  display: flex;
+  flex-direction: column;
+
+  gap: 18px;
+
+  padding:
+    18px;
+
+  border-radius: 16px;
+
+  border:
+    1px solid rgba(220, 38, 38, 0.06);
+
+  background:
+    rgba(255, 255, 255, 0.36);
+}
+
+/* ========================================== */
+/* CONTRACT HEADER */
+/* ========================================== */
+
+.simakClientPage__contractHeader {
+  display: flex;
+
+  align-items: flex-start;
+  justify-content: space-between;
+
+  gap: 14px;
+}
+
+.simakClientPage__contractTitle {
+  font-size: 15px;
+  font-weight: 700;
+
+  color:
+    var(--simak-text);
+}
+
+.simakClientPage__contractNumber {
+  margin-top: 4px;
+
+  font-size: 12px;
+  font-weight: 500;
+
+  color:
+    var(--simak-text-soft);
+}
+
+/* ========================================== */
+/* STATUS BADGE */
+/* ========================================== */
+
+.simakClientPage__statusBadge {
+  flex-shrink: 0;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  min-height: 28px;
+
+  padding:
+    0 10px;
+
+  border-radius: 999px;
+
+  font-size: 10px;
+  font-weight: 700;
+
+  border:
+    1px solid transparent;
+
+  letter-spacing: 0.2px;
+}
+
+.simakClientPage__statusBadge--active {
+  background:
+    rgba(22, 163, 74, 0.08);
+
+  border-color:
+    rgba(22, 163, 74, 0.10);
+
+  color:
+    var(--simak-success);
+}
+
+.simakClientPage__statusBadge--expired {
+  background:
+    rgba(220, 38, 38, 0.08);
+
+  border-color:
+    rgba(220, 38, 38, 0.10);
+
+  color:
+    var(--simak-danger);
+}
+
+/* ========================================== */
+/* DOCUMENT GRID */
+/* ========================================== */
+
+.simakClientPage__documentGrid {
+  display: grid;
+
+  grid-template-columns:
+    repeat(
+      auto-fit,
+      minmax(260px, 1fr)
+    );
+
+  gap: 14px;
+}
+
+/* ========================================== */
+/* DOCUMENT CARD */
+/* ========================================== */
+
+.simakClientPage__documentCard {
+  display: flex;
+
+  align-items: center;
+
+  gap: 14px;
+
+  padding:
+    14px;
+
+  border:
+    1px solid rgba(220, 38, 38, 0.06);
+
+  border-radius: 14px;
+
+  background:
+    rgba(255, 255, 255, 0.48);
+
+  transition:
+    transform 0.15s ease,
+    background 0.15s ease;
+}
+
+.simakClientPage__documentCard:hover {
+  transform: translateY(-1px);
+
+  background:
+    rgba(255, 255, 255, 0.72);
+}
+
+/* ========================================== */
+/* DOCUMENT ICON */
+/* ========================================== */
+
+.simakClientPage__documentIcon {
+  width: 44px;
+  height: 44px;
+
+  border-radius: 12px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  flex-shrink: 0;
+
+  background:
+    rgba(220, 38, 38, 0.06);
+
+  font-size: 12px;
+  font-weight: 700;
+
+  color:
+    var(--simak-primary);
+}
+
+/* ========================================== */
+/* DOCUMENT INFO */
+/* ========================================== */
+
+.simakClientPage__documentInfo {
+  flex: 1;
+
+  min-width: 0;
+}
+
+.simakClientPage__documentName {
+  font-size: 13px;
+  font-weight: 600;
+
+  line-height: 1.4;
+
+  color:
+    var(--simak-text);
+}
+
+.simakClientPage__documentMeta {
+  margin-top: 4px;
+
+  font-size: 11px;
+  font-weight: 500;
+
+  color:
+    var(--simak-text-soft);
+
+  word-break: break-word;
+}
+
+/* ========================================== */
+/* BUTTON DOWNLOAD */
+/* ========================================== */
+
+.simakClientPage__btnDownload {
+  flex-shrink: 0;
+
+  height: 36px;
+
+  padding:
+    0 14px;
+
+  border:
+    1px solid rgba(148, 163, 184, 0.14);
+
+  border-radius: 10px;
+
+  background:
+    rgba(255, 255, 255, 0.82);
+
+  cursor: pointer;
+
+  font-size: 12px;
+  font-weight: 600;
+
+  color:
+    var(--simak-text);
+
+  transition:
+    background 0.15s ease,
+    border-color 0.15s ease;
+}
+
+.simakClientPage__btnDownload:hover {
+  background:
+    rgba(255, 255, 255, 1);
+
+  border-color:
+    rgba(220, 38, 38, 0.12);
+}
+
+/* ========================================== */
+/* RESPONSIVE */
+/* ========================================== */
+
+@media (max-width: 1024px) {
+
+  .simakClientPage__detailHeader {
+    flex-direction: column;
+
+    align-items: stretch;
+  }
+
+  .simakClientPage__headerRight {
+    max-width: 100%;
+
+    justify-content: flex-start;
+  }
+
+  .simakClientPage__grid {
+    grid-template-columns:
+      repeat(2, minmax(0, 1fr));
+  }
+
+  .simakClientPage__field--span2,
+  .simakClientPage__field--double {
+    grid-column: 1 / -1;
+  }
+}
+
+@media (max-width: 768px) {
+
+  .simakClientPage__detailPanel {
+    height: auto;
+  }
+
+  .simakClientPage__sectionNav {
+    flex-direction: column;
+
+    align-items: stretch;
+  }
+
+  .simakClientPage__sectionNav {
+    padding:
+      12px
+      16px;
+  }
+
+  .simakClientPage__body {
+    overflow: visible;
+
+    padding:
+      16px;
+  }
+
+  .simakClientPage__grid,
+  .simakClientPage__documentGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .simakClientPage__field--span2,
+  .simakClientPage__field--double,
+  .simakClientPage__field--full {
+    grid-column: auto;
+  }
+
+  .simakClientPage__contractHeader {
+    flex-direction: column;
+
+    align-items: flex-start;
+  }
+
+  .simakClientPage__btnPrimary {
+    width: 100%;
+  }
+
+  .simakClientPage__documentCard {
+    align-items: flex-start;
+  }
+
+  .simakClientPage__headerRight {
+    overflow-x: auto;
+
+    padding-bottom: 2px;
+  }
+
+  .simakClientPage__categoryBadge {
+    min-height: 36px;
+
+    font-size: 11px;
+  }
+}
