@@ -1,0 +1,856 @@
+/* =========================================================
+   Code.gs
+
+   MAIN API GATEWAY
+   ---------------------------------------------------------
+   Tanggung jawab:
+   - Menerima GET request
+   - Menerima POST request
+   - Routing berdasarkan action
+   - Validasi session
+   - Mencatat aktivitas endpoint
+   - Mengembalikan response JSON
+
+   AUTHENTICATION:
+   - login tidak membutuhkan session
+
+   SEMUA ENDPOINT LAIN:
+   - wajib menggunakan session_id
+   - wajib melewati validateSession_()
+
+   Session management:
+   - ditangani oleh Session.gs
+
+   Authentication:
+   - ditangani oleh Auth.gs
+========================================================= */
+
+
+/* =========================================================
+   KONFIGURASI API
+========================================================= */
+
+const API_CONFIG = {
+
+  // -------------------------------------------------------
+  // ACTION YANG TIDAK MEMBUTUHKAN SESSION
+  // -------------------------------------------------------
+
+  PUBLIC_ACTIONS: [
+    "login",
+  ],
+
+};
+
+
+/* =========================================================
+   DO GET
+   ---------------------------------------------------------
+   Contoh:
+
+   GET
+   ?action=dashboard
+   &session_id=xxxxx
+
+   Semua GET selain public action wajib mempunyai
+   session_id.
+========================================================= */
+
+function doGet(e) {
+
+  return handleApiRequest_(
+    "GET",
+    e
+  );
+
+}
+
+
+/* =========================================================
+   DO POST
+   ---------------------------------------------------------
+   Contoh body:
+
+   {
+     "action": "dashboard",
+     "session_id": "xxxxx"
+   }
+
+   Semua POST selain public action wajib mempunyai
+   session_id.
+========================================================= */
+
+function doPost(e) {
+
+  return handleApiRequest_(
+    "POST",
+    e
+  );
+
+}
+
+
+/* =========================================================
+   MAIN API HANDLER
+   ---------------------------------------------------------
+   Semua request GET dan POST masuk ke sini.
+
+   Flow:
+
+   Request
+      ↓
+   Parse request
+      ↓
+   Cek action
+      ↓
+   Login?
+      ├── YES → authLogin()
+      │
+      └── NO
+           ↓
+       validateSession_()
+           ↓
+       session aktif?
+           ├── NO → SESSION_EXPIRED
+           │
+           └── YES
+                ↓
+             route endpoint
+                ↓
+             log activity
+                ↓
+             response
+========================================================= */
+
+function handleApiRequest_(method, e) {
+
+  try {
+
+    // -----------------------------------------------------
+    // PARSE REQUEST
+    // -----------------------------------------------------
+
+    const request = parseApiRequest_(
+      method,
+      e
+    );
+
+
+    const action = String(
+      request.action || ""
+    ).trim();
+
+
+    // -----------------------------------------------------
+    // ACTION WAJIB DIISI
+    // -----------------------------------------------------
+
+    if (!action) {
+
+      return jsonResponse_({
+
+        success: false,
+
+        code: "ACTION_REQUIRED",
+
+        message: "Action endpoint wajib diisi.",
+
+      });
+
+    }
+
+
+    // -----------------------------------------------------
+    // LOGIN
+    // -----------------------------------------------------
+    // Login adalah satu-satunya endpoint public karena
+    // user belum memiliki session.
+    // -----------------------------------------------------
+
+    if (
+      API_CONFIG.PUBLIC_ACTIONS
+        .indexOf(action) !== -1
+    ) {
+
+      return handlePublicAction_(
+        action,
+        request
+      );
+
+    }
+
+
+    // -----------------------------------------------------
+    // SEMUA ENDPOINT SELAIN LOGIN
+    // WAJIB VALIDATE SESSION
+    // -----------------------------------------------------
+
+    const sessionId = String(
+      request.session_id || ""
+    ).trim();
+
+
+    if (!sessionId) {
+
+      return jsonResponse_({
+
+        success: false,
+
+        authenticated: false,
+
+        session_valid: false,
+
+        session_expired: true,
+
+        code: "SESSION_EXPIRED",
+
+        message:
+          "Session tidak ditemukan. Silakan login kembali.",
+
+      });
+
+    }
+
+
+    // -----------------------------------------------------
+    // VALIDASI SESSION
+    // -----------------------------------------------------
+
+    const session = validateSession_(
+      sessionId
+    );
+
+
+    // -----------------------------------------------------
+    // SESSION TIDAK VALID / EXPIRED
+    // -----------------------------------------------------
+
+    if (!session.session_valid) {
+
+      return jsonResponse_(
+        session
+      );
+
+    }
+
+
+    // -----------------------------------------------------
+    // ROUTING ENDPOINT
+    // -----------------------------------------------------
+
+    return handleProtectedAction_(
+      action,
+      method,
+      request,
+      session
+    );
+
+
+  } catch (error) {
+
+    console.error(error);
+
+
+    return jsonResponse_({
+
+      success: false,
+
+      code: "SERVER_ERROR",
+
+      message:
+        error.message ||
+        "Terjadi kesalahan pada server.",
+
+    });
+
+  }
+
+}
+
+
+/* =========================================================
+   PUBLIC ACTION
+   ---------------------------------------------------------
+   Saat ini hanya:
+
+   login
+
+   Login TIDAK menggunakan validateSession_().
+========================================================= */
+
+function handlePublicAction_(
+  action,
+  request
+) {
+
+  switch (action) {
+
+
+    /* -----------------------------------------------------
+       LOGIN
+    ----------------------------------------------------- */
+
+    case "login": {
+
+      const username = String(
+        request.username || ""
+      ).trim();
+
+      const password = String(
+        request.password || ""
+      );
+
+
+      const result = authLogin(
+        username,
+        password
+      );
+
+
+      return jsonResponse_(
+        result
+      );
+
+    }
+
+
+    default:
+
+      return jsonResponse_({
+
+        success: false,
+
+        code: "PUBLIC_ACTION_NOT_FOUND",
+
+        message:
+          "Public action tidak ditemukan.",
+
+      });
+
+  }
+
+}
+
+
+/* =========================================================
+   PROTECTED ACTION
+   ---------------------------------------------------------
+   Semua action di sini sudah melewati:
+
+   validateSession_()
+
+   Jadi endpoint tidak perlu memanggil
+   validateSession_() lagi.
+
+   Ini mencegah validasi session dan logging dilakukan
+   berkali-kali.
+========================================================= */
+
+function handleProtectedAction_(
+  action,
+  method,
+  request,
+  session
+) {
+
+  // -------------------------------------------------------
+  // USER BERDASARKAN SESSION
+  // -------------------------------------------------------
+
+  const user = getSessionUser_(
+    session.user_id
+  );
+
+
+  if (!user) {
+
+    return jsonResponse_({
+
+      success: false,
+
+      authenticated: false,
+
+      session_valid: false,
+
+      session_expired: true,
+
+      code: "USER_NOT_FOUND",
+
+      message:
+        "User dari session tidak ditemukan.",
+
+    });
+
+  }
+
+
+  // -------------------------------------------------------
+  // LOG ACTIVITY
+  // -------------------------------------------------------
+  // Logging dilakukan sebelum endpoint diproses.
+  //
+  // Dengan demikian setiap request protected endpoint
+  // tercatat.
+  // -------------------------------------------------------
+
+  logEndpointRequest_(
+    user,
+    action,
+    getActivityDescription_(
+      action,
+      method
+    )
+  );
+
+
+  // -------------------------------------------------------
+  // ROUTING
+  // -------------------------------------------------------
+
+  switch (action) {
+
+
+    /* =====================================================
+       LOGOUT
+       ===================================================== */
+
+    case "logout":
+
+      return jsonResponse_(
+        logoutSession_(
+          session.session_id
+        )
+      );
+
+
+    /* =====================================================
+       DASHBOARD
+       ===================================================== */
+
+    case "dashboard":
+
+      return jsonResponse_(
+        apiDashboard_(
+          request,
+          session,
+          user
+        )
+      );
+
+
+    /* =====================================================
+       MASTER DATA
+       ===================================================== */
+
+    case "master_data":
+
+      return jsonResponse_(
+        apiMasterData_(
+          request,
+          session,
+          user
+        )
+      );
+
+
+    /* =====================================================
+       PAYROLL
+       ===================================================== */
+
+    case "payroll":
+
+      return jsonResponse_(
+        apiPayroll_(
+          request,
+          session,
+          user
+        )
+      );
+
+
+    /* =====================================================
+       FINANCE
+       ===================================================== */
+
+    case "finance":
+
+      return jsonResponse_(
+        apiFinance_(
+          request,
+          session,
+          user
+        )
+      );
+
+
+    /* =====================================================
+       ABSENSI
+       ===================================================== */
+
+    case "absensi":
+
+      return jsonResponse_(
+        apiAbsensi_(
+          request,
+          session,
+          user
+        )
+      );
+
+
+    /* =====================================================
+       PENGATURAN
+       ===================================================== */
+
+    case "pengaturan":
+
+      return jsonResponse_(
+        apiPengaturan_(
+          request,
+          session,
+          user
+        )
+      );
+
+
+    /* =====================================================
+       ACTION TIDAK DIKENAL
+       ===================================================== */
+
+    default:
+
+      return jsonResponse_({
+
+        success: false,
+
+        code: "ENDPOINT_NOT_FOUND",
+
+        message:
+          "Endpoint tidak ditemukan.",
+
+      });
+
+  }
+
+}
+
+
+/* =========================================================
+   PARSE API REQUEST
+   ---------------------------------------------------------
+   GET:
+     parameter berada di e.parameter
+
+   POST:
+     JSON berada di e.postData.contents
+
+   POST juga mendukung parameter biasa apabila diperlukan.
+========================================================= */
+
+function parseApiRequest_(
+  method,
+  e
+) {
+
+  e = e || {};
+
+
+  // -------------------------------------------------------
+  // GET
+  // -------------------------------------------------------
+
+  if (method === "GET") {
+
+    return Object.assign(
+      {},
+      e.parameter || {}
+    );
+
+  }
+
+
+  // -------------------------------------------------------
+  // POST
+  // -------------------------------------------------------
+
+  if (method === "POST") {
+
+    let body = {};
+
+
+    if (
+      e.postData &&
+      e.postData.contents
+    ) {
+
+      const contents =
+        String(
+          e.postData.contents
+        ).trim();
+
+
+      if (contents) {
+
+        try {
+
+          body = JSON.parse(
+            contents
+          );
+
+        } catch (error) {
+
+          throw new Error(
+            "Format JSON request tidak valid."
+          );
+
+        }
+
+      }
+
+    }
+
+
+    // -----------------------------------------------------
+    // Jika ada parameter POST biasa, gabungkan juga.
+    //
+    // Body JSON menjadi prioritas.
+    // -----------------------------------------------------
+
+    return Object.assign(
+      {},
+      e.parameter || {},
+      body
+    );
+
+  }
+
+
+  throw new Error(
+    "HTTP method tidak didukung."
+  );
+
+}
+
+
+/* =========================================================
+   ACTIVITY DESCRIPTION
+   ---------------------------------------------------------
+   Membuat deskripsi aktivitas berdasarkan endpoint.
+
+   Bisa dikembangkan kemudian.
+========================================================= */
+
+function getActivityDescription_(
+  action,
+  method
+) {
+
+  switch (action) {
+
+    case "logout":
+      return "User melakukan logout.";
+
+    case "dashboard":
+      return "User mengakses dashboard.";
+
+    case "master_data":
+      return "User mengakses master data.";
+
+    case "payroll":
+      return "User mengakses payroll.";
+
+    case "finance":
+      return "User mengakses finance.";
+
+    case "absensi":
+      return "User mengakses absensi.";
+
+    case "pengaturan":
+      return "User mengakses pengaturan.";
+
+    default:
+      return (
+        "User mengakses endpoint " +
+        action +
+        " menggunakan method " +
+        method +
+        "."
+      );
+
+  }
+
+}
+
+
+/* =========================================================
+   PLACEHOLDER ENDPOINT
+   ---------------------------------------------------------
+   Fungsi-fungsi ini nantinya diganti dengan logic
+   sebenarnya.
+
+   Yang penting:
+   - Jangan memanggil validateSession_() lagi di sini.
+   - Session sudah divalidasi oleh Code.gs.
+   - user sudah diketahui dari session.
+========================================================= */
+
+
+/* =========================================================
+   DASHBOARD
+========================================================= */
+
+function apiDashboard_(
+  request,
+  session,
+  user
+) {
+
+  return {
+
+    success: true,
+
+    user_id: user.user_id,
+
+    message:
+      "Endpoint dashboard berhasil dipanggil.",
+
+  };
+
+}
+
+
+/* =========================================================
+   MASTER DATA
+========================================================= */
+
+function apiMasterData_(
+  request,
+  session,
+  user
+) {
+
+  return {
+
+    success: true,
+
+    user_id: user.user_id,
+
+    message:
+      "Endpoint master data berhasil dipanggil.",
+
+  };
+
+}
+
+
+/* =========================================================
+   PAYROLL
+========================================================= */
+
+function apiPayroll_(
+  request,
+  session,
+  user
+) {
+
+  return {
+
+    success: true,
+
+    user_id: user.user_id,
+
+    message:
+      "Endpoint payroll berhasil dipanggil.",
+
+  };
+
+}
+
+
+/* =========================================================
+   FINANCE
+========================================================= */
+
+function apiFinance_(
+  request,
+  session,
+  user
+) {
+
+  return {
+
+    success: true,
+
+    user_id: user.user_id,
+
+    message:
+      "Endpoint finance berhasil dipanggil.",
+
+  };
+
+}
+
+
+/* =========================================================
+   ABSENSI
+========================================================= */
+
+function apiAbsensi_(
+  request,
+  session,
+  user
+) {
+
+  return {
+
+    success: true,
+
+    user_id: user.user_id,
+
+    message:
+      "Endpoint absensi berhasil dipanggil.",
+
+  };
+
+}
+
+
+/* =========================================================
+   PENGATURAN
+========================================================= */
+
+function apiPengaturan_(
+  request,
+  session,
+  user
+) {
+
+  return {
+
+    success: true,
+
+    user_id: user.user_id,
+
+    message:
+      "Endpoint pengaturan berhasil dipanggil.",
+
+  };
+
+}
+
+
+/* =========================================================
+   JSON RESPONSE
+========================================================= */
+
+function jsonResponse_(data) {
+
+  return ContentService
+    .createTextOutput(
+      JSON.stringify(data)
+    )
+    .setMimeType(
+      ContentService.MimeType.JSON
+    );
+
+}

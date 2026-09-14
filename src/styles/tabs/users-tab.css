@@ -1,0 +1,1175 @@
+/* ======================================================
+   USERS PAGE
+====================================================== */
+
+.users-page {
+  padding: 28px;
+}
+
+
+/* ======================================================
+   HEADER
+====================================================== */
+
+.users-header {
+  display: flex;
+
+  align-items: flex-start;
+  justify-content: space-between;
+
+  gap: 20px;
+
+  margin-bottom: 24px;
+}
+
+.users-eyebrow {
+  margin: 0 0 8px;
+
+  color: var(--kii-red);
+
+  font-size: 10px;
+  font-weight: 700;
+
+  letter-spacing: 1.3px;
+}
+
+.users-header h2 {
+  margin: 0;
+
+  font-size: 24px;
+  line-height: 1.2;
+
+  letter-spacing: -0.5px;
+}
+
+.users-header p:last-child {
+  max-width: 560px;
+
+  margin: 8px 0 0;
+
+  color: var(--text-secondary);
+
+  font-size: 13px;
+
+  line-height: 1.55;
+}
+
+
+/* ======================================================
+   PRIMARY BUTTON
+====================================================== */
+
+.users-primary-button {
+  height: 42px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  gap: 8px;
+
+  padding: 0 16px;
+
+  flex-shrink: 0;
+
+  border: 0;
+  border-radius: 8px;
+
+  background: var(--kii-red);
+  color: white;
+
+  font-size: 12px;
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition:
+    background 0.18s ease,
+    box-shadow 0.18s ease,
+    transform 0.15s ease;
+}
+
+.users-primary-button:hover {
+  background: var(--kii-red-dark);
+
+  box-shadow:
+    0 6px 18px
+    rgba(201, 21, 43, 0.16);
+}
+
+.users-primary-button:active {
+  transform: translateY(1px);
+}
+
+
+/* ======================================================
+   SUMMARY
+====================================================== */
+
+.users-summary {
+  display: grid;
+
+  grid-template-columns:
+    repeat(3, minmax(0, 1fr));
+
+  gap: 10px;
+
+  margin-bottom: 18px;
+}
+
+.users-summary-item {
+  min-height: 72px;
+
+  display: flex;
+  align-items: center;
+
+  gap: 11px;
+
+  padding: 13px;
+
+  border: 1px solid var(--border);
+
+  border-radius: 9px;
+
+  background: #fff;
+}
+
+.users-summary-icon {
+  width: 36px;
+  height: 36px;
+
+  flex-shrink: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 8px;
+
+  background: #f7f7f7;
+
+  color: var(--kii-red);
+}
+
+.users-summary-item div:last-child {
+  display: flex;
+  flex-direction: column;
+
+  gap: 3px;
+}
+
+.users-summary-item span {
+  color: var(--text-muted);
+
+  font-size: 10px;
+}
+
+.users-summary-item strong {
+  color: var(--text-primary);
+
+  font-size: 18px;
+}
+
+
+/* ======================================================
+   TOOLBAR
+====================================================== */
+
+.users-toolbar {
+  display: grid;
+
+  grid-template-columns:
+    minmax(240px, 1fr)
+    170px
+    150px;
+
+  gap: 9px;
+
+  margin-bottom: 12px;
+}
+
+.users-search {
+  height: 40px;
+
+  display: flex;
+  align-items: center;
+
+  gap: 9px;
+
+  padding: 0 12px;
+
+  border: 1px solid var(--border);
+
+  border-radius: 8px;
+
+  background: white;
+
+  transition:
+    border-color 0.18s ease,
+    box-shadow 0.18s ease;
+}
+
+.users-search:focus-within {
+  border-color: var(--kii-red);
+
+  box-shadow:
+    0 0 0 3px
+    rgba(201, 21, 43, 0.07);
+}
+
+.users-search svg {
+  flex-shrink: 0;
+
+  color: #999999;
+}
+
+.users-search input {
+  width: 100%;
+  height: 100%;
+
+  border: 0;
+  outline: 0;
+
+  background: transparent;
+
+  color: var(--text-primary);
+
+  font-size: 12px;
+}
+
+.users-search input::placeholder {
+  color: #aaa;
+}
+
+.users-toolbar select {
+  height: 40px;
+
+  padding: 0 11px;
+
+  border: 1px solid var(--border);
+
+  border-radius: 8px;
+
+  outline: 0;
+
+  background: white;
+
+  color: #555;
+
+  font-family: inherit;
+
+  font-size: 12px;
+
+  cursor: pointer;
+}
+
+.users-toolbar select:focus {
+  border-color: var(--kii-red);
+
+  box-shadow:
+    0 0 0 3px
+    rgba(201, 21, 43, 0.07);
+}
+
+
+/* ======================================================
+   TABLE
+====================================================== */
+
+.users-table-wrapper {
+  overflow-x: auto;
+
+  border: 1px solid var(--border);
+
+  border-radius: 9px;
+
+  background: white;
+}
+
+.users-table {
+  width: 100%;
+
+  min-width: 720px;
+
+  border-collapse: collapse;
+
+  font-size: 12px;
+}
+
+.users-table th {
+  height: 43px;
+
+  padding: 0 14px;
+
+  background: #fafafa;
+
+  border-bottom: 1px solid var(--border);
+
+  color: #777777;
+
+  font-size: 10px;
+  font-weight: 700;
+
+  letter-spacing: 0.3px;
+
+  text-align: left;
+
+  white-space: nowrap;
+}
+
+.users-table td {
+  height: 63px;
+
+  padding: 0 14px;
+
+  border-bottom: 1px solid #eeeeee;
+
+  color: #555555;
+
+  white-space: nowrap;
+}
+
+.users-table tbody tr:last-child td {
+  border-bottom: 0;
+}
+
+.users-table tbody tr:hover {
+  background: #fdfdfd;
+}
+
+
+/* ======================================================
+   USER IDENTITY
+====================================================== */
+
+.user-identity {
+  display: flex;
+
+  align-items: center;
+
+  gap: 10px;
+}
+
+.user-avatar {
+  width: 34px;
+  height: 34px;
+
+  flex-shrink: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 8px;
+
+  background: var(--kii-red-light);
+
+  color: var(--kii-red);
+
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.user-identity div:last-child {
+  display: flex;
+  flex-direction: column;
+
+  gap: 3px;
+}
+
+.user-identity strong {
+  color: var(--text-primary);
+
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.user-identity span {
+  color: #a0a0a0;
+
+  font-size: 10px;
+}
+
+
+/* ======================================================
+   ID
+====================================================== */
+
+.user-id {
+  color: #777777;
+
+  font-size: 11px;
+}
+
+
+/* ======================================================
+   ROLE
+====================================================== */
+
+.user-role {
+  display: inline-flex;
+  align-items: center;
+
+  min-height: 27px;
+
+  padding: 0 9px;
+
+  border: 1px solid #e8e8e8;
+
+  border-radius: 6px;
+
+  background: #fafafa;
+
+  color: #555555;
+
+  font-size: 10px;
+  font-weight: 600;
+}
+
+
+/* ======================================================
+   STATUS
+====================================================== */
+
+.user-status {
+  display: inline-flex;
+  align-items: center;
+
+  gap: 6px;
+
+  padding: 0;
+
+  border: 0;
+
+  background: transparent;
+
+  font-family: inherit;
+
+  font-size: 11px;
+  font-weight: 600;
+
+  cursor: pointer;
+}
+
+.user-status span {
+  width: 6px;
+  height: 6px;
+
+  border-radius: 50%;
+
+  background: #999999;
+}
+
+.user-status.active {
+  color: #39784a;
+}
+
+.user-status.active span {
+  background: #4e9a63;
+}
+
+.user-status.inactive {
+  color: #999999;
+}
+
+
+/* ======================================================
+   DATE
+====================================================== */
+
+.user-date {
+  color: #888888;
+
+  font-size: 11px;
+}
+
+
+/* ======================================================
+   ACTIONS
+====================================================== */
+
+.user-actions {
+  display: flex;
+
+  align-items: center;
+  justify-content: flex-end;
+
+  gap: 5px;
+}
+
+.user-action-button {
+  width: 31px;
+  height: 31px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border: 1px solid var(--border);
+
+  border-radius: 7px;
+
+  background: white;
+
+  color: #777777;
+
+  cursor: pointer;
+
+  transition:
+    color 0.18s ease,
+    background 0.18s ease,
+    border-color 0.18s ease;
+}
+
+.user-action-button:hover {
+  border-color: #d6d6d6;
+
+  background: #f7f7f7;
+
+  color: var(--text-primary);
+}
+
+.user-action-button.danger:hover {
+  border-color: #f0c9cf;
+
+  background: var(--kii-red-light);
+
+  color: var(--kii-red);
+}
+
+
+/* ======================================================
+   EMPTY
+====================================================== */
+
+.users-empty {
+  height: 160px !important;
+
+  color: #999999 !important;
+
+  text-align: center !important;
+}
+
+
+/* ======================================================
+   MODAL
+====================================================== */
+
+.users-modal-overlay {
+  position: fixed;
+
+  inset: 0;
+
+  z-index: 1000;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 24px;
+
+  background:
+    rgba(0, 0, 0, 0.45);
+}
+
+.users-modal {
+  width: 100%;
+  max-width: 470px;
+
+  max-height: calc(100vh - 48px);
+
+  overflow-y: auto;
+
+  border: 1px solid #e4e4e4;
+
+  border-radius: 12px;
+
+  background: white;
+
+  box-shadow:
+    0 20px 60px
+    rgba(0, 0, 0, 0.12);
+}
+
+
+/* ======================================================
+   MODAL HEADER
+====================================================== */
+
+.users-modal-header {
+  display: flex;
+
+  align-items: flex-start;
+  justify-content: space-between;
+
+  padding: 22px 24px 18px;
+
+  border-bottom: 1px solid #eeeeee;
+}
+
+.users-modal-header p {
+  margin: 0 0 5px;
+
+  color: var(--kii-red);
+
+  font-size: 9px;
+  font-weight: 700;
+
+  letter-spacing: 1.2px;
+}
+
+.users-modal-header h3 {
+  margin: 0;
+
+  font-size: 18px;
+
+  letter-spacing: -0.3px;
+}
+
+.users-modal-close {
+  width: 32px;
+  height: 32px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border: 0;
+  border-radius: 7px;
+
+  background: #f7f7f7;
+
+  color: #777777;
+
+  cursor: pointer;
+}
+
+.users-modal-close:hover {
+  background: #eeeeee;
+}
+
+
+/* ======================================================
+   FORM
+====================================================== */
+
+.users-modal-form {
+  padding: 22px 24px 24px;
+}
+
+.users-form-group {
+  display: flex;
+  flex-direction: column;
+
+  gap: 7px;
+
+  margin-bottom: 16px;
+}
+
+.users-form-group label {
+  color: #333333;
+
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.users-form-group input,
+.users-form-group select {
+  width: 100%;
+  height: 42px;
+
+  box-sizing: border-box;
+
+  padding: 0 12px;
+
+  border: 1px solid var(--border);
+
+  border-radius: 8px;
+
+  outline: 0;
+
+  background: white;
+
+  color: var(--text-primary);
+
+  font-family: inherit;
+
+  font-size: 12px;
+
+  transition:
+    border-color 0.18s ease,
+    box-shadow 0.18s ease;
+}
+
+.users-form-group input:focus,
+.users-form-group select:focus {
+  border-color: var(--kii-red);
+
+  box-shadow:
+    0 0 0 3px
+    rgba(201, 21, 43, 0.07);
+}
+
+.users-form-group input::placeholder {
+  color: #aaa;
+}
+
+
+/* ======================================================
+   STATUS SWITCH
+====================================================== */
+
+.users-form-status {
+  display: flex;
+
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 20px;
+
+  padding: 13px;
+
+  margin-top: 3px;
+
+  border: 1px solid var(--border);
+
+  border-radius: 8px;
+
+  background: #fafafa;
+}
+
+.users-form-status div {
+  display: flex;
+  flex-direction: column;
+
+  gap: 4px;
+}
+
+.users-form-status strong {
+  color: #333333;
+
+  font-size: 12px;
+}
+
+.users-form-status span {
+  color: #999999;
+
+  font-size: 10px;
+
+  line-height: 1.4;
+}
+
+
+/* ======================================================
+   SWITCH
+====================================================== */
+
+.users-switch {
+  position: relative;
+
+  width: 39px;
+  height: 22px;
+
+  flex-shrink: 0;
+
+  padding: 0;
+
+  border: 0;
+
+  border-radius: 20px;
+
+  background: #d7d7d7;
+
+  cursor: pointer;
+
+  transition:
+    background 0.18s ease;
+}
+
+.users-switch span {
+  position: absolute;
+
+  top: 3px;
+  left: 3px;
+
+  width: 16px;
+  height: 16px;
+
+  border-radius: 50%;
+
+  background: white;
+
+  box-shadow:
+    0 1px 3px
+    rgba(0, 0, 0, 0.15);
+
+  transition:
+    transform 0.18s ease;
+}
+
+.users-switch.active {
+  background: var(--kii-red);
+}
+
+.users-switch.active span {
+  transform: translateX(17px);
+}
+
+
+/* ======================================================
+   MODAL FOOTER
+====================================================== */
+
+.users-modal-footer {
+  display: flex;
+
+  justify-content: flex-end;
+
+  gap: 8px;
+
+  margin-top: 22px;
+}
+
+.users-cancel-button,
+.users-save-button {
+  height: 40px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  gap: 7px;
+
+  padding: 0 14px;
+
+  border-radius: 8px;
+
+  font-family: inherit;
+
+  font-size: 12px;
+  font-weight: 600;
+
+  cursor: pointer;
+}
+
+.users-cancel-button {
+  border: 1px solid var(--border);
+
+  background: white;
+
+  color: #666666;
+}
+
+.users-cancel-button:hover {
+  background: #f7f7f7;
+}
+
+.users-save-button {
+  border: 0;
+
+  background: var(--kii-red);
+
+  color: white;
+}
+
+.users-save-button:hover {
+  background: var(--kii-red-dark);
+}
+
+/* ======================================================
+   ACCESS CONTROL
+====================================================== */
+
+.users-access-section {
+  margin-top: 28px;
+  padding-top: 28px;
+  border-top: 1px solid var(--border);
+}
+
+.users-access-header {
+  margin-bottom: 16px;
+}
+
+.users-access-header strong {
+  display: block;
+
+  font-size: 14px;
+  font-weight: 700;
+
+  color: var(--text-primary);
+}
+
+.users-access-header span {
+  display: block;
+
+  margin-top: 5px;
+
+  font-size: 12px;
+  line-height: 1.5;
+
+  color: var(--text-muted);
+}
+
+
+/* ======================================================
+   ACCESS LIST
+====================================================== */
+
+.users-access-list {
+  display: flex;
+  flex-direction: column;
+
+  border: 1px solid var(--border);
+  border-radius: 10px;
+
+  overflow: hidden;
+}
+
+
+/* ======================================================
+   GROUP
+====================================================== */
+
+.users-access-group {
+  background: #ffffff;
+}
+
+.users-access-group
+  + .users-access-group {
+  border-top: 1px solid var(--border);
+}
+
+
+/* ======================================================
+   GROUP HEADER
+====================================================== */
+
+.users-access-group-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 20px;
+
+  padding: 15px 16px;
+
+  background: #fafafa;
+}
+
+.users-access-group-info {
+  min-width: 0;
+}
+
+.users-access-group-info strong {
+  display: block;
+
+  font-size: 13px;
+  font-weight: 700;
+
+  color: var(--text-primary);
+}
+
+.users-access-group-info span {
+  display: block;
+
+  margin-top: 4px;
+
+  font-size: 11px;
+  line-height: 1.4;
+
+  color: var(--text-muted);
+}
+
+
+/* ======================================================
+   CHILDREN
+====================================================== */
+
+.users-access-children {
+  border-top: 1px solid var(--border);
+}
+
+.users-access-child {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 20px;
+
+  padding: 13px 16px 13px 32px;
+
+  background: #ffffff;
+}
+
+.users-access-child
+  + .users-access-child {
+  border-top: 1px solid #f0f0f0;
+}
+
+.users-access-child-info {
+  min-width: 0;
+}
+
+.users-access-child-info strong {
+  display: block;
+
+  font-size: 12px;
+  font-weight: 600;
+
+  color: #333333;
+}
+
+.users-access-child-info span {
+  display: block;
+
+  margin-top: 3px;
+
+  font-size: 11px;
+
+  color: var(--text-muted);
+}
+
+
+/* ======================================================
+   RADIO GROUP
+====================================================== */
+
+.users-access-radio-group {
+  display: flex;
+  align-items: center;
+
+  flex-shrink: 0;
+
+  gap: 14px;
+}
+
+.users-access-radio-group label {
+  display: flex;
+  align-items: center;
+
+  gap: 6px;
+
+  font-size: 11px;
+
+  color: #999999;
+
+  cursor: pointer;
+
+  white-space: nowrap;
+}
+
+.users-access-radio-group label.selected {
+  color: var(--kii-red);
+
+  font-weight: 600;
+}
+
+.users-access-radio-group label.denied.selected {
+  color: #777777;
+}
+
+.users-access-radio-group input {
+  width: 14px;
+  height: 14px;
+
+  margin: 0;
+
+  accent-color: var(--kii-red);
+
+  cursor: pointer;
+}
+
+.users-access-radio-group input:disabled {
+  cursor: not-allowed;
+}
+
+
+/* ======================================================
+   DISABLED CHILD
+====================================================== */
+
+.users-access-child.disabled {
+  background: #fafafa;
+}
+
+.users-access-child.disabled
+  .users-access-child-info {
+  opacity: 0.45;
+}
+
+.users-access-child.disabled
+  .users-access-radio-group {
+  opacity: 0.45;
+}
+
+
+/* ======================================================
+   RESPONSIVE
+====================================================== */
+
+@media (max-width: 650px) {
+
+  .users-access-group-header,
+  .users-access-child {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .users-access-radio-group {
+    width: 100%;
+  }
+
+  .users-access-child {
+    padding-left: 22px;
+  }
+
+}
+
+/* ======================================================
+   RESPONSIVE
+====================================================== */
+
+@media (max-width: 800px) {
+  .users-page {
+    padding: 22px;
+  }
+
+  .users-summary {
+    grid-template-columns:
+      repeat(3, minmax(0, 1fr));
+  }
+
+  .users-toolbar {
+    grid-template-columns:
+      minmax(0, 1fr)
+      150px
+      130px;
+  }
+}
+
+
+@media (max-width: 620px) {
+  .users-header {
+    flex-direction: column;
+  }
+
+  .users-primary-button {
+    width: 100%;
+  }
+
+  .users-summary {
+    grid-template-columns: 1fr;
+  }
+
+  .users-toolbar {
+    grid-template-columns: 1fr;
+  }
+
+  .users-modal-overlay {
+    padding: 12px;
+  }
+
+  .users-modal {
+    max-height: calc(100vh - 24px);
+  }
+}

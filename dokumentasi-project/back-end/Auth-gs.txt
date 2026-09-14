@@ -1,0 +1,484 @@
+/* =========================================================
+   Auth.gs
+
+   AUTHENTICATION
+   ---------------------------------------------------------
+   Tabel:
+   - tbl_users
+   - tbl_users_access
+
+   tbl_users:
+   user_id
+   id_karyawan
+   nama_user
+   password
+   role
+   created_at
+   updated_at
+
+   tbl_users_access:
+   user_id
+   role
+   dashboard
+   master_data
+   payroll
+   finance
+   absensi
+   pengaturan
+
+   Catatan:
+   - Username login menggunakan id_karyawan.
+   - Pengelolaan session ditangani oleh Session.gs.
+========================================================= */
+
+
+/* =========================================================
+   KONFIGURASI AUTH
+========================================================= */
+
+const AUTH_CONFIG = {
+  SHEETS: {
+    USERS: "tbl_users",
+    ACCESS: "tbl_users_access",
+  },
+};
+
+
+/* =========================================================
+   LOGIN
+   ---------------------------------------------------------
+   Input:
+   - username
+   - password
+
+   Proses:
+   1. Validasi input
+   2. Cari user berdasarkan id_karyawan
+   3. Validasi password
+   4. Minta Session.gs membuat session
+   5. Ambil hak akses user
+   6. Kembalikan data ke frontend
+
+   Session tidak dibuat di Auth.gs.
+========================================================= */
+
+function authLogin(username, password) {
+
+  // -------------------------------------------------------
+  // VALIDASI INPUT
+  // -------------------------------------------------------
+
+  username = String(username || "").trim();
+  password = String(password || "");
+
+  if (!username) {
+    return {
+      success: false,
+      message: "Username wajib diisi.",
+    };
+  }
+
+  if (!password) {
+    return {
+      success: false,
+      message: "Password wajib diisi.",
+    };
+  }
+
+
+  // -------------------------------------------------------
+  // CARI USER
+  // -------------------------------------------------------
+
+  const user = findUserByUsername_(username);
+
+  if (!user) {
+    return {
+      success: false,
+      message: "Username atau password salah.",
+    };
+  }
+
+
+  // -------------------------------------------------------
+  // CEK PASSWORD
+  // -------------------------------------------------------
+
+  if (String(user.password) !== password) {
+    return {
+      success: false,
+      message: "Username atau password salah.",
+    };
+  }
+
+
+  // -------------------------------------------------------
+  // BUAT SESSION
+  // -------------------------------------------------------
+  // Fungsi ini berada di Session.gs.
+  //
+  // Auth.gs hanya meminta Session.gs membuat session
+  // untuk user yang sudah berhasil login.
+  // -------------------------------------------------------
+
+  const session = createSession_(user.user_id);
+
+
+  // -------------------------------------------------------
+  // AMBIL HAK AKSES USER
+  // -------------------------------------------------------
+
+  const access = getUserAccess_(
+    user.user_id,
+    user.role
+  );
+
+
+  // -------------------------------------------------------
+  // RESPONSE KE FRONTEND
+  // -------------------------------------------------------
+
+  return {
+    success: true,
+
+    user: {
+      user_id: user.user_id,
+      nama_user: user.nama_user,
+      id_karyawan: user.id_karyawan,
+      role: user.role,
+    },
+
+    session_id: session.session_id,
+
+    access: access,
+  };
+}
+
+
+/* =========================================================
+   CARI USER
+   ---------------------------------------------------------
+   Username = id_karyawan
+========================================================= */
+
+function findUserByUsername_(username) {
+
+  const sheet = getAuthSheet_(
+    AUTH_CONFIG.SHEETS.USERS
+  );
+
+  const values = sheet.getDataRange().getValues();
+
+  if (values.length < 2) {
+    return null;
+  }
+
+
+  // -------------------------------------------------------
+  // HEADER
+  // -------------------------------------------------------
+
+  const headers = values[0].map(function (header) {
+    return String(header).trim();
+  });
+
+
+  const index = createHeaderIndex_(headers);
+
+
+  // -------------------------------------------------------
+  // VALIDASI HEADER
+  // -------------------------------------------------------
+
+  const requiredHeaders = [
+    "user_id",
+    "id_karyawan",
+    "nama_user",
+    "password",
+    "role",
+  ];
+
+
+  requiredHeaders.forEach(function (header) {
+
+    if (index[header] === undefined) {
+
+      throw new Error(
+        'Kolom "' +
+        header +
+        '" tidak ditemukan di ' +
+        AUTH_CONFIG.SHEETS.USERS
+      );
+
+    }
+
+  });
+
+
+  // -------------------------------------------------------
+  // CARI USER
+  // -------------------------------------------------------
+
+  for (let i = 1; i < values.length; i++) {
+
+    const row = values[i];
+
+    const idKaryawan = String(
+      row[index.id_karyawan] || ""
+    ).trim();
+
+
+    if (idKaryawan === username) {
+
+      return {
+        user_id: row[index.user_id],
+        id_karyawan: row[index.id_karyawan],
+        nama_user: row[index.nama_user],
+        password: row[index.password],
+        role: row[index.role],
+      };
+
+    }
+
+  }
+
+
+  return null;
+}
+
+
+/* =========================================================
+   AMBIL HAK AKSES USER
+   ---------------------------------------------------------
+   Sumber:
+   tbl_users_access
+
+   Pencarian berdasarkan:
+   user_id
+========================================================= */
+
+function getUserAccess_(userId, role) {
+
+  const sheet = getAuthSheet_(
+    AUTH_CONFIG.SHEETS.ACCESS
+  );
+
+  const values = sheet.getDataRange().getValues();
+
+  if (values.length < 2) {
+
+    return {
+      dashboard: false,
+      master_data: false,
+      payroll: false,
+      finance: false,
+      absensi: false,
+      pengaturan: false,
+    };
+
+  }
+
+
+  // -------------------------------------------------------
+  // HEADER
+  // -------------------------------------------------------
+
+  const headers = values[0].map(function (header) {
+    return String(header).trim();
+  });
+
+
+  const index = createHeaderIndex_(headers);
+
+
+  // -------------------------------------------------------
+  // VALIDASI HEADER
+  // -------------------------------------------------------
+
+  const requiredHeaders = [
+    "user_id",
+    "role",
+    "dashboard",
+    "master_data",
+    "payroll",
+    "finance",
+    "absensi",
+    "pengaturan",
+  ];
+
+
+  requiredHeaders.forEach(function (header) {
+
+    if (index[header] === undefined) {
+
+      throw new Error(
+        'Kolom "' +
+        header +
+        '" tidak ditemukan di ' +
+        AUTH_CONFIG.SHEETS.ACCESS
+      );
+
+    }
+
+  });
+
+
+  // -------------------------------------------------------
+  // CARI BERDASARKAN USER_ID
+  // -------------------------------------------------------
+
+  for (let i = 1; i < values.length; i++) {
+
+    const row = values[i];
+
+    const rowUserId = String(
+      row[index.user_id] || ""
+    ).trim();
+
+
+    if (
+      rowUserId ===
+      String(userId).trim()
+    ) {
+
+      return {
+        dashboard: normalizeAccessValue_(
+          row[index.dashboard]
+        ),
+
+        master_data: normalizeAccessValue_(
+          row[index.master_data]
+        ),
+
+        payroll: normalizeAccessValue_(
+          row[index.payroll]
+        ),
+
+        finance: normalizeAccessValue_(
+          row[index.finance]
+        ),
+
+        absensi: normalizeAccessValue_(
+          row[index.absensi]
+        ),
+
+        pengaturan: normalizeAccessValue_(
+          row[index.pengaturan]
+        ),
+      };
+
+    }
+
+  }
+
+
+  // -------------------------------------------------------
+  // USER TIDAK MEMILIKI DATA ACCESS
+  // -------------------------------------------------------
+
+  return {
+    dashboard: false,
+    master_data: false,
+    payroll: false,
+    finance: false,
+    absensi: false,
+    pengaturan: false,
+  };
+}
+
+
+/* =========================================================
+   NORMALISASI HAK AKSES
+   ---------------------------------------------------------
+   Mendukung:
+   TRUE
+   FALSE
+   1
+   0
+   YA
+   TIDAK
+   YES
+   NO
+========================================================= */
+
+function normalizeAccessValue_(value) {
+
+  if (value === true) {
+    return true;
+  }
+
+  if (value === false) {
+    return false;
+  }
+
+
+  const normalized = String(value || "")
+    .trim()
+    .toUpperCase();
+
+
+  return (
+    normalized === "TRUE" ||
+    normalized === "1" ||
+    normalized === "YA" ||
+    normalized === "YES"
+  );
+}
+
+
+/* =========================================================
+   HEADER INDEX
+   ---------------------------------------------------------
+   Contoh:
+
+   [
+     "user_id",
+     "id_karyawan",
+     "nama_user"
+   ]
+
+   menjadi:
+
+   {
+     user_id: 0,
+     id_karyawan: 1,
+     nama_user: 2
+   }
+========================================================= */
+
+function createHeaderIndex_(headers) {
+
+  const index = {};
+
+  headers.forEach(function (header, position) {
+
+    index[header] = position;
+
+  });
+
+  return index;
+}
+
+
+/* =========================================================
+   GET SHEET
+========================================================= */
+
+function getAuthSheet_(sheetName) {
+
+  const ss = SpreadsheetApp.getActiveSpreadsheet();
+
+  const sheet = ss.getSheetByName(sheetName);
+
+  if (!sheet) {
+
+    throw new Error(
+      'Sheet "' +
+      sheetName +
+      '" tidak ditemukan.'
+    );
+
+  }
+
+  return sheet;
+}

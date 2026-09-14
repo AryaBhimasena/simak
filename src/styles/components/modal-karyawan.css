@@ -1,0 +1,2342 @@
+/* =========================================================
+   MODAL KARYAWAN
+   KII HRIS — 3 COLUMN UI
+========================================================= */
+
+
+/* =========================================================
+   ROOT
+========================================================= */
+
+:root {
+  --kii-red: #c9152b;
+  --kii-red-dark: #a90f22;
+  --kii-red-light: #fff1f3;
+
+  --text-primary: #171717;
+  --text-secondary: #666666;
+  --text-muted: #929292;
+
+  --border: #e4e4e4;
+  --border-light: #eeeeee;
+
+  --background: #f7f7f8;
+  --background-soft: #fafafa;
+  --white: #ffffff;
+
+  --success: #3b9b59;
+  --success-light: #f0f8f2;
+
+  --danger: #c9152b;
+
+  --radius-sm: 7px;
+  --radius-md: 9px;
+  --radius-lg: 12px;
+}
+
+
+/* =========================================================
+   OVERLAY
+========================================================= */
+
+.modal-karyawan-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 24px;
+
+  background: rgba(23, 23, 23, 0.44);
+
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+
+  overflow-y: auto;
+
+  animation: modal-karyawan-overlay-in 0.2s ease;
+}
+
+
+/* =========================================================
+   MODAL
+========================================================= */
+
+.modal-karyawan {
+  position: relative;
+
+  width: 100%;
+  max-width: 1080px;
+
+  height: calc(100vh - 48px);
+  max-height: 920px;
+
+  display: flex;
+  flex-direction: column;
+
+  background: var(--white);
+
+  border: 1px solid #e2e2e2;
+  border-radius: 16px;
+
+  box-shadow:
+    0 24px 70px rgba(0, 0, 0, 0.12),
+    0 4px 12px rgba(0, 0, 0, 0.04);
+
+  overflow: hidden;
+
+  animation: modal-karyawan-in 0.22s ease;
+}
+
+
+/* =========================================================
+   HEADER
+========================================================= */
+
+.modal-karyawan-header {
+  flex-shrink: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 20px;
+
+  padding: 20px 28px;
+
+  border-bottom: 1px solid var(--border);
+
+  background: var(--white);
+}
+
+.modal-karyawan-header-content {
+  min-width: 0;
+}
+
+.modal-karyawan-eyebrow {
+  margin: 0 0 6px;
+
+  color: var(--kii-red);
+
+  font-size: 10px;
+  line-height: 1;
+
+  font-weight: 700;
+
+  letter-spacing: 1.5px;
+
+  text-transform: uppercase;
+}
+
+.modal-karyawan-header h2 {
+  margin: 0;
+
+  color: var(--text-primary);
+
+  font-size: 23px;
+  line-height: 1.2;
+
+  font-weight: 700;
+
+  letter-spacing: -0.5px;
+}
+
+.modal-karyawan-header p:last-child {
+  margin: 7px 0 0;
+
+  color: var(--text-secondary);
+
+  font-size: 11px;
+  line-height: 1.5;
+}
+
+
+/* =========================================================
+   HEADER ACTIONS
+   URUTAN:
+   SIMPAN → X
+========================================================= */
+
+.modal-karyawan-header-actions {
+  flex-shrink: 0;
+
+  display: flex;
+  align-items: center;
+
+  gap: 8px;
+}
+
+
+/* =========================================================
+   SAVE BUTTON
+========================================================= */
+
+.modal-karyawan-primary-button {
+  height: 40px;
+  min-width: 158px;
+
+  padding: 0 17px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  gap: 8px;
+
+  border: 0;
+  border-radius: 8px;
+
+  background: var(--kii-red);
+  color: var(--white);
+
+  font-family: Arial, Helvetica, sans-serif;
+
+  font-size: 11px;
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition:
+    background 0.2s ease,
+    transform 0.15s ease,
+    box-shadow 0.2s ease;
+}
+
+.modal-karyawan-primary-button:hover {
+  background: var(--kii-red-dark);
+
+  box-shadow:
+    0 7px 20px rgba(201, 21, 43, 0.18);
+}
+
+.modal-karyawan-primary-button:active {
+  transform: translateY(1px);
+}
+
+.modal-karyawan-primary-button:disabled {
+  opacity: 0.7;
+
+  cursor: not-allowed;
+
+  box-shadow: none;
+}
+
+
+/* =========================================================
+   CLOSE BUTTON
+   SETELAH SAVE BUTTON
+========================================================= */
+
+.modal-karyawan-close-button {
+  width: 40px;
+  height: 40px;
+
+  flex-shrink: 0;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 0;
+
+  border: 1px solid var(--border);
+  border-radius: 8px;
+
+  background: var(--white);
+  color: #777777;
+
+  cursor: pointer;
+
+  transition:
+    color 0.2s ease,
+    background 0.2s ease,
+    border-color 0.2s ease,
+    transform 0.15s ease;
+}
+
+.modal-karyawan-close-button:hover {
+  border-color: #d7d7d7;
+
+  background: #f7f7f7;
+
+  color: var(--kii-red);
+}
+
+.modal-karyawan-close-button:active {
+  transform: translateY(1px);
+}
+
+.modal-karyawan-close-button:disabled {
+  opacity: 0.55;
+
+  cursor: not-allowed;
+}
+
+
+/* =========================================================
+   BUTTON SPINNER
+========================================================= */
+
+.modal-karyawan-button-spinner {
+  width: 14px;
+  height: 14px;
+
+  flex-shrink: 0;
+
+  border: 2px solid rgba(255, 255, 255, 0.35);
+  border-top-color: var(--white);
+
+  border-radius: 50%;
+
+  animation: modal-karyawan-spin 0.7s linear infinite;
+}
+
+
+/* =========================================================
+   PROFILE
+   DESKTOP — 3 AREA
+========================================================= */
+
+.modal-karyawan-profile {
+  flex-shrink: 0;
+
+  display: grid;
+
+  grid-template-columns:
+    180px
+    minmax(0, 1.15fr)
+    minmax(0, 1fr);
+
+  align-items: stretch;
+
+  margin: 0 28px;
+
+  padding: 18px 0;
+
+  border-bottom: 1px solid var(--border);
+}
+
+
+/* =========================================================
+   PROFILE AREA
+========================================================= */
+
+.modal-karyawan-profile-grid {
+  min-width: 0;
+
+  display: flex;
+  flex-direction: column;
+
+  justify-content: center;
+
+  padding: 0 22px;
+}
+
+.modal-karyawan-profile-grid:first-child {
+  padding-left: 0;
+}
+
+.modal-karyawan-profile-grid:last-child {
+  padding-right: 0;
+}
+
+.modal-karyawan-profile-grid
+  + .modal-karyawan-profile-grid {
+  border-left: 1px solid var(--border-light);
+}
+
+
+/* =========================================================
+   PROFILE — PHOTO AREA
+========================================================= */
+
+.modal-karyawan-profile-photo-grid {
+  align-items: center;
+  justify-content: center;
+}
+
+.modal-karyawan-profile-photo-wrapper {
+  width: 100%;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  gap: 9px;
+}
+
+/* =========================================================
+   PROFILE PHOTO
+========================================================= */
+
+.modal-karyawan-profile-photo {
+  position: relative;
+
+  width: 88px;
+  height: 88px;
+
+  flex-shrink: 0;
+
+  overflow: hidden;
+
+  border: 1px solid var(--border);
+  border-radius: 12px;
+
+  background: var(--background);
+
+  box-shadow:
+    0 2px 8px rgba(0, 0, 0, 0.04);
+}
+
+.modal-karyawan-profile-photo img {
+  display: block;
+
+  width: 100%;
+  height: 100%;
+
+  object-fit: cover;
+}
+
+.modal-karyawan-profile-placeholder {
+  width: 100%;
+  height: 100%;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  color: #aaaaaa;
+
+  background: #f5f5f6;
+}
+
+
+/* =========================================================
+   PHOTO UPLOAD
+========================================================= */
+
+.modal-karyawan-upload-photo-button {
+  min-width: 0;
+
+  height: 34px;
+
+  padding: 0 11px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  gap: 6px;
+
+  border: 1px solid var(--border);
+  border-radius: 7px;
+
+  background: var(--white);
+  color: #555555;
+
+  font-family: Arial, Helvetica, sans-serif;
+
+  font-size: 9px;
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition:
+    border-color 0.2s ease,
+    background 0.2s ease,
+    color 0.2s ease,
+    transform 0.15s ease;
+}
+
+.modal-karyawan-upload-photo-button:hover {
+  border-color: #d1d1d1;
+
+  background: #fafafa;
+
+  color: var(--kii-red);
+}
+
+.modal-karyawan-upload-photo-button:active {
+  transform: translateY(1px);
+}
+
+.modal-karyawan-upload-photo-button:disabled {
+  opacity: 0.55;
+
+  cursor: not-allowed;
+}
+
+
+/* =====================================================
+   PROFILE — IDENTITY GRID
+   ===================================================== */
+
+.modal-karyawan-profile-identity-grid {
+  display: grid;
+
+  grid-template-columns: 1fr auto;
+  grid-template-rows: auto auto;
+
+  gap: 18px 16px;
+
+  min-width: 0;
+
+  justify-content: stretch;
+}
+
+
+/* =====================================================
+   ID + STATUS
+   ===================================================== */
+
+.modal-karyawan-profile-id {
+  grid-column: 1;
+  grid-row: 1;
+}
+
+.modal-karyawan-profile-status {
+  grid-column: 2;
+  grid-row: 1;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: flex-end;
+
+  flex-shrink: 0;
+
+  white-space: nowrap;
+}
+
+
+/* =====================================================
+   ID KARYAWAN
+   ===================================================== */
+
+.modal-karyawan-profile-id {
+  display: flex;
+  flex-direction: column;
+
+  gap: 5px;
+
+  min-width: 0;
+
+  text-align: left;
+}
+
+.modal-karyawan-profile-id strong {
+  display: block;
+
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 1.25;
+
+  color: #111827;
+
+  letter-spacing: 0.02em;
+
+  /* Membuat ID lebih mudah dibaca */
+  font-family:
+    ui-monospace,
+    SFMono-Regular,
+    Menlo,
+    Monaco,
+    Consolas,
+    "Liberation Mono",
+    monospace;
+}
+
+
+/* =====================================================
+   NAMA
+   ===================================================== */
+
+.modal-karyawan-profile-name {
+  grid-column: 1 / -1;
+  grid-row: 2;
+
+  width: 100%;
+
+  text-align: left;
+}
+
+.modal-karyawan-profile-name h3 {
+  margin: 5px 0 0;
+
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 1.3;
+
+  color: #111827;
+
+  /*
+   * Nama panjang boleh turun ke baris berikutnya.
+   * Tidak dipotong.
+   */
+  white-space: normal;
+  overflow-wrap: anywhere;
+  word-break: normal;
+}
+
+.modal-karyawan-profile-id,
+.modal-karyawan-profile-name {
+  text-align: left;
+}
+
+/* =====================================================
+   LABEL
+   ===================================================== */
+
+.modal-karyawan-profile-label {
+  display: block;
+
+  font-size: 10px;
+  font-weight: 700;
+  line-height: 1.2;
+
+  color: #6b7280;
+
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+
+/* =====================================================
+   STATUS
+   ===================================================== */
+
+.modal-karyawan-profile-status {
+  display: inline-flex;
+  align-items: center;
+  justify-content: flex-end;
+
+  gap: 8px;
+
+  flex-shrink: 0;
+
+  white-space: nowrap;
+}
+
+
+/* =========================================================
+   PROFILE — PLACEMENT AREA
+========================================================= */
+
+.modal-karyawan-profile-placement-grid {
+  justify-content: center;
+
+  gap: 11px;
+}
+
+
+/* =========================================================
+   PROFILE EDIT FIELD
+========================================================= */
+
+.modal-karyawan-profile-edit-field {
+  min-width: 0;
+
+  display: flex;
+  flex-direction: column;
+
+  gap: 5px;
+}
+
+.modal-karyawan-profile-edit-field label {
+  display: block;
+
+  color: var(--text-muted);
+
+  font-size: 8px;
+  line-height: 1;
+
+  font-weight: 700;
+
+  letter-spacing: 0.55px;
+
+  text-transform: uppercase;
+}
+
+
+/* =========================================================
+   PROFILE SELECT
+========================================================= */
+
+.modal-karyawan-profile-edit-field select {
+  width: 100%;
+  height: 36px;
+
+  min-width: 0;
+
+  padding: 0 32px 0 10px;
+
+  appearance: none;
+  -webkit-appearance: none;
+
+  border: 1px solid var(--border);
+  border-radius: 7px;
+
+  outline: 0;
+
+  background-color: var(--white);
+
+  background-image:
+    linear-gradient(
+      45deg,
+      transparent 50%,
+      #999 50%
+    ),
+    linear-gradient(
+      135deg,
+      #999 50%,
+      transparent 50%
+    );
+
+  background-position:
+    calc(100% - 14px) 15px,
+    calc(100% - 10px) 15px;
+
+  background-size:
+    4px 4px,
+    4px 4px;
+
+  background-repeat: no-repeat;
+
+  color: var(--text-primary);
+
+  font-family: Arial, Helvetica, sans-serif;
+
+  font-size: 10px;
+  font-weight: 500;
+
+  cursor: pointer;
+
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease,
+    background-color 0.2s ease;
+}
+
+.modal-karyawan-profile-edit-field select:hover {
+  border-color: #d0d0d0;
+
+  background-color: #fcfcfc;
+}
+
+.modal-karyawan-profile-edit-field select:focus {
+  border-color: var(--kii-red);
+
+  box-shadow:
+    0 0 0 3px rgba(201, 21, 43, 0.08);
+}
+
+
+/* =========================================================
+   PROFILE LOCATION
+========================================================= */
+
+.modal-karyawan-profile-location {
+  width: 100%;
+  height: 36px;
+
+  min-width: 0;
+
+  display: flex;
+  align-items: center;
+
+  gap: 7px;
+
+  padding: 0 10px;
+
+  border: 1px solid var(--border);
+  border-radius: 7px;
+
+  background: var(--white);
+
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease,
+    background 0.2s ease;
+}
+
+.modal-karyawan-profile-location:focus-within {
+  border-color: var(--kii-red);
+
+  box-shadow:
+    0 0 0 3px rgba(201, 21, 43, 0.08);
+}
+
+.modal-karyawan-profile-location svg {
+  flex-shrink: 0;
+
+  color: #999999;
+}
+
+.modal-karyawan-profile-location input {
+  width: 100%;
+  min-width: 0;
+  height: 100%;
+
+  padding: 0;
+
+  border: 0;
+  outline: 0;
+
+  background: transparent;
+
+  color: var(--text-primary);
+
+  font-family: Arial, Helvetica, sans-serif;
+
+  font-size: 10px;
+}
+
+.modal-karyawan-profile-location input::placeholder {
+  color: #b1b1b1;
+}
+
+
+/* =========================================================
+   STATUS TOGGLE
+========================================================= */
+
+.modal-karyawan-status-toggle {
+  position: relative;
+
+  flex-shrink: 0;
+
+  height: 28px;
+
+  padding: 0 9px 0 4px;
+
+  display: inline-flex;
+  align-items: center;
+
+  gap: 7px;
+
+  border: 1px solid #dddddd;
+  border-radius: 999px;
+
+  background: #f4f4f4;
+
+  color: #777777;
+
+  font-family: Arial, Helvetica, sans-serif;
+
+  font-size: 10px;
+  font-weight: 700;
+
+  cursor: pointer;
+
+  transition:
+    background 0.2s ease,
+    border-color 0.2s ease,
+    color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.modal-karyawan-status-toggle:hover {
+  border-color: #cccccc;
+}
+
+.modal-karyawan-status-toggle-track {
+  position: relative;
+
+  width: 30px;
+  height: 18px;
+
+  flex-shrink: 0;
+
+  display: block;
+
+  border-radius: 999px;
+
+  background: #d5d5d5;
+
+  transition: background 0.2s ease;
+}
+
+.modal-karyawan-status-toggle-thumb {
+  position: absolute;
+
+  top: 2px;
+  left: 2px;
+
+  width: 14px;
+  height: 14px;
+
+  border-radius: 50%;
+
+  background: var(--white);
+
+  box-shadow:
+    0 1px 3px rgba(0, 0, 0, 0.2);
+
+  transition:
+    transform 0.2s ease;
+}
+
+.modal-karyawan-status-toggle-active {
+  border-color: #b9dcc3;
+
+  background: var(--success-light);
+
+  color: var(--success);
+}
+
+.modal-karyawan-status-toggle-active
+.modal-karyawan-status-toggle-track {
+  background: var(--success);
+}
+
+.modal-karyawan-status-toggle-active
+.modal-karyawan-status-toggle-thumb {
+  transform: translateX(12px);
+}
+
+.modal-karyawan-status-toggle-inactive {
+  border-color: #dddddd;
+
+  background: #f5f5f5;
+
+  color: #777777;
+}
+
+
+/* =========================================================
+   LARGE STATUS TOGGLE
+========================================================= */
+
+.modal-karyawan-status-toggle-large {
+  min-width: 118px;
+
+  height: 38px;
+
+  padding: 0 13px 0 5px;
+
+  gap: 9px;
+
+  font-size: 11px;
+}
+
+.modal-karyawan-status-toggle-large
+.modal-karyawan-status-toggle-track {
+  width: 38px;
+  height: 22px;
+}
+
+.modal-karyawan-status-toggle-large
+.modal-karyawan-status-toggle-thumb {
+  width: 18px;
+  height: 18px;
+
+  top: 2px;
+  left: 2px;
+}
+
+.modal-karyawan-status-toggle-large.modal-karyawan-status-toggle-active
+.modal-karyawan-status-toggle-thumb {
+  transform: translateX(16px);
+}
+
+
+/* =========================================================
+   TABS
+   SINGLE HORIZONTAL LINE
+========================================================= */
+
+.modal-karyawan-tabs {
+  flex-shrink: 0;
+
+  display: flex;
+  align-items: stretch;
+
+  width: 100%;
+
+  padding: 0 28px;
+
+  border-bottom: 1px solid var(--border);
+
+  background: var(--white);
+
+  overflow-x: auto;
+  overflow-y: hidden;
+
+  scrollbar-width: thin;
+  scrollbar-color:
+    #d5d5d5
+    transparent;
+}
+
+.modal-karyawan-tabs::-webkit-scrollbar {
+  height: 4px;
+}
+
+.modal-karyawan-tabs::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.modal-karyawan-tabs::-webkit-scrollbar-thumb {
+  background: #d5d5d5;
+
+  border-radius: 999px;
+}
+
+
+/* =========================================================
+   TAB ITEM
+========================================================= */
+
+.modal-karyawan-tab {
+  position: relative;
+
+  flex: 0 0 auto;
+
+  min-width: max-content;
+
+  height: 48px;
+
+  padding: 0 17px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  gap: 7px;
+
+  border: 0;
+  border-bottom: 2px solid transparent;
+
+  border-radius: 0;
+
+  background: transparent;
+
+  color: var(--text-muted);
+
+  font-family: Arial, Helvetica, sans-serif;
+
+  font-size: 10px;
+  font-weight: 600;
+
+  white-space: nowrap;
+
+  cursor: pointer;
+
+  transition:
+    color 0.2s ease,
+    background 0.2s ease,
+    border-color 0.2s ease;
+}
+
+.modal-karyawan-tab svg {
+  flex-shrink: 0;
+
+  color: #a0a0a0;
+
+  transition: color 0.2s ease;
+}
+
+.modal-karyawan-tab:hover {
+  color: var(--text-primary);
+
+  background: #fafafa;
+}
+
+.modal-karyawan-tab-active {
+  color: var(--kii-red);
+
+  background: transparent;
+
+  border-bottom-color: var(--kii-red);
+}
+
+.modal-karyawan-tab-active svg {
+  color: var(--kii-red);
+}
+
+
+/* =========================================================
+   FORM
+========================================================= */
+
+.modal-karyawan-form {
+  min-height: 0;
+
+  flex: 1;
+
+  display: flex;
+  flex-direction: column;
+
+  overflow: hidden;
+}
+
+
+/* =========================================================
+   TAB CONTENT
+========================================================= */
+
+.modal-karyawan-tab-content {
+  min-height: 0;
+
+  flex: 1;
+
+  overflow-y: auto;
+
+  padding: 24px 28px 30px;
+
+  scrollbar-width: thin;
+
+  scrollbar-color:
+    #d5d5d5
+    transparent;
+}
+
+.modal-karyawan-tab-content::-webkit-scrollbar {
+  width: 6px;
+}
+
+.modal-karyawan-tab-content::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.modal-karyawan-tab-content::-webkit-scrollbar-thumb {
+  background: #d5d5d5;
+
+  border-radius: 10px;
+}
+
+
+/* =========================================================
+   SECTION HEADER
+========================================================= */
+
+.modal-karyawan-form-section-header {
+  display: flex;
+  align-items: flex-start;
+
+  gap: 11px;
+
+  margin-bottom: 20px;
+}
+
+.modal-karyawan-section-icon {
+  width: 34px;
+  height: 34px;
+
+  flex-shrink: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 8px;
+
+  background: var(--kii-red-light);
+
+  color: var(--kii-red);
+}
+
+.modal-karyawan-form-section-header h3 {
+  margin: 1px 0 0;
+
+  color: var(--text-primary);
+
+  font-size: 14px;
+  line-height: 1.3;
+
+  font-weight: 700;
+}
+
+.modal-karyawan-form-section-header p {
+  margin: 4px 0 0;
+
+  color: var(--text-muted);
+
+  font-size: 10px;
+  line-height: 1.5;
+}
+
+
+/* =========================================================
+   FORM GRID
+   DESKTOP = 3 COLUMN
+========================================================= */
+
+.modal-karyawan-form-grid {
+  width: 100%;
+
+  display: grid;
+
+  grid-template-columns:
+    repeat(3, minmax(0, 1fr));
+
+  column-gap: 16px;
+
+  row-gap: 17px;
+
+  align-items: start;
+}
+
+.modal-karyawan-form-grid-3 {
+  grid-template-columns:
+    repeat(3, minmax(0, 1fr));
+}
+
+
+/* =========================================================
+   FULL WIDTH
+========================================================= */
+
+.modal-karyawan-form-field-full {
+  grid-column: 1 / -1;
+}
+
+
+/* =========================================================
+   FORM FIELD
+========================================================= */
+
+.modal-karyawan-form-field {
+  min-width: 0;
+
+  display: flex;
+  flex-direction: column;
+
+  gap: 6px;
+}
+
+.modal-karyawan-form-field label {
+  display: block;
+
+  color: #333333;
+
+  font-size: 10px;
+  line-height: 1.4;
+
+  font-weight: 600;
+}
+
+.modal-karyawan-required {
+  margin-left: 3px;
+
+  color: var(--kii-red);
+
+  font-weight: 700;
+}
+
+
+/* =========================================================
+   INPUT
+========================================================= */
+
+.modal-karyawan-input-wrapper {
+  width: 100%;
+  height: 39px;
+
+  min-width: 0;
+
+  display: flex;
+  align-items: center;
+
+  gap: 8px;
+
+  padding: 0 11px;
+
+  border: 1px solid var(--border);
+  border-radius: 7px;
+
+  background: var(--white);
+
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease,
+    background 0.2s ease;
+}
+
+.modal-karyawan-input-wrapper:hover {
+  border-color: #d2d2d2;
+}
+
+.modal-karyawan-input-wrapper:focus-within {
+  border-color: var(--kii-red);
+
+  box-shadow:
+    0 0 0 3px rgba(201, 21, 43, 0.07);
+}
+
+.modal-karyawan-input-wrapper input {
+  width: 100%;
+  height: 100%;
+
+  min-width: 0;
+
+  padding: 0;
+
+  border: 0;
+  outline: 0;
+
+  background: transparent;
+
+  color: var(--text-primary);
+
+  font-family: Arial, Helvetica, sans-serif;
+
+  font-size: 11px;
+}
+
+.modal-karyawan-input-wrapper input::placeholder {
+  color: #b1b1b1;
+}
+
+
+/* =========================================================
+   NUMBER INPUT
+========================================================= */
+
+.modal-karyawan-input-wrapper input[type="number"] {
+  appearance: textfield;
+  -moz-appearance: textfield;
+}
+
+.modal-karyawan-input-wrapper input[type="number"]::-webkit-inner-spin-button,
+.modal-karyawan-input-wrapper input[type="number"]::-webkit-outer-spin-button {
+  margin: 0;
+
+  appearance: none;
+}
+
+
+/* =========================================================
+   TEXTAREA
+========================================================= */
+
+.modal-karyawan-form-field textarea {
+  width: 100%;
+
+  min-height: 84px;
+
+  padding: 10px 11px;
+
+  resize: vertical;
+
+  border: 1px solid var(--border);
+  border-radius: 7px;
+
+  outline: 0;
+
+  background: var(--white);
+
+  color: var(--text-primary);
+
+  font-family: Arial, Helvetica, sans-serif;
+
+  font-size: 11px;
+
+  line-height: 1.5;
+
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.modal-karyawan-form-field textarea:hover {
+  border-color: #d2d2d2;
+}
+
+.modal-karyawan-form-field textarea::placeholder {
+  color: #b1b1b1;
+}
+
+.modal-karyawan-form-field textarea:focus {
+  border-color: var(--kii-red);
+
+  box-shadow:
+    0 0 0 3px rgba(201, 21, 43, 0.07);
+}
+
+
+/* =========================================================
+   FORM SELECT
+========================================================= */
+
+.modal-karyawan-form-field select {
+  width: 100%;
+  height: 39px;
+
+  min-width: 0;
+
+  padding: 0 34px 0 11px;
+
+  appearance: none;
+  -webkit-appearance: none;
+
+  border: 1px solid var(--border);
+  border-radius: 7px;
+
+  outline: 0;
+
+  background-color: var(--white);
+
+  background-image:
+    linear-gradient(
+      45deg,
+      transparent 50%,
+      #999 50%
+    ),
+    linear-gradient(
+      135deg,
+      #999 50%,
+      transparent 50%
+    );
+
+  background-position:
+    calc(100% - 15px) 16px,
+    calc(100% - 11px) 16px;
+
+  background-size:
+    4px 4px,
+    4px 4px;
+
+  background-repeat: no-repeat;
+
+  color: var(--text-primary);
+
+  font-family: Arial, Helvetica, sans-serif;
+
+  font-size: 11px;
+
+  cursor: pointer;
+
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease,
+    background-color 0.2s ease;
+}
+
+.modal-karyawan-form-field select:hover {
+  border-color: #d2d2d2;
+
+  background-color: #fcfcfc;
+}
+
+.modal-karyawan-form-field select:focus {
+  border-color: var(--kii-red);
+
+  box-shadow:
+    0 0 0 3px rgba(201, 21, 43, 0.07);
+}
+
+
+/* =========================================================
+   SECTION DIVIDER
+========================================================= */
+
+.modal-karyawan-form-divider {
+  grid-column: 1 / -1;
+
+  position: relative;
+
+  height: 1px;
+
+  margin: 5px 0 1px;
+
+  background: var(--border-light);
+}
+
+.modal-karyawan-form-divider span {
+  position: absolute;
+
+  left: 0;
+  top: 50%;
+
+  transform: translateY(-50%);
+
+  padding-right: 10px;
+
+  background: var(--white);
+
+  color: var(--text-muted);
+
+  font-size: 8px;
+  line-height: 1;
+
+  font-weight: 700;
+
+  letter-spacing: 0.7px;
+
+  text-transform: uppercase;
+}
+
+
+/* =========================================================
+   DOCUMENT FIELD
+========================================================= */
+
+.modal-karyawan-document-field {
+  min-width: 0;
+
+  display: flex;
+  flex-direction: column;
+
+  gap: 10px;
+
+  padding: 11px;
+
+  border: 1px solid var(--border);
+  border-radius: 8px;
+
+  background: var(--background-soft);
+}
+
+.modal-karyawan-document-label {
+  min-width: 0;
+
+  display: flex;
+  flex-direction: column;
+
+  gap: 4px;
+}
+
+.modal-karyawan-document-label label {
+  color: var(--text-primary);
+
+  font-size: 10px;
+
+  font-weight: 600;
+}
+
+.modal-karyawan-document-label span {
+  overflow: hidden;
+
+  color: var(--text-muted);
+
+  font-size: 8px;
+
+  white-space: nowrap;
+
+  text-overflow: ellipsis;
+}
+
+.modal-karyawan-document-actions {
+  display: flex;
+  align-items: center;
+
+  gap: 6px;
+}
+
+.modal-karyawan-document-upload-button,
+.modal-karyawan-document-download-button {
+  height: 31px;
+
+  padding: 0 9px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  gap: 6px;
+
+  border-radius: 6px;
+
+  font-family: Arial, Helvetica, sans-serif;
+
+  font-size: 9px;
+  font-weight: 600;
+
+  text-decoration: none;
+
+  cursor: pointer;
+
+  transition:
+    background 0.2s ease,
+    border-color 0.2s ease,
+    color 0.2s ease;
+}
+
+.modal-karyawan-document-upload-button {
+  border: 1px solid var(--border);
+
+  background: var(--white);
+
+  color: #555555;
+}
+
+.modal-karyawan-document-upload-button:hover {
+  border-color: #d0d0d0;
+
+  background: #f9f9f9;
+
+  color: var(--kii-red);
+}
+
+.modal-karyawan-document-download-button {
+  border: 1px solid #ecd0d4;
+
+  background: var(--kii-red-light);
+
+  color: var(--kii-red);
+}
+
+.modal-karyawan-document-download-button:hover {
+  border-color: #e6b9bf;
+
+  background: #ffe9ec;
+}
+
+
+/* =========================================================
+   FORM STATUS
+========================================================= */
+
+.modal-karyawan-form-status-field {
+  min-width: 0;
+
+  display: flex;
+  flex-direction: column;
+
+  align-items: flex-start;
+
+  gap: 6px;
+}
+
+.modal-karyawan-form-status-field label {
+  color: #333333;
+
+  font-size: 10px;
+
+  font-weight: 600;
+}
+
+
+/* =========================================================
+   ERROR
+========================================================= */
+
+.modal-karyawan-form-error {
+  display: flex;
+  align-items: flex-start;
+
+  gap: 9px;
+
+  margin-top: 18px;
+
+  padding: 11px 13px;
+
+  border: 1px solid #f2c9ce;
+  border-radius: 8px;
+
+  background: var(--kii-red-light);
+
+  color: #8f1727;
+}
+
+.modal-karyawan-form-error > span {
+  width: 18px;
+  height: 18px;
+
+  flex-shrink: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 50%;
+
+  background: var(--kii-red);
+
+  color: var(--white);
+
+  font-size: 10px;
+
+  font-weight: 700;
+}
+
+.modal-karyawan-form-error p {
+  margin: 1px 0 0;
+
+  font-size: 10px;
+
+  line-height: 1.5;
+}
+
+
+/* =========================================================
+   SUCCESS
+========================================================= */
+
+.modal-karyawan-form-success {
+  display: flex;
+  align-items: flex-start;
+
+  gap: 9px;
+
+  margin-top: 18px;
+
+  padding: 11px 13px;
+
+  border: 1px solid #cfe6d5;
+  border-radius: 8px;
+
+  background: #f2f9f4;
+
+  color: #287a42;
+}
+
+.modal-karyawan-form-success > span {
+  width: 18px;
+  height: 18px;
+
+  flex-shrink: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 50%;
+
+  background: var(--success);
+
+  color: var(--white);
+
+  font-size: 10px;
+
+  font-weight: 700;
+}
+
+.modal-karyawan-form-success p {
+  margin: 1px 0 0;
+
+  font-size: 10px;
+
+  line-height: 1.5;
+}
+
+
+/* =========================================================
+   FOCUS
+========================================================= */
+
+.modal-karyawan button:focus-visible,
+.modal-karyawan select:focus-visible,
+.modal-karyawan input:focus-visible,
+.modal-karyawan textarea:focus-visible {
+  outline: 2px solid rgba(201, 21, 43, 0.25);
+
+  outline-offset: 2px;
+}
+
+
+/* =========================================================
+   DISABLED
+========================================================= */
+
+.modal-karyawan input:disabled,
+.modal-karyawan select:disabled,
+.modal-karyawan textarea:disabled {
+  background: #fafafa;
+
+  color: #999999;
+
+  cursor: not-allowed;
+}
+
+
+/* =========================================================
+   ANIMATION
+========================================================= */
+
+@keyframes modal-karyawan-overlay-in {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes modal-karyawan-in {
+  from {
+    opacity: 0;
+
+    transform:
+      translateY(8px)
+      scale(0.985);
+  }
+
+  to {
+    opacity: 1;
+
+    transform:
+      translateY(0)
+      scale(1);
+  }
+}
+
+@keyframes modal-karyawan-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+
+/* =========================================================
+   TABLET
+========================================================= */
+
+@media (max-width: 900px) {
+
+  .modal-karyawan {
+    max-width: 940px;
+  }
+
+
+  /* -------------------------------------------------------
+     PROFILE
+  ------------------------------------------------------- */
+
+  .modal-karyawan-profile {
+    grid-template-columns:
+      minmax(170px, 0.75fr)
+      minmax(250px, 1.1fr)
+      minmax(250px, 1.1fr);
+  }
+
+  .modal-karyawan-profile-grid {
+    padding: 0 14px;
+  }
+
+  .modal-karyawan-profile-photo-wrapper {
+    flex-direction: column;
+  }
+
+
+  /* -------------------------------------------------------
+     FORM
+  ------------------------------------------------------- */
+
+  .modal-karyawan-form-grid,
+  .modal-karyawan-form-grid-3 {
+    grid-template-columns:
+      repeat(2, minmax(0, 1fr));
+  }
+}
+
+
+/* =========================================================
+   SMALL TABLET
+========================================================= */
+
+@media (max-width: 760px) {
+
+  .modal-karyawan-overlay {
+    padding: 16px;
+  }
+
+  .modal-karyawan {
+    height: calc(100vh - 32px);
+
+    max-height: none;
+  }
+
+
+  /* -------------------------------------------------------
+     HEADER
+  ------------------------------------------------------- */
+
+  .modal-karyawan-header {
+    padding: 20px 22px;
+  }
+
+
+  /* -------------------------------------------------------
+     PROFILE
+  ------------------------------------------------------- */
+
+  .modal-karyawan-profile {
+    grid-template-columns:
+      150px
+      minmax(0, 1fr);
+  }
+
+  .modal-karyawan-profile-placement-grid {
+    grid-column: 1 / -1;
+
+    display: grid;
+
+    grid-template-columns:
+      repeat(2, minmax(0, 1fr));
+
+    margin-top: 15px;
+
+    padding: 15px 0 0;
+
+    border-top: 1px solid var(--border-light);
+  }
+
+  .modal-karyawan-profile-placement-grid {
+    border-left: 0 !important;
+  }
+
+
+  /* -------------------------------------------------------
+     TABS
+  ------------------------------------------------------- */
+
+  .modal-karyawan-tabs {
+    padding: 10px 22px;
+  }
+
+
+  /* -------------------------------------------------------
+     CONTENT
+  ------------------------------------------------------- */
+
+  .modal-karyawan-tab-content {
+    padding:
+      22px 22px 28px;
+  }
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 560px) {
+
+  .modal-karyawan-overlay {
+    padding: 0;
+
+    align-items: stretch;
+  }
+
+  .modal-karyawan {
+    width: 100%;
+    max-width: none;
+
+    height: 100vh;
+    max-height: none;
+
+    min-height: 100vh;
+
+    border: 0;
+    border-radius: 0;
+
+    box-shadow: none;
+  }
+
+
+  /* -------------------------------------------------------
+     HEADER
+  ------------------------------------------------------- */
+
+  .modal-karyawan-header {
+    padding: 17px;
+
+    gap: 12px;
+  }
+
+  .modal-karyawan-header h2 {
+    font-size: 19px;
+  }
+
+  .modal-karyawan-header p:last-child {
+    font-size: 9px;
+  }
+
+  .modal-karyawan-header-actions {
+    gap: 6px;
+  }
+
+  .modal-karyawan-primary-button {
+    height: 38px;
+
+    min-width: auto;
+
+    padding: 0 12px;
+
+    font-size: 10px;
+  }
+
+  .modal-karyawan-primary-button svg {
+    width: 14px;
+    height: 14px;
+  }
+
+  .modal-karyawan-close-button {
+    width: 38px;
+    height: 38px;
+  }
+
+
+  /* -------------------------------------------------------
+     PROFILE
+  ------------------------------------------------------- */
+
+  .modal-karyawan-profile {
+    margin: 0 17px;
+
+    padding: 15px 0;
+
+    grid-template-columns:
+      105px
+      minmax(0, 1fr);
+  }
+
+  .modal-karyawan-profile-grid {
+    padding: 0 10px;
+  }
+
+  .modal-karyawan-profile-grid:first-child {
+    padding-left: 0;
+  }
+
+  .modal-karyawan-profile-grid:nth-child(2) {
+    padding-right: 0;
+  }
+
+  .modal-karyawan-profile-photo-wrapper {
+    gap: 8px;
+  }
+
+  .modal-karyawan-profile-photo {
+    width: 72px;
+    height: 72px;
+
+    border-radius: 10px;
+  }
+
+  .modal-karyawan-upload-photo-button {
+    width: 72px;
+
+    height: 28px;
+
+    padding: 0 5px;
+
+    gap: 4px;
+
+    font-size: 8px;
+  }
+
+  .modal-karyawan-upload-photo-button svg {
+    width: 11px;
+    height: 11px;
+  }
+
+  .modal-karyawan-profile-name h3 {
+    font-size: 14px;
+  }
+
+  .modal-karyawan-profile-meta {
+    gap: 5px;
+  }
+
+  .modal-karyawan-profile-meta-item {
+    padding: 6px 7px;
+  }
+
+  .modal-karyawan-profile-meta-item span {
+    font-size: 7px;
+  }
+
+  .modal-karyawan-profile-meta-item strong {
+    font-size: 8px;
+  }
+
+  .modal-karyawan-profile-status {
+    gap: 6px;
+  }
+
+  .modal-karyawan-profile-label {
+    font-size: 7px;
+  }
+
+
+  /* -------------------------------------------------------
+     STATUS TOGGLE
+  ------------------------------------------------------- */
+
+  .modal-karyawan-status-toggle {
+    height: 25px;
+
+    padding:
+      0 7px 0 3px;
+
+    gap: 5px;
+
+    font-size: 8px;
+  }
+
+  .modal-karyawan-status-toggle-track {
+    width: 27px;
+    height: 16px;
+  }
+
+  .modal-karyawan-status-toggle-thumb {
+    width: 12px;
+    height: 12px;
+
+    top: 2px;
+    left: 2px;
+  }
+
+  .modal-karyawan-status-toggle-active
+  .modal-karyawan-status-toggle-thumb {
+    transform: translateX(11px);
+  }
+
+
+  /* -------------------------------------------------------
+     PLACEMENT
+  ------------------------------------------------------- */
+
+  .modal-karyawan-profile-placement-grid {
+    grid-template-columns:
+      repeat(2, minmax(0, 1fr));
+
+    gap: 8px;
+
+    margin-top: 12px;
+
+    padding-top: 12px;
+  }
+
+  .modal-karyawan-profile-edit-field {
+    gap: 4px;
+  }
+
+  .modal-karyawan-profile-edit-field label {
+    font-size: 7px;
+  }
+
+  .modal-karyawan-profile-edit-field select,
+  .modal-karyawan-profile-location {
+    height: 32px;
+  }
+
+  .modal-karyawan-profile-edit-field select,
+  .modal-karyawan-profile-location input {
+    font-size: 9px;
+  }
+
+
+  /* -------------------------------------------------------
+     TABS
+  ------------------------------------------------------- */
+
+  .modal-karyawan-tabs {
+    padding: 8px 12px;
+  }
+
+  .modal-karyawan-tabs-grid {
+    grid-template-columns:
+      repeat(3, minmax(0, 1fr));
+
+    gap: 4px;
+  }
+
+  .modal-karyawan-tab {
+    height: 38px;
+
+    padding: 0 5px;
+
+    gap: 5px;
+
+    border-radius: 7px;
+
+    font-size: 8px;
+  }
+
+  .modal-karyawan-tab svg {
+    width: 13px;
+    height: 13px;
+  }
+
+
+  /* -------------------------------------------------------
+     CONTENT
+  ------------------------------------------------------- */
+
+  .modal-karyawan-tab-content {
+    padding:
+      18px 17px 24px;
+  }
+
+  .modal-karyawan-form-section-header {
+    margin-bottom: 15px;
+
+    gap: 9px;
+  }
+
+  .modal-karyawan-section-icon {
+    width: 30px;
+    height: 30px;
+
+    border-radius: 7px;
+  }
+
+  .modal-karyawan-form-section-header h3 {
+    font-size: 13px;
+  }
+
+  .modal-karyawan-form-section-header p {
+    font-size: 9px;
+  }
+
+
+  /* -------------------------------------------------------
+     FORM
+  ------------------------------------------------------- */
+
+  .modal-karyawan-form-grid,
+  .modal-karyawan-form-grid-3 {
+    grid-template-columns:
+      1fr;
+
+    row-gap: 13px;
+  }
+
+  .modal-karyawan-form-field-full {
+    grid-column: auto;
+  }
+
+  .modal-karyawan-form-divider {
+    grid-column: 1;
+  }
+
+
+  /* -------------------------------------------------------
+     DOCUMENT
+  ------------------------------------------------------- */
+
+  .modal-karyawan-document-field {
+    padding: 10px;
+  }
+
+
+  /* -------------------------------------------------------
+     MESSAGE
+  ------------------------------------------------------- */
+
+  .modal-karyawan-form-error,
+  .modal-karyawan-form-success {
+    margin-top: 14px;
+
+    padding: 10px 11px;
+  }
+
+  .modal-karyawan-form-error p,
+  .modal-karyawan-form-success p {
+    font-size: 9px;
+  }
+}
+
+
+/* =========================================================
+   VERY SMALL MOBILE
+========================================================= */
+
+@media (max-width: 380px) {
+
+  .modal-karyawan-header {
+    padding: 15px 13px;
+  }
+
+  .modal-karyawan-header h2 {
+    font-size: 17px;
+  }
+
+  .modal-karyawan-header p:last-child {
+    display: none;
+  }
+
+  .modal-karyawan-primary-button {
+    padding: 0 9px;
+  }
+
+  .modal-karyawan-primary-button svg {
+    display: none;
+  }
+
+  .modal-karyawan-close-button {
+    width: 36px;
+    height: 36px;
+  }
+
+
+  /* -------------------------------------------------------
+     PROFILE
+  ------------------------------------------------------- */
+
+  .modal-karyawan-profile {
+    margin: 0 13px;
+
+    grid-template-columns:
+      92px
+      minmax(0, 1fr);
+  }
+
+  .modal-karyawan-profile-photo {
+    width: 66px;
+    height: 66px;
+  }
+
+  .modal-karyawan-upload-photo-button {
+    width: 66px;
+  }
+
+  .modal-karyawan-profile-name h3 {
+    font-size: 13px;
+  }
+
+  .modal-karyawan-profile-meta {
+    grid-template-columns: 1fr;
+  }
+
+  .modal-karyawan-profile-status {
+    align-items: flex-start;
+
+    flex-direction: column;
+  }
+
+  .modal-karyawan-profile-placement-grid {
+    grid-template-columns: 1fr;
+  }
+
+
+  /* -------------------------------------------------------
+     TABS
+  ------------------------------------------------------- */
+
+  .modal-karyawan-tabs {
+    padding:
+      7px 8px;
+  }
+
+  .modal-karyawan-tab {
+    height: 36px;
+
+    font-size: 7px;
+
+    gap: 3px;
+  }
+
+  .modal-karyawan-tab svg {
+    width: 11px;
+    height: 11px;
+  }
+
+
+  /* -------------------------------------------------------
+     CONTENT
+  ------------------------------------------------------- */
+
+  .modal-karyawan-tab-content {
+    padding:
+      16px 13px 20px;
+  }
+}

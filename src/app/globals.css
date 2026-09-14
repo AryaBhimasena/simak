@@ -1,137 +1,110 @@
-/* ====================================== */
-/* SIMAK GLOBAL SYSTEM */
-/* ====================================== */
+/* =========================
+   GLOBAL VARIABLES
+========================= */
 
 :root {
+  /* BRAND */
 
-  /* ================= COLORS ================= */
+  --kii-red: #c9152b;
+  --kii-red-dark: #a90f22;
+  --kii-red-light: #fff1f3;
 
-  --simak-bg:
-    #eef2f7;
+  /* TEXT */
 
-  --simak-bg-secondary:
-    #e7edf5;
+  --text-primary: #171717;
+  --text-secondary: #666666;
+  --text-muted: #929292;
 
-  --simak-surface:
-    rgba(255,255,255,0.58);
+  /* SURFACE */
 
-  --simak-surface-strong:
-    rgba(255,255,255,0.72);
+  --white: #ffffff;
+  --background: #f7f7f8;
 
-  --simak-border:
-    rgba(255,255,255,0.7);
+  /* BORDER */
 
-  --simak-border-soft:
-    rgba(148,163,184,0.18);
+  --border: #e7e7e7;
+  --border-light: #eeeeee;
 
-  /* ================= TEXT ================= */
+  /* UI */
 
-  --simak-text:
-    #1e293b;
+  --input-height: 50px;
+  --button-height: 50px;
 
-  --simak-text-soft:
-    #64748b;
+  --radius-sm: 7px;
+  --radius-md: 9px;
+  --radius-lg: 14px;
+  --radius-xl: 20px;
 
-  --simak-text-muted:
-    #94a3b8;
+  /* SHADOW */
 
-  /* ================= BRAND ================= */
+  --shadow-card:
+    0 20px 60px rgba(0, 0, 0, 0.06),
+    0 2px 8px rgba(0, 0, 0, 0.03);
 
-  --simak-primary:
-    #dc2626;
-
-  --simak-primary-hover:
-    #b91c1c;
-
-  /* ================= STATUS ================= */
-
-  --simak-success:
-    #16a34a;
-
-  --simak-danger:
-    #dc2626;
-
-  --simak-warning:
-    #f59e0b;
-
-  /* ================= EFFECT ================= */
-
-  --simak-shadow:
-    0 10px 40px rgba(15,23,42,0.08);
-
-  --simak-shadow-hover:
-    0 20px 50px rgba(15,23,42,0.12);
-
-  --simak-blur:
-    blur(18px);
-
-  --simak-radius:
-    24px;
+  --shadow-dropdown:
+    0 16px 40px rgba(0, 0, 0, 0.09),
+    0 3px 8px rgba(0, 0, 0, 0.03);
 }
 
-/* ====================================== */
-/* RESET */
-/* ====================================== */
 
-* {
+/* =========================
+   RESET
+========================= */
+
+*,
+*::before,
+*::after {
   box-sizing: border-box;
 }
 
+
+/* =========================
+   DOCUMENT
+========================= */
+
 html,
 body {
-  padding: 0;
   margin: 0;
+  padding: 0;
+
+  width: 100%;
+  min-height: 100%;
+
+  overflow-x: hidden;
 }
+
+
+/* =========================
+   BODY
+========================= */
 
 body {
+  background: var(--background);
+
+  color: var(--text-primary);
+
   font-family:
-    var(--font-geist-sans),
+    Arial,
+    Helvetica,
     sans-serif;
 
-  background:
-    radial-gradient(
-      circle at top right,
-      rgba(220,38,38,0.08),
-      transparent 20%
-    ),
-    linear-gradient(
-      135deg,
-      var(--simak-bg),
-      var(--simak-bg-secondary)
-    );
-
-  color: var(--simak-text);
-
-  min-height: 100vh;
-
   -webkit-font-smoothing: antialiased;
-  text-rendering: optimizeLegibility;
+  -moz-osx-font-smoothing: grayscale;
 }
 
-/* ====================================== */
-/* SCROLLBAR */
-/* ====================================== */
 
-::-webkit-scrollbar {
-  width: 10px;
+/* =========================
+   LINKS
+========================= */
+
+a {
+  color: inherit;
 }
 
-::-webkit-scrollbar-track {
-  background: transparent;
-}
 
-::-webkit-scrollbar-thumb {
-  background: rgba(148,163,184,0.4);
-  border-radius: 999px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: rgba(100,116,139,0.6);
-}
-
-/* ====================================== */
-/* BASE */
-/* ====================================== */
+/* =========================
+   BUTTON
+========================= */
 
 button,
 input,
@@ -140,7 +113,21 @@ select {
   font: inherit;
 }
 
-a {
-  color: inherit;
-  text-decoration: none;
+
+/* =========================
+   IMAGES
+========================= */
+
+img,
+svg {
+  max-width: 100%;
+}
+
+
+/* =========================
+   APP ROOT
+========================= */
+
+#__next {
+  min-height: 100vh;
 }

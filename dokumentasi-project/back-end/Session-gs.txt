@@ -1,0 +1,1094 @@
+/* =========================================================
+   Session.gs
+
+   SESSION MANAGEMENT
+   ---------------------------------------------------------
+   Tabel:
+   - tbl_sessions
+   - tbl_log_history
+
+   tbl_sessions:
+   session_id
+   user_id
+   created_at
+   expired_at
+   status
+
+   tbl_log_history:
+   id_user
+   id_karyawan
+   nama_user
+   password
+   role
+   endpoint_used
+   activity
+   created_at
+   updated_at
+
+   STATUS SESSION:
+   - ACTIVE
+   - EXPIRED
+
+   SESSION:
+   - Berlaku 4 jam.
+   - Tidak diperpanjang otomatis.
+   - Tidak ada status DESTROYED.
+   - Logout mengubah status ACTIVE menjadi EXPIRED.
+
+   CATATAN:
+   - Password pada tbl_log_history sengaja dikosongkan.
+========================================================= */
+
+
+/* =========================================================
+   KONFIGURASI SESSION
+========================================================= */
+
+const SESSION_CONFIG = {
+
+  // -------------------------------------------------------
+  // SESSION BERLAKU 4 JAM
+  // -------------------------------------------------------
+
+  DURATION_HOURS: 4,
+
+  // -------------------------------------------------------
+  // NAMA SHEET SESSION
+  // -------------------------------------------------------
+
+  SHEETS: {
+    SESSIONS: "tbl_sessions",
+    LOG_HISTORY: "tbl_log_history",
+    USERS: "tbl_users",
+  },
+
+  // -------------------------------------------------------
+  // STATUS SESSION
+  // -------------------------------------------------------
+
+  STATUS: {
+    ACTIVE: "ACTIVE",
+    EXPIRED: "EXPIRED",
+  },
+
+};
+
+
+/* =========================================================
+   CREATE SESSION
+   ---------------------------------------------------------
+   Dipanggil oleh Auth.gs:
+
+   const session = createSession_(user.user_id);
+
+   Proses:
+   1. Validasi user_id
+   2. Generate session_id
+   3. Tentukan created_at
+   4. Tentukan expired_at = created_at + 4 jam
+   5. Simpan ke tbl_sessions
+
+   Session TIDAK diperpanjang otomatis.
+========================================================= */
+
+function createSession_(userId) {
+
+  userId = String(userId || "").trim();
+
+
+  if (!userId) {
+
+    throw new Error(
+      "User ID tidak valid untuk membuat session."
+    );
+
+  }
+
+
+  const lock = LockService.getScriptLock();
+
+  lock.waitLock(10000);
+
+
+  try {
+
+    const sheet = getSessionSheet_();
+
+    const createdAt = new Date();
+
+
+    // -----------------------------------------------------
+    // SESSION EXPIRED = CREATED + 4 JAM
+    // -----------------------------------------------------
+
+    const expiredAt = new Date(
+      createdAt.getTime() +
+      (
+        SESSION_CONFIG.DURATION_HOURS *
+        60 *
+        60 *
+        1000
+      )
+    );
+
+
+    // -----------------------------------------------------
+    // GENERATE SESSION ID
+    // -----------------------------------------------------
+
+    const sessionId = generateSessionId_();
+
+
+    // -----------------------------------------------------
+    // SIMPAN SESSION
+    // -----------------------------------------------------
+
+    sheet.appendRow([
+      sessionId,
+      userId,
+      createdAt,
+      expiredAt,
+      SESSION_CONFIG.STATUS.ACTIVE,
+    ]);
+
+
+    return {
+
+      session_id: sessionId,
+
+      user_id: userId,
+
+      created_at: createdAt,
+
+      expired_at: expiredAt,
+
+      status: SESSION_CONFIG.STATUS.ACTIVE,
+
+    };
+
+
+  } finally {
+
+    lock.releaseLock();
+
+  }
+
+}
+
+
+/* =========================================================
+   GENERATE SESSION ID
+========================================================= */
+
+function generateSessionId_() {
+
+  const uuid1 = Utilities.getUuid();
+
+  const uuid2 = Utilities.getUuid();
+
+
+  return (
+    uuid1 +
+    uuid2
+  ).replace(/-/g, "");
+
+}
+
+
+/* =========================================================
+   VALIDATE SESSION
+   ---------------------------------------------------------
+   WAJIB dipanggil oleh setiap endpoint yang membutuhkan
+   autentikasi.
+
+   Input:
+   - sessionId
+
+   Return ACTIVE:
+
+   {
+     success: true,
+     authenticated: true,
+     session_valid: true,
+     session_expired: false,
+     code: "SESSION_ACTIVE",
+     user_id: "...",
+     session_id: "...",
+     expired_at: ...
+   }
+
+   Return EXPIRED:
+
+   {
+     success: false,
+     authenticated: false,
+     session_valid: false,
+     session_expired: true,
+     code: "SESSION_EXPIRED"
+   }
+========================================================= */
+
+function validateSession_(sessionId) {
+
+  sessionId = String(sessionId || "").trim();
+
+
+  // -------------------------------------------------------
+  // SESSION ID KOSONG
+  // -------------------------------------------------------
+
+  if (!sessionId) {
+
+    return {
+
+      success: false,
+
+      authenticated: false,
+
+      session_valid: false,
+
+      session_expired: true,
+
+      code: "SESSION_EXPIRED",
+
+      message:
+        "Session tidak ditemukan. Silakan login kembali.",
+
+    };
+
+  }
+
+
+  const sheet = getSessionSheet_();
+
+  const values = sheet.getDataRange().getValues();
+
+
+  if (values.length < 2) {
+
+    return {
+
+      success: false,
+
+      authenticated: false,
+
+      session_valid: false,
+
+      session_expired: true,
+
+      code: "SESSION_EXPIRED",
+
+      message:
+        "Session tidak ditemukan. Silakan login kembali.",
+
+    };
+
+  }
+
+
+  // -------------------------------------------------------
+  // HEADER
+  // -------------------------------------------------------
+
+  const headers = values[0].map(function (header) {
+
+    return String(header).trim();
+
+  });
+
+
+  const index = createSessionHeaderIndex_(headers);
+
+  validateSessionHeaders_(index);
+
+
+  const now = new Date();
+
+
+  // -------------------------------------------------------
+  // CARI SESSION
+  // -------------------------------------------------------
+
+  for (let i = 1; i < values.length; i++) {
+
+    const row = values[i];
+
+
+    const rowSessionId = String(
+      row[index.session_id] || ""
+    ).trim();
+
+
+    if (rowSessionId !== sessionId) {
+      continue;
+    }
+
+
+    const userId = String(
+      row[index.user_id] || ""
+    ).trim();
+
+
+    const createdAt = row[index.created_at];
+
+    const expiredAt = normalizeSessionDate_(
+      row[index.expired_at]
+    );
+
+
+    const status = String(
+      row[index.status] || ""
+    ).trim().toUpperCase();
+
+
+    // -----------------------------------------------------
+    // SESSION SUDAH EXPIRED
+    // -----------------------------------------------------
+
+    if (
+      status ===
+      SESSION_CONFIG.STATUS.EXPIRED
+    ) {
+
+      return {
+
+        success: false,
+
+        authenticated: false,
+
+        session_valid: false,
+
+        session_expired: true,
+
+        code: "SESSION_EXPIRED",
+
+        message:
+          "Session telah expired. Silakan login kembali.",
+
+        user_id: userId,
+
+        session_id: sessionId,
+
+        expired_at: expiredAt,
+
+      };
+
+    }
+
+
+    // -----------------------------------------------------
+    // STATUS TIDAK VALID
+    // -----------------------------------------------------
+
+    if (
+      status !==
+      SESSION_CONFIG.STATUS.ACTIVE
+    ) {
+
+      return {
+
+        success: false,
+
+        authenticated: false,
+
+        session_valid: false,
+
+        session_expired: true,
+
+        code: "SESSION_EXPIRED",
+
+        message:
+          "Session tidak valid. Silakan login kembali.",
+
+        user_id: userId,
+
+        session_id: sessionId,
+
+      };
+
+    }
+
+
+    // -----------------------------------------------------
+    // EXPIRED_AT TIDAK VALID
+    // -----------------------------------------------------
+
+    if (!expiredAt) {
+
+      return {
+
+        success: false,
+
+        authenticated: false,
+
+        session_valid: false,
+
+        session_expired: true,
+
+        code: "SESSION_EXPIRED",
+
+        message:
+          "Session tidak valid. Silakan login kembali.",
+
+        user_id: userId,
+
+        session_id: sessionId,
+
+      };
+
+    }
+
+
+    // -----------------------------------------------------
+    // CEK WAKTU
+    //
+    // Session tetap ACTIVE sampai ada request.
+    //
+    // Jika request datang setelah expired_at:
+    //
+    // ACTIVE → EXPIRED
+    // -----------------------------------------------------
+
+    if (
+      now.getTime() >=
+      expiredAt.getTime()
+    ) {
+
+      sheet
+        .getRange(
+          i + 1,
+          index.status + 1
+        )
+        .setValue(
+          SESSION_CONFIG.STATUS.EXPIRED
+        );
+
+
+      return {
+
+        success: false,
+
+        authenticated: false,
+
+        session_valid: false,
+
+        session_expired: true,
+
+        code: "SESSION_EXPIRED",
+
+        message:
+          "Session telah expired. Silakan login kembali.",
+
+        user_id: userId,
+
+        session_id: sessionId,
+
+        created_at: createdAt,
+
+        expired_at: expiredAt,
+
+      };
+
+    }
+
+
+    // -----------------------------------------------------
+    // SESSION MASIH ACTIVE
+    // -----------------------------------------------------
+
+    return {
+
+      success: true,
+
+      authenticated: true,
+
+      session_valid: true,
+
+      session_expired: false,
+
+      code: "SESSION_ACTIVE",
+
+      message: "Session aktif.",
+
+      user_id: userId,
+
+      session_id: sessionId,
+
+      created_at: createdAt,
+
+      expired_at: expiredAt,
+
+      status: SESSION_CONFIG.STATUS.ACTIVE,
+
+    };
+
+  }
+
+
+  // -------------------------------------------------------
+  // SESSION TIDAK DITEMUKAN
+  // -------------------------------------------------------
+
+  return {
+
+    success: false,
+
+    authenticated: false,
+
+    session_valid: false,
+
+    session_expired: true,
+
+    code: "SESSION_EXPIRED",
+
+    message:
+      "Session tidak ditemukan. Silakan login kembali.",
+
+  };
+
+}
+
+
+/* =========================================================
+   LOGOUT
+   ---------------------------------------------------------
+   Frontend mengirim:
+
+   session_id
+
+   Backend:
+   ACTIVE → EXPIRED
+
+   Tidak ada penghapusan row.
+========================================================= */
+
+function logoutSession_(sessionId) {
+
+  sessionId = String(sessionId || "").trim();
+
+
+  if (!sessionId) {
+
+    return {
+
+      success: false,
+
+      code: "SESSION_EXPIRED",
+
+      message:
+        "Session tidak ditemukan.",
+
+    };
+
+  }
+
+
+  const sheet = getSessionSheet_();
+
+  const values = sheet.getDataRange().getValues();
+
+
+  if (values.length < 2) {
+
+    return {
+
+      success: false,
+
+      code: "SESSION_EXPIRED",
+
+      message:
+        "Session tidak ditemukan.",
+
+    };
+
+  }
+
+
+  const headers = values[0].map(function (header) {
+
+    return String(header).trim();
+
+  });
+
+
+  const index = createSessionHeaderIndex_(headers);
+
+  validateSessionHeaders_(index);
+
+
+  for (let i = 1; i < values.length; i++) {
+
+    const row = values[i];
+
+
+    const rowSessionId = String(
+      row[index.session_id] || ""
+    ).trim();
+
+
+    if (rowSessionId !== sessionId) {
+      continue;
+    }
+
+
+    const userId = row[index.user_id];
+
+
+    const currentStatus = String(
+      row[index.status] || ""
+    ).trim().toUpperCase();
+
+
+    // -----------------------------------------------------
+    // SESSION SUDAH EXPIRED
+    // -----------------------------------------------------
+
+    if (
+      currentStatus ===
+      SESSION_CONFIG.STATUS.EXPIRED
+    ) {
+
+      return {
+
+        success: true,
+
+        code: "SESSION_EXPIRED",
+
+        message:
+          "Session sudah tidak aktif.",
+
+        user_id: userId,
+
+        session_id: sessionId,
+
+      };
+
+    }
+
+
+    // -----------------------------------------------------
+    // LOGOUT
+    // -----------------------------------------------------
+
+    sheet
+      .getRange(
+        i + 1,
+        index.status + 1
+      )
+      .setValue(
+        SESSION_CONFIG.STATUS.EXPIRED
+      );
+
+
+    return {
+
+      success: true,
+
+      code: "LOGOUT_SUCCESS",
+
+      message:
+        "Logout berhasil.",
+
+      user_id: userId,
+
+      session_id: sessionId,
+
+    };
+
+  }
+
+
+  return {
+
+    success: false,
+
+    code: "SESSION_EXPIRED",
+
+    message:
+      "Session tidak ditemukan.",
+
+  };
+
+}
+
+
+/* =========================================================
+   ENDPOINT LOGOUT
+   ---------------------------------------------------------
+   Endpoint khusus untuk logout.
+
+   Frontend:
+   {
+     action: "logout",
+     session_id: "..."
+   }
+
+   Endpoint ini:
+   1. Validasi session
+   2. Catat aktivitas logout
+   3. Ubah session menjadi EXPIRED
+========================================================= */
+
+function apiLogout(sessionId) {
+
+  sessionId = String(sessionId || "").trim();
+
+
+  // -------------------------------------------------------
+  // VALIDASI SESSION
+  // -------------------------------------------------------
+
+  const session = validateSession_(sessionId);
+
+
+  // -------------------------------------------------------
+  // SESSION SUDAH EXPIRED
+  // -------------------------------------------------------
+
+  if (!session.session_valid) {
+
+    return session;
+
+  }
+
+
+  // -------------------------------------------------------
+  // AMBIL USER
+  // -------------------------------------------------------
+
+  const user = getSessionUser_(
+    session.user_id
+  );
+
+
+  // -------------------------------------------------------
+  // LOG REQUEST LOGOUT
+  // -------------------------------------------------------
+
+  logEndpointRequest_(
+    user,
+    "logout",
+    "User melakukan logout"
+  );
+
+
+  // -------------------------------------------------------
+  // EXPIRE SESSION
+  // -------------------------------------------------------
+
+  return logoutSession_(sessionId);
+
+}
+
+
+/* =========================================================
+   GET USER SESSION
+   ---------------------------------------------------------
+   Mengambil informasi user berdasarkan user_id.
+
+   Digunakan untuk kebutuhan logging endpoint.
+========================================================= */
+
+function getSessionUser_(userId) {
+
+  userId = String(userId || "").trim();
+
+
+  if (!userId) {
+    return null;
+  }
+
+
+  const ss = SpreadsheetApp.getActiveSpreadsheet();
+
+  const sheet = ss.getSheetByName(
+    SESSION_CONFIG.SHEETS.USERS
+  );
+
+
+  if (!sheet) {
+
+    throw new Error(
+      'Sheet "' +
+      SESSION_CONFIG.SHEETS.USERS +
+      '" tidak ditemukan.'
+    );
+
+  }
+
+
+  const values = sheet.getDataRange().getValues();
+
+
+  if (values.length < 2) {
+    return null;
+  }
+
+
+  const headers = values[0].map(function (header) {
+
+    return String(header).trim();
+
+  });
+
+
+  const index = {};
+
+  headers.forEach(function (header, position) {
+
+    index[header] = position;
+
+  });
+
+
+  const requiredHeaders = [
+    "user_id",
+    "id_karyawan",
+    "nama_user",
+    "password",
+    "role",
+  ];
+
+
+  requiredHeaders.forEach(function (header) {
+
+    if (index[header] === undefined) {
+
+      throw new Error(
+        'Kolom "' +
+        header +
+        '" tidak ditemukan di ' +
+        SESSION_CONFIG.SHEETS.USERS
+      );
+
+    }
+
+  });
+
+
+  for (let i = 1; i < values.length; i++) {
+
+    const row = values[i];
+
+
+    const rowUserId = String(
+      row[index.user_id] || ""
+    ).trim();
+
+
+    if (rowUserId === userId) {
+
+      return {
+
+        user_id: row[index.user_id],
+
+        id_karyawan: row[index.id_karyawan],
+
+        nama_user: row[index.nama_user],
+
+        // -------------------------------------------------
+        // PASSWORD TIDAK AKAN DITULIS KE LOG
+        // -------------------------------------------------
+
+        password: "",
+
+        role: row[index.role],
+
+      };
+
+    }
+
+  }
+
+
+  return null;
+
+}
+
+
+/* =========================================================
+   LOG ENDPOINT REQUEST
+   ---------------------------------------------------------
+   Tabel:
+
+   id_user
+   id_karyawan
+   nama_user
+   password
+   role
+   endpoint_used
+   activity
+   created_at
+   updated_at
+
+   Password selalu kosong.
+========================================================= */
+
+function logEndpointRequest_(
+  user,
+  endpointUsed,
+  activity
+) {
+
+  const ss = SpreadsheetApp.getActiveSpreadsheet();
+
+  const sheet = ss.getSheetByName(
+    SESSION_CONFIG.SHEETS.LOG_HISTORY
+  );
+
+
+  if (!sheet) {
+
+    throw new Error(
+      'Sheet "' +
+      SESSION_CONFIG.SHEETS.LOG_HISTORY +
+      '" tidak ditemukan.'
+    );
+
+  }
+
+
+  const now = new Date();
+
+
+  sheet.appendRow([
+
+    user ? user.user_id : "",
+
+    user ? user.id_karyawan : "",
+
+    user ? user.nama_user : "",
+
+    "",
+
+    user ? user.role : "",
+
+    endpointUsed || "",
+
+    activity || "",
+
+    now,
+
+    now,
+
+  ]);
+
+}
+
+
+/* =========================================================
+   GET SESSION SHEET
+========================================================= */
+
+function getSessionSheet_() {
+
+  const ss = SpreadsheetApp.getActiveSpreadsheet();
+
+  const sheet = ss.getSheetByName(
+    SESSION_CONFIG.SHEETS.SESSIONS
+  );
+
+
+  if (!sheet) {
+
+    throw new Error(
+      'Sheet "' +
+      SESSION_CONFIG.SHEETS.SESSIONS +
+      '" tidak ditemukan.'
+    );
+
+  }
+
+
+  return sheet;
+
+}
+
+
+/* =========================================================
+   HEADER INDEX SESSION
+========================================================= */
+
+function createSessionHeaderIndex_(headers) {
+
+  const index = {};
+
+
+  headers.forEach(function (header, position) {
+
+    index[header] = position;
+
+  });
+
+
+  return index;
+
+}
+
+
+/* =========================================================
+   VALIDASI HEADER SESSION
+========================================================= */
+
+function validateSessionHeaders_(index) {
+
+  const requiredHeaders = [
+    "session_id",
+    "user_id",
+    "created_at",
+    "expired_at",
+    "status",
+  ];
+
+
+  requiredHeaders.forEach(function (header) {
+
+    if (index[header] === undefined) {
+
+      throw new Error(
+        'Kolom "' +
+        header +
+        '" tidak ditemukan di ' +
+        SESSION_CONFIG.SHEETS.SESSIONS
+      );
+
+    }
+
+  });
+
+}
+
+
+/* =========================================================
+   NORMALISASI TANGGAL
+========================================================= */
+
+function normalizeSessionDate_(value) {
+
+  if (value instanceof Date) {
+
+    if (isNaN(value.getTime())) {
+      return null;
+    }
+
+    return value;
+
+  }
+
+
+  if (!value) {
+    return null;
+  }
+
+
+  const date = new Date(value);
+
+
+  if (isNaN(date.getTime())) {
+    return null;
+  }
+
+
+  return date;
+
+}

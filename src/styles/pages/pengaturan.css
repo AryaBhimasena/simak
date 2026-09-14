@@ -1,0 +1,411 @@
+:root {
+  --kii-red: #c9152b;
+  --kii-red-dark: #a90f22;
+  --kii-red-light: #fff1f3;
+
+  --text-primary: #171717;
+  --text-secondary: #666666;
+  --text-muted: #929292;
+
+  --border: #e7e7e7;
+  --background: #f7f7f8;
+  --white: #ffffff;
+}
+
+
+/* ======================================================
+   PAGE
+====================================================== */
+
+.pengaturan-page {
+  min-height: 100vh;
+
+  padding: 32px;
+
+  background: var(--background);
+
+  font-family:
+    Arial,
+    Helvetica,
+    sans-serif;
+
+  color: var(--text-primary);
+}
+
+
+/* ======================================================
+   HEADER
+====================================================== */
+
+.pengaturan-header {
+  margin-bottom: 28px;
+}
+
+.pengaturan-eyebrow {
+  margin: 0 0 9px;
+
+  color: var(--kii-red);
+
+  font-size: 11px;
+  font-weight: 700;
+
+  letter-spacing: 1.4px;
+}
+
+.pengaturan-header h1 {
+  margin: 0;
+
+  font-size: 30px;
+  line-height: 1.2;
+
+  letter-spacing: -0.8px;
+}
+
+.pengaturan-description {
+  margin: 10px 0 0;
+
+  color: var(--text-secondary);
+
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+
+/* ======================================================
+   MAIN LAYOUT
+====================================================== */
+
+.pengaturan-layout {
+  display: grid;
+
+  grid-template-columns:
+    250px minmax(0, 1fr);
+
+  gap: 22px;
+
+  align-items: start;
+}
+
+
+/* ======================================================
+   SIDEBAR
+====================================================== */
+
+.pengaturan-sidebar {
+  background: var(--white);
+
+  border: 1px solid var(--border);
+
+  border-radius: 12px;
+
+  padding: 10px;
+}
+
+.pengaturan-sidebar-title {
+  padding: 11px 12px 13px;
+
+  color: #888888;
+
+  font-size: 10px;
+  font-weight: 700;
+
+  letter-spacing: 1.1px;
+
+  text-transform: uppercase;
+}
+
+
+/* ======================================================
+   NAV
+====================================================== */
+
+.pengaturan-nav {
+  display: flex;
+  flex-direction: column;
+
+  gap: 3px;
+}
+
+.pengaturan-nav-item {
+  width: 100%;
+
+  min-height: 62px;
+
+  display: flex;
+  align-items: center;
+
+  gap: 11px;
+
+  padding: 10px 10px;
+
+  border: 0;
+  border-radius: 9px;
+
+  background: transparent;
+
+  color: var(--text-secondary);
+
+  text-align: left;
+
+  cursor: pointer;
+
+  transition:
+    background 0.18s ease,
+    color 0.18s ease;
+}
+
+.pengaturan-nav-item:hover {
+  background: #f7f7f7;
+}
+
+.pengaturan-nav-item.active {
+  background: var(--kii-red-light);
+  color: var(--kii-red);
+}
+
+
+/* ======================================================
+   NAV ICON
+====================================================== */
+
+.pengaturan-nav-icon {
+  width: 34px;
+  height: 34px;
+
+  flex-shrink: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 8px;
+
+  background: #f5f5f5;
+
+  color: #777777;
+}
+
+.pengaturan-nav-item.active
+.pengaturan-nav-icon {
+  background: white;
+
+  color: var(--kii-red);
+}
+
+
+/* ======================================================
+   NAV CONTENT
+====================================================== */
+
+.pengaturan-nav-content {
+  min-width: 0;
+
+  display: flex;
+  flex-direction: column;
+
+  gap: 3px;
+
+  flex: 1;
+}
+
+.pengaturan-nav-label {
+  font-size: 13px;
+  font-weight: 600;
+
+  color: inherit;
+}
+
+.pengaturan-nav-description {
+  overflow: hidden;
+
+  color: #999999;
+
+  font-size: 10px;
+
+  line-height: 1.35;
+
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.pengaturan-nav-item.active
+.pengaturan-nav-description {
+  color: #b85c69;
+}
+
+
+/* ======================================================
+   NAV ARROW
+====================================================== */
+
+.pengaturan-nav-arrow {
+  flex-shrink: 0;
+
+  opacity: 0.35;
+
+  transition:
+    transform 0.18s ease,
+    opacity 0.18s ease;
+}
+
+.pengaturan-nav-item:hover
+.pengaturan-nav-arrow,
+.pengaturan-nav-item.active
+.pengaturan-nav-arrow {
+  opacity: 0.8;
+}
+
+.pengaturan-nav-item.active
+.pengaturan-nav-arrow {
+  transform: translateX(2px);
+}
+
+
+/* ======================================================
+   CONTENT
+====================================================== */
+
+.pengaturan-content {
+  min-width: 0;
+
+  background: var(--white);
+
+  border: 1px solid var(--border);
+
+  border-radius: 12px;
+
+  min-height: 620px;
+}
+
+
+/* ======================================================
+   PLACEHOLDER
+====================================================== */
+
+.pengaturan-placeholder {
+  min-height: 620px;
+
+  display: flex;
+  flex-direction: column;
+
+  align-items: center;
+  justify-content: center;
+
+  padding: 40px;
+
+  text-align: center;
+
+  color: #999999;
+}
+
+.pengaturan-placeholder svg {
+  margin-bottom: 14px;
+
+  color: var(--kii-red);
+}
+
+.pengaturan-placeholder h3 {
+  margin: 0;
+
+  color: var(--text-primary);
+
+  font-size: 17px;
+}
+
+.pengaturan-placeholder p {
+  max-width: 360px;
+
+  margin: 9px 0 0;
+
+  color: var(--text-secondary);
+
+  font-size: 13px;
+
+  line-height: 1.6;
+}
+
+
+/* ======================================================
+   RESPONSIVE
+====================================================== */
+
+@media (max-width: 1000px) {
+  .pengaturan-layout {
+    grid-template-columns: 210px minmax(0, 1fr);
+
+    gap: 16px;
+  }
+
+  .pengaturan-page {
+    padding: 24px;
+  }
+
+  .pengaturan-nav-description {
+    display: none;
+  }
+}
+
+
+@media (max-width: 760px) {
+  .pengaturan-layout {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .pengaturan-sidebar {
+    width: 100%;
+  }
+
+  .pengaturan-nav {
+    display: grid;
+
+    grid-template-columns:
+      repeat(3, minmax(0, 1fr));
+
+    gap: 5px;
+  }
+
+  .pengaturan-nav-item {
+    min-height: 54px;
+  }
+
+  .pengaturan-nav-arrow {
+    display: none;
+  }
+
+  .pengaturan-nav-description {
+    display: none;
+  }
+
+  .pengaturan-content {
+    width: 100%;
+  }
+}
+
+
+@media (max-width: 560px) {
+  .pengaturan-page {
+    padding: 18px 14px;
+  }
+
+  .pengaturan-header {
+    margin-bottom: 20px;
+  }
+
+  .pengaturan-header h1 {
+    font-size: 26px;
+  }
+
+  .pengaturan-nav {
+    grid-template-columns:
+      repeat(2, minmax(0, 1fr));
+  }
+
+  .pengaturan-nav-item {
+    min-height: 52px;
+  }
+
+  .pengaturan-nav-content {
+    gap: 0;
+  }
+}
