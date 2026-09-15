@@ -46,10 +46,6 @@ async function request(method, payload = {}) {
   return data;
 }
 
-/* ==========================
-   PUBLIC API
-========================== */
-
 export const api = {
   get: (payload) => request("GET", payload),
   post: (payload) => request("POST", payload),
