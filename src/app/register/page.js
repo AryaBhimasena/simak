@@ -113,7 +113,8 @@ export default function RegisterPage() {
      STEP 2 — MASTER DATA
   ======================================================= */
 
-  const [kategoriTenagaKerjaOptions, setKategoriTenagaKerjaOptions] = useState([]);
+  const [kategoriTenagaKerjaOptions, setKategoriTenagaKerjaOptions] =
+    useState([]);
   const [jabatanOptions, setJabatanOptions] = useState([]);
   const [penempatanOptions, setPenempatanOptions] = useState([]);
   const [isLoadingStepTwoOptions, setIsLoadingStepTwoOptions] = useState(false);
@@ -199,13 +200,21 @@ export default function RegisterPage() {
       const masterData = response?.data || {};
 
       setKategoriTenagaKerjaOptions(
-        Array.isArray(masterData.kategori_tk) ? masterData.kategori_tk : []
+        Array.isArray(masterData.kategori_tk)
+          ? masterData.kategori_tk
+          : []
       );
+
       setJabatanOptions(
-        Array.isArray(masterData.jabatan) ? masterData.jabatan : []
+        Array.isArray(masterData.jabatan)
+          ? masterData.jabatan
+          : []
       );
+
       setPenempatanOptions(
-        Array.isArray(masterData.penempatan) ? masterData.penempatan : []
+        Array.isArray(masterData.penempatan)
+          ? masterData.penempatan
+          : []
       );
     } catch (error) {
       console.error("Load Step 2 master data error:", error);
@@ -253,10 +262,10 @@ export default function RegisterPage() {
      SELECT KARYAWAN LAMA
   ======================================================= */
 
-  const handleSelectExistingEmployee = () => {
-    resetForm();
-    setRegistrationType("lama");
-  };
+const handleSelectExistingEmployee = () => {
+  resetForm();
+  setRegistrationType("lama");
+};
 
   /* =======================================================
      BACK TO REGISTRATION TYPE
@@ -276,14 +285,18 @@ export default function RegisterPage() {
     setErrorMessage("");
 
     /* -----------------------------------------------------
-       VALIDASI INPUT
+       VALIDASI INPUT PENCARIAN
     ----------------------------------------------------- */
 
     const searchValue = String(value || "").trim();
 
-    if (method === "nik" && !NIK_PATTERN.test(searchValue)) {
-      setEmployeeNotFound("NIK harus terdiri dari 16 digit angka.");
-      return;
+    if (method === "nik") {
+      if (!searchValue || !NIK_PATTERN.test(searchValue)) {
+        setEmployeeNotFound(
+          "NIK harus terdiri dari 16 digit angka."
+        );
+        return;
+      }
     }
 
     if (method === "id_karyawan" && !searchValue) {
@@ -294,46 +307,24 @@ export default function RegisterPage() {
     setIsFindingEmployee(true);
 
     try {
-      /* ---------------------------------------------------
-         REQUEST KE API ROUTE NEXT.JS
+const payload = {
+  action: "getKaryawanUntukRegistrasi",
+  method,
+};
 
-         Nanti endpoint API route akan meneruskan
-         method dan parameter ke Apps Script.
-      --------------------------------------------------- */
+if (method === "nik") {
+  payload.nik = searchValue;
+}
 
-      const params = new URLSearchParams();
-      params.set("action", "getKaryawanUntukRegistrasi");
-      params.set("method", method);
+if (method === "id_karyawan") {
+  payload.id_karyawan = searchValue;
+}
 
-      if (method === "nik") {
-        params.set("nik", searchValue);
-      }
+const result = await api.get(payload);
 
-      if (method === "id_karyawan") {
-        params.set("id_karyawan", searchValue);
-      }
-
-      const response = await fetch(`/api/register?${params.toString()}`, {
-        method: "GET",
-      });
-
-      let result = null;
-
-      try {
-        result = await response.json();
-      } catch {
-        result = null;
-      }
-
-      if (!response.ok) {
-        throw new Error(
-          result?.message || "Data karyawan tidak ditemukan."
-        );
-      }
-
-      if (!result?.data) {
-        throw new Error("Data karyawan tidak ditemukan.");
-      }
+if (!result?.data) {
+  throw new Error("Data karyawan tidak ditemukan.");
+}
 
       /* ---------------------------------------------------
          DATA DITEMUKAN
@@ -344,19 +335,16 @@ export default function RegisterPage() {
       setFormData((previous) => ({
         ...previous,
         ...employee,
-        nik: employee.nik || (method === "nik" ? searchValue : ""),
+
+        nik: "",
         foto: null,
       }));
 
-      setExistingPhotoUrl(
-        employee.foto_url ||
-          employee.foto ||
-          employee.Foto ||
-          ""
-      );
+      setExistingPhotoUrl("");
 
       setEmployeeNotFound("");
       setHasFoundEmployee(true);
+	  await loadStepTwoOptions();
       setCurrentStep(1);
     } catch (error) {
       console.error("Find employee error:", error);
@@ -396,13 +384,10 @@ export default function RegisterPage() {
        NIK — WAJIB UNTUK KARYAWAN BARU
     ----------------------------------------------------- */
 
-    if (
-      registrationType === "baru" &&
-      (!nik.trim() || !NIK_PATTERN.test(nik.trim()))
-    ) {
-      setErrorMessage("NIK harus terdiri dari 16 digit angka.");
-      return false;
-    }
+if (!nik.trim() || !NIK_PATTERN.test(nik.trim())) {
+  setErrorMessage("NIK harus terdiri dari 16 digit angka.");
+  return false;
+}
 
     /* -----------------------------------------------------
        NAMA
@@ -591,7 +576,7 @@ export default function RegisterPage() {
   ======================================================= */
 
   const validateStepThree = () => {
-    if (registrationType === "baru" && !formData.foto) {
+    if (!formData.foto) {
       setErrorMessage("Silakan upload foto karyawan.");
       return false;
     }
@@ -853,7 +838,9 @@ export default function RegisterPage() {
 
             <div className="register-header">
               <p className="register-eyebrow">SIMAK-KII</p>
+
               <h1>Selamat datang</h1>
+
               <p>
                 Pilih jenis pengisian data yang ingin Anda lakukan.
               </p>
@@ -871,6 +858,7 @@ export default function RegisterPage() {
 
                 <div className="registration-choice-content">
                   <strong>Karyawan lama</strong>
+
                   <span>
                     Perbarui data karyawan yang sudah terdaftar.
                   </span>
@@ -890,6 +878,7 @@ export default function RegisterPage() {
 
                 <div className="registration-choice-content">
                   <strong>Karyawan baru</strong>
+
                   <span>
                     Isi data diri untuk pendaftaran karyawan baru.
                   </span>
@@ -903,27 +892,6 @@ export default function RegisterPage() {
           </div>
         </div>
       </main>
-    );
-  }
-
-  /* =======================================================
-     EXISTING EMPLOYEE — SEARCH NIK
-  ======================================================= */
-
-  if (registrationType === "lama" && !hasFoundEmployee) {
-    return (
-      <KaryawanLama
-        searchNik={searchNik}
-        setSearchNik={setSearchNik}
-        employeeNotFound={employeeNotFound}
-        setEmployeeNotFound={setEmployeeNotFound}
-        isFindingEmployee={isFindingEmployee}
-        handleFindEmployee={handleFindEmployee}
-        handleBackToTypeSelection={handleBackToTypeSelection}
-        InputField={InputField}
-        Brand={Brand}
-        Footer={Footer}
-      />
     );
   }
 
@@ -955,7 +923,9 @@ export default function RegisterPage() {
         StepThree={StepThree}
         Brand={Brand}
         Footer={Footer}
+
         /* MASTER DATA STEP 2 */
+
         kategoriTenagaKerjaOptions={kategoriTenagaKerjaOptions}
         jabatanOptions={jabatanOptions}
         penempatanOptions={penempatanOptions}
@@ -966,626 +936,761 @@ export default function RegisterPage() {
     );
   }
 
-  /* =======================================================
-     MAIN FORM KARYAWAN LAMA
-  ======================================================= */
+/* =======================================================
+   KARYAWAN LAMA
+======================================================= */
 
-  /*
-   * Jika komponen form karyawan lama sudah dipindahkan
-   * ke file terpisah, panggil komponen tersebut di sini.
-   */
-
-  return null;
-}
-
-/* =========================================================
-   BRAND
-========================================================= */
-
-function Brand() {
+if (registrationType === "lama") {
   return (
-    <div className="mobile-brand">
-      <div className="mobile-brand-mark">KII</div>
-
-      <div>
-        <div className="mobile-brand-title">
-          SIMAK<span>-KII</span>
-        </div>
-
-        <p>
-          Sistem Informasi Management dan Administrasi Kantor
-        </p>
-      </div>
-    </div>
+    <KaryawanLama
+      hasFoundEmployee={hasFoundEmployee}
+      searchNik={searchNik}
+      setSearchNik={setSearchNik}
+      searchIdKaryawan={searchIdKaryawan}
+      setSearchIdKaryawan={setSearchIdKaryawan}
+      employeeNotFound={employeeNotFound}
+      setEmployeeNotFound={setEmployeeNotFound}
+      isFindingEmployee={isFindingEmployee}
+      handleFindEmployee={handleFindEmployee}
+      currentStep={currentStep}
+      totalSteps={TOTAL_STEPS}
+      formData={formData}
+      updateField={updateField}
+      photoPreview={photoPreview}
+      existingPhotoUrl={existingPhotoUrl}
+      errorMessage={errorMessage}
+      isLoading={isLoading}
+      handleNext={handleNext}
+      handlePrevious={handlePrevious}
+      handlePhotoChange={handlePhotoChange}
+      handleBackToTypeSelection={handleBackToTypeSelection}
+      handleSubmit={handleSubmit}
+      StepProgress={StepProgress}
+      StepOne={StepOne}
+      StepTwo={StepTwo}
+      StepThree={StepThree}
+      InputField={InputField}
+      Brand={Brand}
+      Footer={Footer}
+      kategoriTenagaKerjaOptions={kategoriTenagaKerjaOptions}
+      jabatanOptions={jabatanOptions}
+      penempatanOptions={penempatanOptions}
+      isLoadingStepTwoOptions={isLoadingStepTwoOptions}
+      stepTwoOptionsError={stepTwoOptionsError}
+    />
   );
 }
 
-/* =========================================================
-   STEP PROGRESS
-========================================================= */
+  /* =========================================================
+     BRAND
+  ========================================================= */
 
-function StepProgress({ currentStep }) {
-  const steps = ["Data Pribadi", "Kepegawaian", "Foto"];
+  function Brand() {
+    return (
+      <div className="mobile-brand">
+        <div className="mobile-brand-mark">KII</div>
 
-  return (
-    <div className="register-progress">
-      {steps.map((label, index) => {
-        const step = index + 1;
-        const isActive = step === currentStep;
-        const isCompleted = step < currentStep;
-
-        return (
-          <div
-            key={label}
-            className={`progress-item ${isActive ? "active" : ""} ${
-              isCompleted ? "completed" : ""
-            }`}
-          >
-            <div className="progress-number">
-              {isCompleted ? (
-                <CheckCircle2 size={15} strokeWidth={2.2} />
-              ) : (
-                step
-              )}
-            </div>
-
-            <span>{label}</span>
+        <div>
+          <div className="mobile-brand-title">
+            SIMAK<span>-KII</span>
           </div>
-        );
-      })}
-    </div>
-  );
-}
 
-/* =========================================================
-   STEP 1 — DATA PRIBADI
-========================================================= */
-
-function StepOne({ formData, updateField, registrationType }) {
-  const isExistingEmployee = registrationType === "lama";
-
-  return (
-    <section className="register-step">
-      <div className="step-heading">
-        <span className="step-icon">
-          <UserRound size={20} strokeWidth={1.8} />
-        </span>
-
-        <div>
-          <h2>Data pribadi</h2>
           <p>
-            Lengkapi informasi identitas dan data pribadi Anda.
+            Sistem Informasi Management dan Administrasi Kantor
           </p>
         </div>
       </div>
+    );
+  }
 
-      <div className="form-section">
-        <div className="form-section-title">Identitas karyawan</div>
+  /* =========================================================
+     STEP PROGRESS
+  ========================================================= */
 
-        <InputField
-          id="nik"
-          label="NIK"
-          placeholder="Masukkan 16 digit NIK"
-          icon={CreditCard}
-          value={formData.nik}
-          onChange={(value) => updateField("nik", value.replace(/\D/g, ""))}
-          inputMode="numeric"
-          maxLength={16}
-          disabled={isExistingEmployee}
-        />
+  function StepProgress({ currentStep }) {
+    const steps = ["Data Pribadi", "Kepegawaian", "Foto"];
 
-        <InputField
-          id="no_jkn_peserta"
-          label="No. JKN peserta"
-          placeholder="Masukkan nomor JKN"
-          icon={HeartPulse}
-          value={formData.no_jkn_peserta}
-          onChange={(value) =>
-            updateField("no_jkn_peserta", value.replace(/\D/g, ""))
-          }
-          inputMode="numeric"
-          required={false}
-        />
+    return (
+      <div className="register-progress">
+        {steps.map((label, index) => {
+          const step = index + 1;
+          const isActive = step === currentStep;
+          const isCompleted = step < currentStep;
 
-        <InputField
-          id="npp"
-          label="NPP"
-          placeholder="Masukkan NPP"
-          icon={BadgeCheck}
-          value={formData.npp}
-          onChange={(value) => updateField("npp", value)}
-          required={false}
-        />
-
-        <InputField
-          id="nama_karyawan"
-          label="Nama karyawan"
-          placeholder="Masukkan nama lengkap"
-          icon={UserRound}
-          value={formData.nama_karyawan}
-          onChange={(value) => updateField("nama_karyawan", value)}
-          autoComplete="name"
-        />
-
-        <InputField
-          id="kota_lahir"
-          label="Kota lahir"
-          placeholder="Contoh: Denpasar"
-          icon={MapPin}
-          value={formData.kota_lahir}
-          onChange={(value) => updateField("kota_lahir", value)}
-        />
-
-        <InputField
-          id="tanggal_lahir"
-          label="Tanggal lahir"
-          icon={CalendarDays}
-          type="date"
-          value={formData.tanggal_lahir}
-          onChange={(value) => updateField("tanggal_lahir", value)}
-        />
-
-        <SelectField
-          id="status_pernikahan"
-          label="Status pernikahan"
-          icon={UserRoundCheck}
-          value={formData.status_pernikahan}
-          onChange={(value) => updateField("status_pernikahan", value)}
-          options={[
-            { value: "belum_menikah", label: "Belum menikah" },
-            { value: "menikah", label: "Menikah" },
-            { value: "cerai_hidup", label: "Cerai hidup" },
-            { value: "cerai_mati", label: "Cerai mati" },
-          ]}
-        />
-      </div>
-
-      <div className="form-section">
-        <div className="form-section-title">Alamat</div>
-
-        <TextareaField
-          id="alamat_ktp"
-          label="Alamat KTP"
-          placeholder="Masukkan alamat sesuai KTP"
-          icon={MapPin}
-          value={formData.alamat_ktp}
-          onChange={(value) => updateField("alamat_ktp", value)}
-        />
-
-        <TextareaField
-          id="alamat_domisili"
-          label="Alamat domisili"
-          placeholder="Masukkan alamat tempat tinggal saat ini"
-          icon={MapPin}
-          value={formData.alamat_domisili}
-          onChange={(value) => updateField("alamat_domisili", value)}
-        />
-      </div>
-
-      <div className="form-section">
-        <div className="form-section-title">Kontak</div>
-
-        <InputField
-          id="no_hp"
-          label="No. HP"
-          placeholder="Contoh: 081234567890"
-          icon={Phone}
-          value={formData.no_hp}
-          onChange={(value) => updateField("no_hp", onlyDigits(value))}
-          inputMode="numeric"
-          maxLength={15}
-        />
-
-        <InputField
-          id="nama_kontak_darurat"
-          label="Nama kontak darurat"
-          placeholder="Nama orang yang dapat dihubungi"
-          icon={UserRoundCheck}
-          value={formData.nama_kontak_darurat}
-          onChange={(value) =>
-            updateField("nama_kontak_darurat", value)
-          }
-        />
-
-        <InputField
-          id="nomor_kontak_darurat"
-          label="Nomor kontak darurat"
-          placeholder="Contoh: 081234567890"
-          icon={Phone}
-          value={formData.nomor_kontak_darurat}
-          onChange={(value) =>
-            updateField("nomor_kontak_darurat", onlyDigits(value))
-          }
-          inputMode="numeric"
-          maxLength={15}
-        />
-      </div>
-
-      <div className="form-section">
-        <div className="form-section-title">Rekening bank</div>
-
-        <InputField
-          id="nama_bank"
-          label="Nama bank"
-          placeholder="Contoh: BCA"
-          icon={Landmark}
-          value={formData.nama_bank}
-          onChange={(value) => updateField("nama_bank", value)}
-        />
-
-        <InputField
-          id="nomor_rekening"
-          label="Nomor rekening"
-          placeholder="Masukkan nomor rekening"
-          icon={WalletCards}
-          value={formData.nomor_rekening}
-          onChange={(value) =>
-            updateField("nomor_rekening", onlyDigits(value))
-          }
-          inputMode="numeric"
-          maxLength={25}
-        />
-
-        <InputField
-          id="nama_rekening"
-          label="Nama rekening"
-          placeholder="Nama pemilik rekening"
-          icon={UserRound}
-          value={formData.nama_rekening}
-          onChange={(value) => updateField("nama_rekening", value)}
-        />
-      </div>
-
-      <div className="form-section">
-        <div className="form-section-title">Ukuran pakaian</div>
-
-        <SelectField
-          id="ukuran_baju"
-          label="Ukuran baju"
-          icon={Shirt}
-          value={formData.ukuran_baju}
-          onChange={(value) => updateField("ukuran_baju", value)}
-          options={["XS", "S", "M", "L", "XL", "XXL", "XXXL"].map(
-            (size) => ({ value: size, label: size })
-          )}
-        />
-
-        <SelectField
-          id="ukuran_celana"
-          label="Ukuran celana"
-          icon={Ruler}
-          value={formData.ukuran_celana}
-          onChange={(value) => updateField("ukuran_celana", value)}
-          options={["28", "30", "32", "34", "36", "38", "40", "42", "44"].map(
-            (size) => ({ value: size, label: size })
-          )}
-        />
-
-        <SelectField
-          id="ukuran_sepatu"
-          label="Ukuran sepatu"
-          icon={Footprints}
-          value={formData.ukuran_sepatu}
-          onChange={(value) => updateField("ukuran_sepatu", value)}
-          options={[
-            "36",
-            "37",
-            "38",
-            "39",
-            "40",
-            "41",
-            "42",
-            "43",
-            "44",
-            "45",
-          ].map((size) => ({ value: size, label: size }))}
-        />
-      </div>
-    </section>
-  );
-}
-
-/* =========================================================
-   STEP 2 — DATA KEPEGAWAIAN
-========================================================= */
-
-function StepTwo({
-  formData,
-  updateField,
-  kategoriTenagaKerjaOptions = [],
-  jabatanOptions = [],
-  penempatanOptions = [],
-  isLoadingStepTwoOptions = false,
-  stepTwoOptionsError = "",
-}) {
-  return (
-    <section className="register-step">
-      <div className="step-heading">
-        <span className="step-icon">
-          <BriefcaseBusiness size={20} strokeWidth={1.8} />
-        </span>
-
-        <div>
-          <h2>Data kepegawaian</h2>
-          <p>
-            Lengkapi informasi pekerjaan dan penempatan Anda.
-          </p>
-        </div>
-      </div>
-
-      {stepTwoOptionsError && (
-        <div className="register-error">{stepTwoOptionsError}</div>
-      )}
-
-      <div className="form-section">
-        <SelectField
-          id="kategori_tk"
-          label="Kategori tenaga kerja"
-          icon={BriefcaseBusiness}
-          value={formData.kategori_tk}
-          onChange={(value) => updateField("kategori_tk", value)}
-          options={kategoriTenagaKerjaOptions}
-          disabled={isLoadingStepTwoOptions}
-        />
-
-        <SelectField
-          id="jabatan"
-          label="Jabatan"
-          icon={BadgeCheck}
-          value={formData.jabatan}
-          onChange={(value) => updateField("jabatan", value)}
-          options={jabatanOptions}
-          disabled={isLoadingStepTwoOptions}
-        />
-
-        <SelectField
-          id="penempatan"
-          label="Lokasi penempatan"
-          icon={Building2}
-          value={formData.penempatan}
-          onChange={(value) => updateField("penempatan", value)}
-          options={penempatanOptions}
-          disabled={isLoadingStepTwoOptions}
-        />
-
-        <InputField
-          id="tanggal_masuk"
-          label="Tanggal masuk"
-          type="date"
-          icon={CalendarDays}
-          value={formData.tanggal_masuk}
-          onChange={(value) => updateField("tanggal_masuk", value)}
-        />
-      </div>
-    </section>
-  );
-}
-
-/* =========================================================
-   STEP 3 — FOTO
-========================================================= */
-
-function StepThree({
-  foto,
-  photoPreview,
-  existingPhotoUrl,
-  registrationType,
-  handlePhotoChange,
-}) {
-  const isExistingEmployee = registrationType === "lama";
-  const preview = photoPreview || existingPhotoUrl || "";
-
-  return (
-    <section className="register-step">
-      <div className="step-heading">
-        <span className="step-icon">
-          <Camera size={20} strokeWidth={1.8} />
-        </span>
-
-        <div>
-          <h2>Foto karyawan</h2>
-          <p>
-            {isExistingEmployee
-              ? "Periksa foto lama atau upload foto baru jika ingin menggantinya."
-              : "Upload foto terbaru untuk melengkapi profil karyawan."}
-          </p>
-        </div>
-      </div>
-
-      <div className="photo-upload-section">
-        {preview ? (
-          <div className="photo-preview">
-            <img src={preview} alt="Foto karyawan" />
-
-            <label
-              htmlFor="foto"
-              className="photo-change-button"
+          return (
+            <div
+              key={label}
+              className={`progress-item ${isActive ? "active" : ""} ${
+                isCompleted ? "completed" : ""
+              }`}
             >
-              {foto
-                ? "Ganti foto"
-                : isExistingEmployee
-                  ? "Ganti foto"
-                  : "Pilih foto"}
-            </label>
+              <div className="progress-number">
+                {isCompleted ? (
+                  <CheckCircle2 size={15} strokeWidth={2.2} />
+                ) : (
+                  step
+                )}
+              </div>
+
+              <span>{label}</span>
+            </div>
+          );
+        })}
+      </div>
+    );
+  }
+
+  /* =========================================================
+     STEP 1 — DATA PRIBADI
+  ========================================================= */
+
+  function StepOne({ formData, updateField, registrationType }) {
+    const isExistingEmployee = registrationType === "lama";
+
+    return (
+      <section className="register-step">
+        <div className="step-heading">
+          <span className="step-icon">
+            <UserRound size={20} strokeWidth={1.8} />
+          </span>
+
+          <div>
+            <h2>Data pribadi</h2>
+
+            <p>
+              Lengkapi informasi identitas dan data pribadi Anda.
+            </p>
           </div>
-        ) : (
-          <label htmlFor="foto" className="photo-upload-box">
-            <div className="photo-upload-icon">
-              <Camera size={30} strokeWidth={1.6} />
-            </div>
+        </div>
 
-            <strong>Upload foto karyawan</strong>
-            <span>JPG, JPEG, PNG, atau WEBP</span>
-            <span>Maksimal 5 MB</span>
+        <div className="form-section">
+          <div className="form-section-title">
+            Identitas karyawan
+          </div>
 
-            <div className="photo-upload-action">
-              <Upload size={17} strokeWidth={2} />
-              Pilih foto
-            </div>
-          </label>
+          <InputField
+            id="nik"
+            label="NIK"
+            placeholder="Masukkan 16 digit NIK"
+            icon={CreditCard}
+            value={formData.nik}
+            onChange={(value) =>
+              updateField("nik", value.replace(/\D/g, ""))
+            }
+            inputMode="numeric"
+            maxLength={16}
+          />
+
+          <InputField
+            id="no_jkn_peserta"
+            label="No. JKN peserta"
+            placeholder="Masukkan nomor JKN"
+            icon={HeartPulse}
+            value={formData.no_jkn_peserta}
+            onChange={(value) =>
+              updateField(
+                "no_jkn_peserta",
+                value.replace(/\D/g, "")
+              )
+            }
+            inputMode="numeric"
+            required={false}
+          />
+
+          <InputField
+            id="npp"
+            label="NPP"
+            placeholder="Masukkan NPP"
+            icon={BadgeCheck}
+            value={formData.npp}
+            onChange={(value) => updateField("npp", value)}
+            required={false}
+          />
+
+          <InputField
+            id="nama_karyawan"
+            label="Nama karyawan"
+            placeholder="Masukkan nama lengkap"
+            icon={UserRound}
+            value={formData.nama_karyawan}
+            onChange={(value) =>
+              updateField("nama_karyawan", value)
+            }
+            autoComplete="name"
+          />
+
+          <InputField
+            id="kota_lahir"
+            label="Kota lahir"
+            placeholder="Contoh: Denpasar"
+            icon={MapPin}
+            value={formData.kota_lahir}
+            onChange={(value) => updateField("kota_lahir", value)}
+          />
+
+          <InputField
+            id="tanggal_lahir"
+            label="Tanggal lahir"
+            icon={CalendarDays}
+            type="date"
+            value={formData.tanggal_lahir}
+            onChange={(value) =>
+              updateField("tanggal_lahir", value)
+            }
+          />
+
+          <SelectField
+            id="status_pernikahan"
+            label="Status pernikahan"
+            icon={UserRoundCheck}
+            value={formData.status_pernikahan}
+            onChange={(value) =>
+              updateField("status_pernikahan", value)
+            }
+            options={[
+              {
+                value: "belum_menikah",
+                label: "Belum menikah",
+              },
+              {
+                value: "menikah",
+                label: "Menikah",
+              },
+              {
+                value: "cerai_hidup",
+                label: "Cerai hidup",
+              },
+              {
+                value: "cerai_mati",
+                label: "Cerai mati",
+              },
+            ]}
+          />
+        </div>
+
+        <div className="form-section">
+          <div className="form-section-title">Alamat</div>
+
+          <TextareaField
+            id="alamat_ktp"
+            label="Alamat KTP"
+            placeholder="Masukkan alamat sesuai KTP"
+            icon={MapPin}
+            value={formData.alamat_ktp}
+            onChange={(value) =>
+              updateField("alamat_ktp", value)
+            }
+          />
+
+          <TextareaField
+            id="alamat_domisili"
+            label="Alamat domisili"
+            placeholder="Masukkan alamat tempat tinggal saat ini"
+            icon={MapPin}
+            value={formData.alamat_domisili}
+            onChange={(value) =>
+              updateField("alamat_domisili", value)
+            }
+          />
+        </div>
+
+        <div className="form-section">
+          <div className="form-section-title">Kontak</div>
+
+          <InputField
+            id="no_hp"
+            label="No. HP"
+            placeholder="Contoh: 081234567890"
+            icon={Phone}
+            value={formData.no_hp}
+            onChange={(value) =>
+              updateField("no_hp", onlyDigits(value))
+            }
+            inputMode="numeric"
+            maxLength={15}
+          />
+
+          <InputField
+            id="nama_kontak_darurat"
+            label="Nama kontak darurat"
+            placeholder="Nama orang yang dapat dihubungi"
+            icon={UserRoundCheck}
+            value={formData.nama_kontak_darurat}
+            onChange={(value) =>
+              updateField("nama_kontak_darurat", value)
+            }
+          />
+
+          <InputField
+            id="nomor_kontak_darurat"
+            label="Nomor kontak darurat"
+            placeholder="Contoh: 081234567890"
+            icon={Phone}
+            value={formData.nomor_kontak_darurat}
+            onChange={(value) =>
+              updateField(
+                "nomor_kontak_darurat",
+                onlyDigits(value)
+              )
+            }
+            inputMode="numeric"
+            maxLength={15}
+          />
+        </div>
+
+        <div className="form-section">
+          <div className="form-section-title">
+            Rekening bank
+          </div>
+
+          <InputField
+            id="nama_bank"
+            label="Nama bank"
+            placeholder="Contoh: BCA"
+            icon={Landmark}
+            value={formData.nama_bank}
+            onChange={(value) =>
+              updateField("nama_bank", value)
+            }
+          />
+
+          <InputField
+            id="nomor_rekening"
+            label="Nomor rekening"
+            placeholder="Masukkan nomor rekening"
+            icon={WalletCards}
+            value={formData.nomor_rekening}
+            onChange={(value) =>
+              updateField(
+                "nomor_rekening",
+                onlyDigits(value)
+              )
+            }
+            inputMode="numeric"
+            maxLength={25}
+          />
+
+          <InputField
+            id="nama_rekening"
+            label="Nama rekening"
+            placeholder="Nama pemilik rekening"
+            icon={UserRound}
+            value={formData.nama_rekening}
+            onChange={(value) =>
+              updateField("nama_rekening", value)
+            }
+          />
+        </div>
+
+        <div className="form-section">
+          <div className="form-section-title">
+            Ukuran pakaian
+          </div>
+
+          <SelectField
+            id="ukuran_baju"
+            label="Ukuran baju"
+            icon={Shirt}
+            value={formData.ukuran_baju}
+            onChange={(value) =>
+              updateField("ukuran_baju", value)
+            }
+            options={[
+              "XS",
+              "S",
+              "M",
+              "L",
+              "XL",
+              "XXL",
+              "XXXL",
+            ].map((size) => ({
+              value: size,
+              label: size,
+            }))}
+          />
+
+          <SelectField
+            id="ukuran_celana"
+            label="Ukuran celana"
+            icon={Ruler}
+            value={formData.ukuran_celana}
+            onChange={(value) =>
+              updateField("ukuran_celana", value)
+            }
+            options={[
+              "28",
+              "30",
+              "32",
+              "34",
+              "36",
+              "38",
+              "40",
+              "42",
+              "44",
+            ].map((size) => ({
+              value: size,
+              label: size,
+            }))}
+          />
+
+          <SelectField
+            id="ukuran_sepatu"
+            label="Ukuran sepatu"
+            icon={Footprints}
+            value={formData.ukuran_sepatu}
+            onChange={(value) =>
+              updateField("ukuran_sepatu", value)
+            }
+            options={[
+              "36",
+              "37",
+              "38",
+              "39",
+              "40",
+              "41",
+              "42",
+              "43",
+              "44",
+              "45",
+            ].map((size) => ({
+              value: size,
+              label: size,
+            }))}
+          />
+        </div>
+      </section>
+    );
+  }
+
+  /* =========================================================
+     STEP 2 — DATA KEPEGAWAIAN
+  ========================================================= */
+
+  function StepTwo({
+    formData,
+    updateField,
+    kategoriTenagaKerjaOptions = [],
+    jabatanOptions = [],
+    penempatanOptions = [],
+    isLoadingStepTwoOptions = false,
+    stepTwoOptionsError = "",
+  }) {
+    return (
+      <section className="register-step">
+        <div className="step-heading">
+          <span className="step-icon">
+            <BriefcaseBusiness size={20} strokeWidth={1.8} />
+          </span>
+
+          <div>
+            <h2>Data kepegawaian</h2>
+
+            <p>
+              Lengkapi informasi pekerjaan dan penempatan Anda.
+            </p>
+          </div>
+        </div>
+
+        {stepTwoOptionsError && (
+          <div className="register-error">
+            {stepTwoOptionsError}
+          </div>
         )}
 
-        <input
-          id="foto"
-          type="file"
-          accept="image/jpeg,image/png,image/webp"
-          onChange={handlePhotoChange}
-          hidden
-        />
+        <div className="form-section">
+          <SelectField
+            id="kategori_tk"
+            label="Kategori tenaga kerja"
+            icon={BriefcaseBusiness}
+            value={formData.kategori_tk}
+            onChange={(value) =>
+              updateField("kategori_tk", value)
+            }
+            options={kategoriTenagaKerjaOptions}
+            disabled={isLoadingStepTwoOptions}
+          />
 
-        <div className="photo-note">
-          <strong>Tips foto</strong>
+          <SelectField
+            id="jabatan"
+            label="Jabatan"
+            icon={BadgeCheck}
+            value={formData.jabatan}
+            onChange={(value) =>
+              updateField("jabatan", value)
+            }
+            options={jabatanOptions}
+            disabled={isLoadingStepTwoOptions}
+          />
 
-          <ul>
-            <li>Gunakan foto terbaru.</li>
-            <li>Wajah terlihat jelas.</li>
-            <li>Gunakan pencahayaan yang cukup.</li>
-            <li>Hindari foto yang buram.</li>
-          </ul>
+          <SelectField
+            id="penempatan"
+            label="Lokasi penempatan"
+            icon={Building2}
+            value={formData.penempatan}
+            onChange={(value) =>
+              updateField("penempatan", value)
+            }
+            options={penempatanOptions}
+            disabled={isLoadingStepTwoOptions}
+          />
+
+          <InputField
+            id="tanggal_masuk"
+            label="Tanggal masuk"
+            type="date"
+            icon={CalendarDays}
+            value={formData.tanggal_masuk}
+            onChange={(value) =>
+              updateField("tanggal_masuk", value)
+            }
+          />
+        </div>
+      </section>
+    );
+  }
+
+  /* =========================================================
+     STEP 3 — FOTO
+  ========================================================= */
+
+  function StepThree({
+    foto,
+    photoPreview,
+    existingPhotoUrl,
+    registrationType,
+    handlePhotoChange,
+  }) {
+    const isExistingEmployee = registrationType === "lama";
+    const preview = photoPreview || existingPhotoUrl || "";
+
+    return (
+      <section className="register-step">
+        <div className="step-heading">
+          <span className="step-icon">
+            <Camera size={20} strokeWidth={1.8} />
+          </span>
+
+          <div>
+            <h2>Foto karyawan</h2>
+
+            <p>
+              {isExistingEmployee
+                ? "Periksa foto lama atau upload foto baru jika ingin menggantinya."
+                : "Upload foto terbaru untuk melengkapi profil karyawan."}
+            </p>
+          </div>
+        </div>
+
+        <div className="photo-upload-section">
+          {preview ? (
+            <div className="photo-preview">
+              <img
+                src={preview}
+                alt="Foto karyawan"
+              />
+
+              <label
+                htmlFor="foto"
+                className="photo-change-button"
+              >
+                {foto
+                  ? "Ganti foto"
+                  : isExistingEmployee
+                    ? "Ganti foto"
+                    : "Pilih foto"}
+              </label>
+            </div>
+          ) : (
+            <label
+              htmlFor="foto"
+              className="photo-upload-box"
+            >
+              <div className="photo-upload-icon">
+                <Camera size={30} strokeWidth={1.6} />
+              </div>
+
+              <strong>Upload foto karyawan</strong>
+              <span>JPG, JPEG, PNG, atau WEBP</span>
+              <span>Maksimal 5 MB</span>
+
+              <div className="photo-upload-action">
+                <Upload size={17} strokeWidth={2} />
+                Pilih foto
+              </div>
+            </label>
+          )}
+
+          <input
+            id="foto"
+            type="file"
+            accept="image/jpeg,image/png,image/webp"
+            onChange={handlePhotoChange}
+            hidden
+          />
+
+          <div className="photo-note">
+            <strong>Tips foto</strong>
+
+            <ul>
+              <li>Gunakan foto terbaru.</li>
+              <li>Wajah terlihat jelas.</li>
+              <li>Gunakan pencahayaan yang cukup.</li>
+              <li>Hindari foto yang buram.</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+    );
+  }
+
+  /* =========================================================
+     INPUT FIELD
+  ========================================================= */
+
+  function InputField({
+    id,
+    label,
+    placeholder,
+    icon: Icon,
+    value,
+    onChange,
+    type = "text",
+    inputMode,
+    maxLength,
+    autoComplete,
+    disabled = false,
+    required = true,
+  }) {
+    return (
+      <div className="form-group">
+        <label htmlFor={id}>{label}</label>
+
+        <div
+          className={`input-wrapper ${
+            disabled ? "input-wrapper-disabled" : ""
+          }`}
+        >
+          <Icon size={19} strokeWidth={1.8} />
+
+          <input
+            id={id}
+            type={type}
+            placeholder={placeholder}
+            value={value ?? ""}
+            onChange={(event) =>
+              onChange(event.target.value)
+            }
+            inputMode={inputMode}
+            maxLength={maxLength}
+            autoComplete={autoComplete}
+            disabled={disabled}
+            required={required}
+          />
         </div>
       </div>
-    </section>
-  );
-}
+    );
+  }
 
-/* =========================================================
-   INPUT FIELD
-========================================================= */
+  /* =========================================================
+     TEXTAREA FIELD
+  ========================================================= */
 
-function InputField({
-  id,
-  label,
-  placeholder,
-  icon: Icon,
-  value,
-  onChange,
-  type = "text",
-  inputMode,
-  maxLength,
-  autoComplete,
-  disabled = false,
-  required = true,
-}) {
-  return (
-    <div className="form-group">
-      <label htmlFor={id}>{label}</label>
+  function TextareaField({
+    id,
+    label,
+    placeholder,
+    icon: Icon,
+    value,
+    onChange,
+    required = true,
+  }) {
+    return (
+      <div className="form-group">
+        <label htmlFor={id}>{label}</label>
 
-      <div
-        className={`input-wrapper ${
-          disabled ? "input-wrapper-disabled" : ""
-        }`}
-      >
-        <Icon size={19} strokeWidth={1.8} />
+        <div className="input-wrapper input-wrapper-textarea">
+          <Icon size={19} strokeWidth={1.8} />
 
-        <input
-          id={id}
-          type={type}
-          placeholder={placeholder}
-          value={value ?? ""}
-          onChange={(event) => onChange(event.target.value)}
-          inputMode={inputMode}
-          maxLength={maxLength}
-          autoComplete={autoComplete}
-          disabled={disabled}
-          required={required}
-        />
+          <textarea
+            id={id}
+            placeholder={placeholder}
+            value={value ?? ""}
+            onChange={(event) =>
+              onChange(event.target.value)
+            }
+            rows={4}
+            required={required}
+          />
+        </div>
       </div>
-    </div>
-  );
-}
+    );
+  }
 
-/* =========================================================
-   TEXTAREA FIELD
-========================================================= */
+  /* =========================================================
+     SELECT FIELD
+  ========================================================= */
 
-function TextareaField({
-  id,
-  label,
-  placeholder,
-  icon: Icon,
-  value,
-  onChange,
-  required = true,
-}) {
-  return (
-    <div className="form-group">
-      <label htmlFor={id}>{label}</label>
+  function SelectField({
+    id,
+    label,
+    icon: Icon,
+    value,
+    onChange,
+    options = [],
+    required = true,
+    disabled = false,
+  }) {
+    return (
+      <div className="form-group">
+        <label htmlFor={id}>{label}</label>
 
-      <div className="input-wrapper input-wrapper-textarea">
-        <Icon size={19} strokeWidth={1.8} />
-
-        <textarea
-          id={id}
-          placeholder={placeholder}
-          value={value ?? ""}
-          onChange={(event) => onChange(event.target.value)}
-          rows={4}
-          required={required}
-        />
-      </div>
-    </div>
-  );
-}
-
-/* =========================================================
-   SELECT FIELD
-========================================================= */
-
-function SelectField({
-  id,
-  label,
-  icon: Icon,
-  value,
-  onChange,
-  options = [],
-  required = true,
-  disabled = false,
-}) {
-  return (
-    <div className="form-group">
-      <label htmlFor={id}>{label}</label>
-
-      <div
-        className={`input-wrapper ${
-          disabled ? "input-wrapper-disabled" : ""
-        }`}
-      >
-        <Icon size={19} strokeWidth={1.8} />
-
-        <select
-          id={id}
-          value={value ?? ""}
-          onChange={(event) => onChange(event.target.value)}
-          required={required}
-          disabled={disabled}
+        <div
+          className={`input-wrapper ${
+            disabled ? "input-wrapper-disabled" : ""
+          }`}
         >
-          <option value="">
-            {disabled
-              ? "Memuat data..."
-              : `Pilih ${label.toLowerCase()}`}
-          </option>
+          <Icon size={19} strokeWidth={1.8} />
 
-          {options.map((option) => (
-            <option key={option.value} value={option.value}>
-              {option.label}
+          <select
+            id={id}
+            value={value ?? ""}
+            onChange={(event) =>
+              onChange(event.target.value)
+            }
+            required={required}
+            disabled={disabled}
+          >
+            <option value="">
+              {disabled
+                ? "Memuat data..."
+                : `Pilih ${label.toLowerCase()}`}
             </option>
-          ))}
-        </select>
+
+            {options.map((option) => (
+              <option
+                key={option.value}
+                value={option.value}
+              >
+                {option.label}
+              </option>
+            ))}
+          </select>
+        </div>
       </div>
-    </div>
-  );
-}
+    );
+  }
 
-/* =========================================================
-   FOOTER
-========================================================= */
+  /* =========================================================
+     FOOTER
+  ========================================================= */
 
-function Footer() {
-  return (
-    <div className="register-footer">
-      <span>SIMAK-KII</span>
-      <span className="footer-dot">•</span>
-      <span>Kreasi Inovasi Indonesia</span>
-    </div>
-  );
+  function Footer() {
+    return (
+      <div className="register-footer">
+        <span>SIMAK-KII</span>
+        <span className="footer-dot">•</span>
+        <span>Kreasi Inovasi Indonesia</span>
+      </div>
+    );
+  }
 }

@@ -1,48 +1,64 @@
-// app/register/karyawan-lama.js
-
 "use client";
 
 import { useState } from "react";
 import {
   CreditCard,
   ArrowLeft,
+  ArrowRight,
   Search,
   MessageCircle,
   UserRound,
   BriefcaseBusiness,
   MapPin,
   X,
+  CheckCircle2,
 } from "lucide-react";
 
-const KATEGORI_TENAGA_KERJA = [
-  "security",
-  "driver",
-  "helper",
-  "admin",
-  "ob",
-];
-
 export default function KaryawanLama({
+  hasFoundEmployee = false,
+
+  /* SEARCH */
   searchNik,
   setSearchNik,
+  searchIdKaryawan,
+  setSearchIdKaryawan,
   employeeNotFound,
   setEmployeeNotFound,
   isFindingEmployee,
   handleFindEmployee,
+
+  /* FORM */
+  currentStep,
+  totalSteps,
+  formData,
+  updateField,
+  photoPreview,
+  existingPhotoUrl,
+  errorMessage,
+  isLoading,
+  handleNext,
+  handlePrevious,
+  handlePhotoChange,
   handleBackToTypeSelection,
+  handleSubmit,
+
+  /* COMPONENT */
+  StepProgress,
+  StepOne,
+  StepTwo,
+  StepThree,
   InputField,
   Brand,
   Footer,
+
+  /* MASTER DATA */
+  kategoriTenagaKerjaOptions = [],
+  jabatanOptions = [],
+  penempatanOptions = [],
+  isLoadingStepTwoOptions = false,
+  stepTwoOptionsError = "",
 }) {
-
-  /* =====================================================
-   * STATE
-   * ===================================================== */
-
   const [searchMethod, setSearchMethod] = useState("nik");
-
-  const [searchIdKaryawan, setSearchIdKaryawan] = useState("");
-
   const [showAdminHelp, setShowAdminHelp] = useState(false);
 
   const [adminForm, setAdminForm] = useState({
@@ -52,22 +68,12 @@ export default function KaryawanLama({
     penempatan: "",
   });
 
-
-  /* =====================================================
-   * HANDLER
-   * ===================================================== */
-
   const handleChangeMethod = (method) => {
-
     setSearchMethod(method);
-
     setEmployeeNotFound("");
-
   };
 
-
   const handleSearch = () => {
-
     const value =
       searchMethod === "nik"
         ? searchNik
@@ -77,22 +83,16 @@ export default function KaryawanLama({
       method: searchMethod,
       value,
     });
-
   };
-
 
   const handleAdminFormChange = (field, value) => {
-
-    setAdminForm((prev) => ({
-      ...prev,
+    setAdminForm((previous) => ({
+      ...previous,
       [field]: value,
     }));
-
   };
 
-
   const handleSendAdminWhatsApp = () => {
-
     const {
       nama,
       kategori,
@@ -120,9 +120,7 @@ export default function KaryawanLama({
       "_blank",
       "noopener,noreferrer"
     );
-
   };
-
 
   const isAdminFormValid =
     adminForm.nama.trim() &&
@@ -130,16 +128,184 @@ export default function KaryawanLama({
     adminForm.jabatan.trim() &&
     adminForm.penempatan.trim();
 
+  /* =====================================================
+     FORM KARYAWAN LAMA
+  ===================================================== */
+
+  if (hasFoundEmployee) {
+    return (
+      <main className="register-page">
+        <div className="register-container">
+          <div className="register-form-wrapper">
+            <Brand />
+
+            <div className="register-header">
+              <p className="register-eyebrow">
+                KARYAWAN LAMA
+              </p>
+
+              <h1>Perbarui data karyawan</h1>
+
+              <p>
+                Periksa dan lengkapi kembali data karyawan
+                yang sudah terdaftar.
+              </p>
+            </div>
+
+            <StepProgress currentStep={currentStep} />
+
+            <form
+              onSubmit={handleSubmit}
+              className="register-form"
+            >
+              {currentStep === 1 && (
+                <StepOne
+                  formData={formData}
+                  updateField={updateField}
+                  registrationType="lama"
+                />
+              )}
+
+              {currentStep === 2 && (
+                <StepTwo
+                  formData={formData}
+                  updateField={updateField}
+                  kategoriTenagaKerjaOptions={
+                    kategoriTenagaKerjaOptions
+                  }
+                  jabatanOptions={jabatanOptions}
+                  penempatanOptions={penempatanOptions}
+                  isLoadingStepTwoOptions={
+                    isLoadingStepTwoOptions
+                  }
+                  stepTwoOptionsError={
+                    stepTwoOptionsError
+                  }
+                />
+              )}
+
+              {currentStep === 3 && (
+                <StepThree
+                  foto={formData.foto}
+                  photoPreview={photoPreview}
+                  existingPhotoUrl={existingPhotoUrl}
+                  registrationType="lama"
+                  handlePhotoChange={handlePhotoChange}
+                />
+              )}
+
+              {errorMessage && (
+                <div
+                  className="register-error"
+                  role="alert"
+                  aria-live="polite"
+                >
+                  {errorMessage}
+                </div>
+              )}
+
+              <div className="register-navigation">
+                {currentStep === 1 && (
+                  <button
+                    type="button"
+                    className="register-button register-button-secondary"
+                    onClick={handleBackToTypeSelection}
+                    disabled={isLoading}
+                    aria-label="Ganti pilihan pendaftaran"
+                  >
+                    <ArrowLeft
+                      size={18}
+                      strokeWidth={2}
+                    />
+                    <span>Ganti pilihan</span>
+                  </button>
+                )}
+
+                {currentStep > 1 && (
+                  <button
+                    type="button"
+                    className="register-button register-button-secondary"
+                    onClick={handlePrevious}
+                    disabled={isLoading}
+                    aria-label="Kembali ke langkah sebelumnya"
+                  >
+                    <ArrowLeft
+                      size={18}
+                      strokeWidth={2}
+                    />
+                    <span>Kembali</span>
+                  </button>
+                )}
+
+                {currentStep < totalSteps && (
+                  <button
+                    type="button"
+                    className="register-button"
+                    onClick={handleNext}
+                    disabled={
+                      isLoading ||
+                      (
+                        currentStep === 2 &&
+                        isLoadingStepTwoOptions
+                      )
+                    }
+                  >
+                    <span>Lanjutkan</span>
+                    <ArrowRight
+                      size={19}
+                      strokeWidth={2}
+                    />
+                  </button>
+                )}
+
+                {currentStep === totalSteps && (
+                  <button
+                    type="submit"
+                    className="register-button"
+                    disabled={isLoading}
+                  >
+                    {isLoading ? (
+                      <span>Menyimpan perubahan...</span>
+                    ) : (
+                      <>
+                        <span>Simpan perubahan</span>
+                        <CheckCircle2
+                          size={19}
+                          strokeWidth={2}
+                        />
+                      </>
+                    )}
+                  </button>
+                )}
+              </div>
+
+              <p className="register-note">
+                {currentStep === 1 &&
+                  "Periksa kembali data pribadi dan masukkan NIK baru yang masih berlaku."}
+
+                {currentStep === 2 &&
+                  "Pastikan informasi kepegawaian yang ditampilkan sudah sesuai."}
+
+                {currentStep === 3 &&
+                  "Upload foto terbaru. Foto lama tidak digunakan kembali."}
+              </p>
+            </form>
+
+            <Footer />
+          </div>
+        </div>
+      </main>
+    );
+  }
 
   /* =====================================================
-   * RENDER
-   * ===================================================== */
+     PENCARIAN KARYAWAN LAMA
+  ===================================================== */
 
   return (
     <main className="register-page">
       <div className="register-container">
         <div className="register-form-wrapper">
-
           <Brand />
 
           <div className="register-header">
@@ -147,9 +313,7 @@ export default function KaryawanLama({
               KARYAWAN LAMA
             </p>
 
-            <h1>
-              Perbarui data karyawan
-            </h1>
+            <h1>Perbarui data karyawan</h1>
 
             <p>
               Cari data karyawan yang sudah terdaftar
@@ -157,19 +321,12 @@ export default function KaryawanLama({
             </p>
           </div>
 
-
-          {/* =================================================
-           * PILIH METODE PENCARIAN
-           * ================================================= */}
-
           <div className="form-section">
-
             <div className="register-method-label">
               Cari berdasarkan
             </div>
 
             <div className="register-method-switch">
-
               <button
                 type="button"
                 className={
@@ -177,7 +334,9 @@ export default function KaryawanLama({
                     ? "register-method-option active"
                     : "register-method-option"
                 }
-                onClick={() => handleChangeMethod("nik")}
+                onClick={() =>
+                  handleChangeMethod("nik")
+                }
               >
                 <CreditCard size={17} />
                 <span>NIK</span>
@@ -190,21 +349,16 @@ export default function KaryawanLama({
                     ? "register-method-option active"
                     : "register-method-option"
                 }
-                onClick={() => handleChangeMethod("id_karyawan")}
+                onClick={() =>
+                  handleChangeMethod("id_karyawan")
+                }
               >
                 <UserRound size={17} />
                 <span>ID Karyawan</span>
               </button>
-
             </div>
 
-
-            {/* =================================================
-             * INPUT NIK
-             * ================================================= */}
-
             {searchMethod === "nik" && (
-
               <InputField
                 id="search_nik"
                 label="NIK"
@@ -215,23 +369,15 @@ export default function KaryawanLama({
                   setSearchNik(
                     value.replace(/\D/g, "")
                   );
-
                   setEmployeeNotFound("");
                 }}
                 inputMode="numeric"
                 maxLength={16}
                 autoComplete="off"
               />
-
             )}
 
-
-            {/* =================================================
-             * INPUT ID KARYAWAN
-             * ================================================= */}
-
             {searchMethod === "id_karyawan" && (
-
               <InputField
                 id="search_id_karyawan"
                 label="ID Karyawan"
@@ -244,29 +390,17 @@ export default function KaryawanLama({
                 }}
                 autoComplete="off"
               />
-
             )}
 
-
-            {/* =================================================
-             * PESAN ERROR / INFORMASI
-             * ================================================= */}
-
             {employeeNotFound && (
-
               <div
                 className="register-error"
                 role="alert"
+                aria-live="polite"
               >
                 {employeeNotFound}
               </div>
-
             )}
-
-
-            {/* =================================================
-             * TOMBOL CARI
-             * ================================================= */}
 
             <button
               type="button"
@@ -286,7 +420,6 @@ export default function KaryawanLama({
               ) : (
                 <>
                   <span>Pembaruan Data</span>
-
                   <Search
                     size={19}
                     strokeWidth={2}
@@ -295,17 +428,13 @@ export default function KaryawanLama({
               )}
             </button>
 
-
-            {/* =================================================
-             * BANTUAN ADMIN
-             * ================================================= */}
-
             {searchMethod === "id_karyawan" && (
-
               <button
                 type="button"
                 className="register-admin-help-link"
-                onClick={() => setShowAdminHelp(true)}
+                onClick={() =>
+                  setShowAdminHelp(true)
+                }
               >
                 <MessageCircle
                   size={17}
@@ -316,34 +445,27 @@ export default function KaryawanLama({
                   Tidak tahu ID Karyawan? Hubungi Admin
                 </span>
               </button>
-
             )}
-
           </div>
 
-
-          {/* ===================================================
-           * MODAL FORM BANTUAN ADMIN
-           * =================================================== */}
-
           {showAdminHelp && (
-
             <div
               className="register-modal-backdrop"
               role="presentation"
-              onClick={() => setShowAdminHelp(false)}
+              onClick={() =>
+                setShowAdminHelp(false)
+              }
             >
-
               <div
                 className="register-modal"
                 role="dialog"
                 aria-modal="true"
                 aria-labelledby="admin-help-title"
-                onClick={(event) => event.stopPropagation()}
+                onClick={(event) =>
+                  event.stopPropagation()
+                }
               >
-
                 <div className="register-modal-header">
-
                   <div>
                     <p className="register-eyebrow">
                       BANTUAN ADMIN
@@ -358,22 +480,20 @@ export default function KaryawanLama({
                     type="button"
                     className="register-modal-close"
                     aria-label="Tutup"
-                    onClick={() => setShowAdminHelp(false)}
+                    onClick={() =>
+                      setShowAdminHelp(false)
+                    }
                   >
                     <X size={20} />
                   </button>
-
                 </div>
 
-
                 <p className="register-modal-description">
-                  Isi data berikut agar Admin dapat membantu
-                  menemukan ID Karyawan Anda.
+                  Isi data berikut agar Admin dapat
+                  membantu menemukan ID Karyawan Anda.
                 </p>
 
-
                 <div className="register-modal-form">
-
                   <InputField
                     id="admin_nama"
                     label="Nama"
@@ -381,14 +501,15 @@ export default function KaryawanLama({
                     icon={UserRound}
                     value={adminForm.nama}
                     onChange={(value) =>
-                      handleAdminFormChange("nama", value)
+                      handleAdminFormChange(
+                        "nama",
+                        value
+                      )
                     }
                     autoComplete="name"
                   />
 
-
                   <div className="register-input-group">
-
                     <label
                       htmlFor="admin_kategori"
                       className="register-input-label"
@@ -406,24 +527,28 @@ export default function KaryawanLama({
                           event.target.value
                         )
                       }
+                      disabled={
+                        !kategoriTenagaKerjaOptions.length
+                      }
                     >
                       <option value="">
-                        Pilih kategori tenaga kerja
+                        {kategoriTenagaKerjaOptions.length
+                          ? "Pilih kategori tenaga kerja"
+                          : "Data kategori belum tersedia"}
                       </option>
 
-                      {KATEGORI_TENAGA_KERJA.map((kategori) => (
-                        <option
-                          key={kategori}
-                          value={kategori}
-                        >
-                          {kategori.toUpperCase()}
-                        </option>
-                      ))}
-
+                      {kategoriTenagaKerjaOptions.map(
+                        (option) => (
+                          <option
+                            key={option.value}
+                            value={option.value}
+                          >
+                            {option.label}
+                          </option>
+                        )
+                      )}
                     </select>
-
                   </div>
-
 
                   <InputField
                     id="admin_jabatan"
@@ -432,11 +557,13 @@ export default function KaryawanLama({
                     icon={BriefcaseBusiness}
                     value={adminForm.jabatan}
                     onChange={(value) =>
-                      handleAdminFormChange("jabatan", value)
+                      handleAdminFormChange(
+                        "jabatan",
+                        value
+                      )
                     }
                     autoComplete="organization-title"
                   />
-
 
                   <InputField
                     id="admin_penempatan"
@@ -452,16 +579,15 @@ export default function KaryawanLama({
                     }
                     autoComplete="off"
                   />
-
                 </div>
 
-
                 <div className="register-modal-actions">
-
                   <button
                     type="button"
                     className="register-modal-cancel"
-                    onClick={() => setShowAdminHelp(false)}
+                    onClick={() =>
+                      setShowAdminHelp(false)
+                    }
                   >
                     Batal
                   </button>
@@ -478,19 +604,10 @@ export default function KaryawanLama({
                       Chat Admin via WhatsApp
                     </span>
                   </button>
-
                 </div>
-
               </div>
-
             </div>
-
           )}
-
-
-          {/* =================================================
-           * KEMBALI
-           * ================================================= */}
 
           <button
             type="button"
@@ -507,12 +624,9 @@ export default function KaryawanLama({
             </span>
           </button>
 
-
           <Footer />
-
         </div>
       </div>
     </main>
   );
-
 }
