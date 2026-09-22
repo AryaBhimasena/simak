@@ -41,7 +41,7 @@ export const INITIAL_FORM = {
   status_karyawan: "",
   status_aktif: "",
   Keterangan: "",
-  Foto: "",
+  foto_url: "",
   KTP: "",
   KK: "",
   Catatan: "",
@@ -379,7 +379,7 @@ export function getEmployeeName(form) {
 
 export function getEmployeePhoto(form) {
   return String(
-    form?.Foto || ""
+    form?.foto_url || ""
   ).trim();
 }
 

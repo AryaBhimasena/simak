@@ -89,14 +89,14 @@ export default function KaryawanModal({
       return;
     }
 
-    if (mode === "edit" && employee) {
-      const normalized = normalizeKaryawanData(employee);
+	if (mode === "edit" && employee) {
+	  const normalized = normalizeKaryawanData(employee);
 
-      setForm(normalized);
-      setPhotoPreview(normalized.Foto || "");
+	  setForm(normalized);
+	  setPhotoPreview(normalized.foto_url || "");
 
-      return;
-    }
+	  return;
+	}
 
     if (mode === "edit") {
       setForm(createInitialForm());
@@ -235,10 +235,10 @@ export default function KaryawanModal({
      PROFILE DATA
   ======================================================= */
 
-  const employeeName = getEmployeeName(form);
-  const employeePhoto = getEmployeePhoto(form);
-  const employeeActive = isEmployeeActive(form.status_aktif);
-  const currentPhotoPreview = photoPreview || employeePhoto;
+const employeeName = getEmployeeName(form);
+const employeePhoto = getEmployeePhoto(form);
+const employeeActive = isEmployeeActive(form.status_aktif);
+const currentPhotoPreview = photoPreview || employeePhoto;
 
   /* =======================================================
      TABS
