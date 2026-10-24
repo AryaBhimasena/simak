@@ -1,0 +1,1663 @@
+
+/* =========================================================
+   SIMAK-KII — INPUT ABSENSI
+   Mobile-first Stylesheet
+
+   Struktur:
+   01. Design Tokens
+   02. Base & Layout
+   03. Brand & Page Heading
+   04. Panels & Section Heading
+   05. Forms & Fields
+   06. Inputs, Select & Textarea
+   07. Buttons & Actions
+   08. Attendance Tabs
+   09. BKO Section
+   10. Employee Information
+   11. Feedback & Empty States
+   12. Attendance Recap
+   13. Footer & Utilities
+   14. Responsive Layout
+   15. Accessibility
+========================================================= */
+
+
+/* =========================================================
+   01. DESIGN TOKENS
+========================================================= */
+
+:root {
+  /* Brand */
+  --kii-red: #c9152b;
+  --kii-red-dark: #a90f22;
+  --kii-red-light: #fff1f3;
+  --kii-red-soft: #fff7f8;
+
+  /* Typography */
+  --text-primary: #171717;
+  --text-secondary: #666666;
+  --text-muted: #929292;
+
+  /* Surfaces */
+  --background: #f7f7f8;
+  --white: #ffffff;
+  --surface-muted: #fafafa;
+  --surface-disabled: #f5f5f5;
+
+  /* Borders */
+  --border: #e7e7e7;
+  --border-light: #eeeeee;
+  --border-input: #dedede;
+  --border-hover: #cfcfcf;
+
+  /* Success */
+  --success: #287a43;
+  --success-bg: #f3faf5;
+  --success-border: #cce5d3;
+  --success-text: #456e50;
+
+  /* Danger */
+  --danger-bg: #fff1f3;
+  --danger-border: #f1cbd1;
+
+  /* Sunday */
+  --sunday-red: #c9152b;
+  --sunday-bg: #fff7f8;
+  --sunday-border: #f5dadd;
+
+  /* Radius */
+  --radius-sm: 8px;
+  --radius-md: 10px;
+  --radius-lg: 13px;
+
+  /* Shadows */
+  --shadow-sm: 0 2px 8px rgba(20, 20, 20, 0.035);
+  --shadow-card: 0 3px 12px rgba(20, 20, 20, 0.035);
+  --shadow-brand: 0 4px 12px rgba(201, 21, 43, 0.16);
+  --shadow-focus: 0 0 0 3px rgba(201, 21, 43, 0.08);
+
+  /* Motion */
+  --transition: 160ms ease;
+
+  /* Form */
+  --control-height: 50px;
+  --control-radius: 10px;
+}
+
+
+/* =========================================================
+   02. BASE & LAYOUT
+========================================================= */
+
+.input-absen-page {
+  min-height: 100vh;
+  min-height: 100dvh;
+
+  padding: 20px 12px 28px;
+
+  background: var(--background);
+  color: var(--text-primary);
+
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 14px;
+  line-height: 1.55;
+
+  -webkit-font-smoothing: antialiased;
+  overflow-x: clip;
+}
+
+.input-absen-page *,
+.input-absen-page *::before,
+.input-absen-page *::after {
+  box-sizing: border-box;
+}
+
+.input-absen-page button,
+.input-absen-page input,
+.input-absen-page select,
+.input-absen-page textarea {
+  font: inherit;
+}
+
+.input-absen-page button {
+  -webkit-tap-highlight-color: transparent;
+}
+
+.input-absen-container {
+  width: 100%;
+  max-width: 920px;
+  min-width: 0;
+
+  margin-inline: auto;
+}
+
+
+/* =========================================================
+   03. BRAND & PAGE HEADING
+========================================================= */
+
+/* Brand */
+
+.absen-brand {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+
+  margin-bottom: 27px;
+}
+
+.absen-brand-mark {
+  display: grid;
+  place-items: center;
+
+  width: 43px;
+  height: 43px;
+  flex: 0 0 43px;
+
+  border-radius: 11px;
+
+  background: var(--kii-red);
+  color: var(--white);
+
+  box-shadow: var(--shadow-brand);
+}
+
+.absen-brand-copy {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+
+  min-width: 0;
+}
+
+.absen-brand-title {
+  color: var(--text-primary);
+
+  font-size: 19px;
+  line-height: 1.2;
+  font-weight: 800;
+  letter-spacing: -0.5px;
+}
+
+.absen-brand-subtitle {
+  color: var(--text-muted);
+
+  font-size: 10px;
+  line-height: 1.5;
+
+  overflow-wrap: anywhere;
+}
+
+/* Page Heading */
+
+.absen-page-heading {
+  margin-bottom: 22px;
+}
+
+.absen-eyebrow {
+  display: block;
+
+  margin-bottom: 7px;
+
+  color: var(--kii-red);
+
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 1.25px;
+}
+
+.absen-page-heading h1 {
+  margin: 0 0 8px;
+
+  color: var(--text-primary);
+
+  font-size: clamp(25px, 6vw, 32px);
+  line-height: 1.18;
+  font-weight: 800;
+  letter-spacing: -0.8px;
+}
+
+.absen-page-heading p {
+  max-width: 600px;
+  margin: 0;
+
+  color: var(--text-secondary);
+
+  font-size: 13px;
+  line-height: 1.7;
+}
+
+
+/* =========================================================
+   04. PANELS & SECTION HEADING
+========================================================= */
+
+.absen-panel {
+  min-width: 0;
+
+  margin-bottom: 14px;
+  padding: 17px 14px;
+
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+
+  background: var(--white);
+  box-shadow: var(--shadow-card);
+}
+
+/* Section Heading */
+
+.absen-section-heading {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+
+  margin-bottom: 20px;
+}
+
+.absen-section-icon {
+  display: grid;
+  place-items: center;
+
+  width: 38px;
+  height: 38px;
+  flex: 0 0 38px;
+
+  border: 1px solid #f8dce0;
+  border-radius: var(--radius-md);
+
+  background: var(--kii-red-light);
+  color: var(--kii-red);
+}
+
+.absen-section-heading > div:last-child {
+  min-width: 0;
+  flex: 1;
+}
+
+.absen-section-heading h2 {
+  margin: 0 0 4px;
+
+  color: var(--text-primary);
+
+  font-size: 15px;
+  line-height: 1.35;
+  font-weight: 750;
+  letter-spacing: -0.2px;
+}
+
+.absen-section-heading p {
+  margin: 0;
+
+  color: var(--text-muted);
+
+  font-size: 11px;
+  line-height: 1.6;
+}
+
+
+/* =========================================================
+   05. FORMS & FIELDS
+========================================================= */
+
+.absen-form {
+  display: flex;
+  flex-direction: column;
+  gap: 17px;
+
+  min-width: 0;
+}
+
+/* Reset Fieldset */
+
+.absen-form fieldset {
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+
+  border: 0;
+}
+
+/* Individual Field */
+
+.absen-field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+
+  min-width: 0;
+  margin-bottom: 17px;
+}
+
+.absen-field:last-child {
+  margin-bottom: 0;
+}
+
+.absen-form .absen-field {
+  margin-bottom: 0;
+}
+
+.absen-field label,
+.absen-recap-filter label {
+  color: var(--text-primary);
+
+  font-size: 12px;
+  line-height: 1.5;
+  font-weight: 700;
+}
+
+/* Required Indicator */
+
+.absen-field label span {
+  color: var(--kii-red);
+}
+
+/* Field Hint */
+
+.absen-field-hint {
+  margin: -2px 0 0;
+
+  color: var(--text-muted);
+
+  font-size: 11px;
+  line-height: 1.6;
+}
+
+/* Default Field Grid */
+
+.absen-fields-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 16px;
+
+  min-width: 0;
+}
+
+.absen-fields-grid > * {
+  min-width: 0;
+}
+
+/*
+  PERIODE KERJA & TAHUN PERIODE
+
+  Grid ini tetap dua kolom bahkan pada layar mobile.
+  Pastikan JSX menggunakan class:
+  "absen-fields-grid absen-period-grid"
+*/
+
+.absen-period-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+
+  min-width: 0;
+}
+
+.absen-period-grid > * {
+  min-width: 0;
+}
+
+/*
+  JAM MASUK & JAM KELUAR
+
+  Grid ini tetap dua kolom bahkan pada layar mobile.
+  Pastikan JSX menggunakan class:
+  "absen-fields-grid absen-time-grid"
+*/
+
+.absen-time-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+
+  min-width: 0;
+}
+
+.absen-time-grid > * {
+  min-width: 0;
+}
+
+
+/* =========================================================
+   06. INPUTS, SELECT & TEXTAREA
+========================================================= */
+
+/* Shared Control Styling */
+
+.absen-field > input,
+.absen-select,
+.absen-field textarea {
+  width: 100%;
+  min-width: 0;
+
+  border: 1px solid var(--border-input);
+  border-radius: var(--control-radius);
+
+  background: var(--white);
+  color: var(--text-primary);
+
+  font-size: 16px;
+
+  transition:
+    border-color var(--transition),
+    box-shadow var(--transition),
+    background var(--transition);
+}
+
+/* Input & Select */
+
+.absen-field > input,
+.absen-select {
+  min-height: var(--control-height);
+  padding: 0 13px;
+}
+
+/* Textarea */
+
+.absen-field textarea {
+  display: block;
+
+  min-height: 90px;
+  padding: 12px 13px;
+
+  line-height: 1.5;
+
+  resize: vertical;
+}
+
+/* Placeholder */
+
+.absen-field input::placeholder,
+.absen-field textarea::placeholder,
+.absen-input-wrap input::placeholder {
+  color: #a4a4a4;
+}
+
+/* Hover */
+
+.absen-field > input:hover:not(:disabled),
+.absen-select:hover:not(:disabled),
+.absen-field textarea:hover:not(:disabled) {
+  border-color: var(--border-hover);
+}
+
+/* Focus */
+
+.absen-field > input:focus,
+.absen-select:focus,
+.absen-field textarea:focus {
+  border-color: var(--kii-red);
+
+  outline: 0;
+  box-shadow: var(--shadow-focus);
+}
+
+/* Disabled */
+
+.absen-field > input:disabled,
+.absen-select:disabled,
+.absen-field textarea:disabled {
+  background: var(--surface-disabled);
+  color: var(--text-muted);
+
+  cursor: not-allowed;
+}
+
+/* Select */
+
+.absen-select {
+  cursor: pointer;
+}
+
+/* Input with Leading Icon */
+
+.absen-input-wrap {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  min-width: 0;
+  min-height: var(--control-height);
+
+  padding: 0 13px;
+
+  border: 1px solid var(--border-input);
+  border-radius: var(--control-radius);
+
+  background: var(--white);
+
+  transition:
+    border-color var(--transition),
+    box-shadow var(--transition),
+    background var(--transition);
+}
+
+.absen-input-wrap:hover {
+  border-color: var(--border-hover);
+}
+
+.absen-input-wrap:focus-within {
+  border-color: var(--kii-red);
+  box-shadow: var(--shadow-focus);
+}
+
+/* Leading Icon */
+
+.absen-input-icon {
+  flex: 0 0 auto;
+
+  color: #969696;
+
+  transition: color var(--transition);
+}
+
+.absen-input-wrap:focus-within .absen-input-icon {
+  color: var(--kii-red);
+}
+
+/* Input Inside Wrapper */
+
+.absen-input-wrap input {
+  width: 100%;
+  min-width: 0;
+  height: 48px;
+
+  padding: 0;
+
+  border: 0;
+  outline: 0;
+
+  background: transparent;
+  color: var(--text-primary);
+
+  font-size: 16px;
+}
+
+.absen-input-wrap input:focus,
+.absen-input-wrap input:focus-visible {
+  border: 0;
+  outline: 0;
+  box-shadow: none;
+}
+
+/* Disabled Wrapper */
+
+.absen-input-wrap:has(input:disabled) {
+  background: var(--surface-disabled);
+  border-color: var(--border-light);
+}
+
+.absen-input-wrap input:disabled {
+  color: var(--text-muted);
+  cursor: not-allowed;
+}
+
+/* Native Time Input */
+
+.absen-input-wrap input[type="time"] {
+  min-width: 0;
+  max-width: 100%;
+}
+
+/*
+  NIK SHOW/HIDE BUTTON
+
+  Mendukung tombol ikon Eye / EyeOff di dalam
+  .absen-input-wrap tanpa memperbesar tinggi input.
+
+  Gunakan class "absen-password-toggle" pada tombol.
+*/
+
+.absen-input-wrap .absen-password-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 36px;
+  height: 36px;
+  flex: 0 0 36px;
+
+  margin: 0;
+  padding: 0;
+
+  border: 0;
+  border-radius: 8px;
+
+  background: transparent;
+  color: var(--text-muted);
+
+  cursor: pointer;
+
+  transition:
+    color var(--transition),
+    background var(--transition);
+}
+
+.absen-input-wrap .absen-password-toggle:hover {
+  background: var(--kii-red-light);
+  color: var(--kii-red);
+}
+
+.absen-input-wrap .absen-password-toggle:active {
+  background: #ffe5e9;
+}
+
+.absen-input-wrap .absen-password-toggle svg {
+  width: 18px;
+  height: 18px;
+  flex: 0 0 auto;
+}
+
+.absen-input-wrap .absen-password-toggle:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Compact Controls on Narrow Screens */
+
+.absen-period-grid .absen-select,
+.absen-time-grid .absen-input-wrap {
+  width: 100%;
+  min-width: 0;
+}
+
+.absen-period-grid .absen-select {
+  padding-right: 8px;
+  padding-left: 9px;
+
+  font-size: 14px;
+}
+
+.absen-time-grid .absen-input-wrap {
+  gap: 6px;
+  padding-right: 8px;
+  padding-left: 9px;
+}
+
+.absen-time-grid .absen-input-wrap input {
+  font-size: 14px;
+}
+
+.absen-time-grid .absen-input-icon {
+  width: 16px;
+  height: 16px;
+}
+
+
+/* =========================================================
+   07. BUTTONS & ACTIONS
+========================================================= */
+
+/* Primary Button */
+
+.absen-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+
+  width: 100%;
+  min-width: 0;
+  min-height: 48px;
+
+  padding: 11px 16px;
+
+  border: 1px solid var(--kii-red);
+  border-radius: var(--radius-md);
+
+  background: var(--kii-red);
+  color: var(--white);
+
+  font-size: 13px;
+  line-height: 1.4;
+  font-weight: 700;
+  text-align: center;
+
+  cursor: pointer;
+
+  transition:
+    background var(--transition),
+    border-color var(--transition),
+    box-shadow var(--transition),
+    transform 100ms ease;
+}
+
+.absen-button > svg {
+  flex: 0 0 auto;
+}
+
+.absen-button:hover:not(:disabled) {
+  border-color: var(--kii-red-dark);
+  background: var(--kii-red-dark);
+
+  box-shadow: 0 4px 10px rgba(201, 21, 43, 0.13);
+}
+
+.absen-button:active:not(:disabled) {
+  transform: translateY(1px);
+}
+
+.absen-button:disabled {
+  opacity: 0.58;
+
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+/* Secondary Button */
+
+.absen-button-secondary {
+  border-color: var(--border);
+
+  background: var(--white);
+  color: var(--text-secondary);
+
+  box-shadow: none;
+}
+
+.absen-button-secondary:hover:not(:disabled) {
+  border-color: #d5d5d5;
+
+  background: #f8f8f8;
+  color: var(--text-primary);
+
+  box-shadow: none;
+}
+
+/* Small Button */
+
+.absen-button-small {
+  min-height: 40px;
+  padding: 9px 12px;
+
+  font-size: 12px;
+}
+
+/* Form Actions */
+
+.absen-form-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+
+  margin-top: 3px;
+}
+
+/* Primary Button First on Mobile */
+
+.absen-form-actions
+  > .absen-button:not(.absen-button-secondary) {
+  order: -1;
+}
+
+
+/* =========================================================
+   08. ATTENDANCE TABS
+========================================================= */
+
+.absen-tabs {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 5px;
+
+  margin: 3px 0 20px;
+  padding: 5px;
+
+  border: 1px solid var(--border);
+  border-radius: 12px;
+
+  background: #f6f6f7;
+}
+
+.absen-tab {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  min-width: 0;
+  min-height: 46px;
+
+  padding: 9px 7px;
+
+  border: 1px solid transparent;
+  border-radius: 9px;
+
+  background: transparent;
+  color: var(--text-secondary);
+
+  font-size: 12px;
+  line-height: 1.4;
+  font-weight: 700;
+  text-align: center;
+
+  cursor: pointer;
+
+  transition:
+    background var(--transition),
+    color var(--transition),
+    border-color var(--transition),
+    box-shadow var(--transition);
+}
+
+.absen-tab:hover:not(.active) {
+  background: var(--white);
+  color: var(--text-primary);
+}
+
+.absen-tab.active {
+  border-color: #f0cbd1;
+
+  background: var(--white);
+  color: var(--kii-red);
+
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.045);
+}
+
+.absen-tab:disabled {
+  cursor: not-allowed;
+}
+
+
+/* =========================================================
+   09. BKO SECTION
+========================================================= */
+
+.absen-bko-section {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+
+  min-width: 0;
+
+  margin-bottom: 18px;
+  padding: 13px;
+
+  border: 1px solid #f0dadd;
+  border-radius: 11px;
+
+  background: #fffafb;
+}
+
+.absen-bko-section > .absen-info-note {
+  border-color: #f0dadd;
+  background: #fff4f5;
+}
+
+.absen-bko-section > .absen-field {
+  margin-bottom: 0;
+}
+
+.absen-bko-section .absen-form {
+  gap: 15px;
+}
+
+.absen-bko-section .absen-selected-banner {
+  margin-top: 0;
+}
+
+.absen-bko-section .absen-form > .absen-button {
+  align-self: flex-start;
+}
+
+
+/* =========================================================
+   10. EMPLOYEE INFORMATION
+========================================================= */
+
+/* Validated Employee Banner */
+
+.absen-selected-banner {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+
+  min-width: 0;
+
+  margin-top: 15px;
+  padding: 13px;
+
+  border: 1px solid var(--success-border);
+  border-radius: var(--radius-md);
+
+  background: var(--success-bg);
+  color: var(--success);
+}
+
+.absen-selected-banner > svg {
+  flex: 0 0 auto;
+  margin-top: 2px;
+}
+
+.absen-selected-banner > div {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 4px;
+
+  min-width: 0;
+}
+
+.absen-selected-banner strong {
+  color: var(--success);
+
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+.absen-selected-banner span {
+  color: var(--success-text);
+
+  font-size: 12px;
+  line-height: 1.55;
+
+  overflow-wrap: anywhere;
+}
+
+/* Close / Cancel Button */
+
+.absen-selected-banner button,
+.absen-success-banner button {
+  display: grid;
+  place-items: center;
+
+  width: 32px;
+  height: 32px;
+  flex: 0 0 32px;
+
+  padding: 0;
+
+  border: 0;
+  border-radius: var(--radius-sm);
+
+  background: transparent;
+  color: inherit;
+
+  cursor: pointer;
+
+  transition: background var(--transition);
+}
+
+.absen-selected-banner button:hover,
+.absen-success-banner button:hover {
+  background: #e5f4e9;
+}
+
+
+/* =========================================================
+   11. FEEDBACK & EMPTY STATES
+========================================================= */
+
+/* Shared Feedback Layout */
+
+.absen-info-note,
+.absen-error {
+  display: flex;
+  align-items: flex-start;
+  gap: 9px;
+
+  min-width: 0;
+  padding: 12px;
+
+  border: 1px solid var(--border-light);
+  border-radius: 9px;
+
+  font-size: 12px;
+  line-height: 1.65;
+
+  overflow-wrap: anywhere;
+}
+
+.absen-info-note > svg,
+.absen-error > svg {
+  flex: 0 0 auto;
+  margin-top: 2px;
+
+  color: var(--kii-red);
+}
+
+/* Information Note */
+
+.absen-info-note {
+  background: var(--surface-muted);
+  color: var(--text-secondary);
+}
+
+/* Error Message */
+
+.absen-error {
+  margin-top: 10px;
+
+  border-color: var(--danger-border);
+
+  background: var(--danger-bg);
+  color: var(--kii-red-dark);
+}
+
+/* Success Message */
+
+.absen-success-banner {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  min-width: 0;
+
+  margin-bottom: 15px;
+  padding: 13px;
+
+  border: 1px solid var(--success-border);
+  border-radius: var(--radius-md);
+
+  background: var(--success-bg);
+  color: var(--success);
+
+  font-size: 12px;
+  line-height: 1.6;
+
+  box-shadow: var(--shadow-sm);
+}
+
+.absen-success-banner > svg {
+  flex: 0 0 auto;
+}
+
+.absen-success-banner span {
+  flex: 1;
+  min-width: 0;
+
+  overflow-wrap: anywhere;
+}
+
+/* Inline Message */
+
+.absen-inline-message {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  margin-top: 12px;
+
+  color: var(--text-secondary);
+
+  font-size: 12px;
+}
+
+/* Empty State */
+
+.absen-empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+
+  padding: 28px 14px;
+
+  border: 1px dashed var(--border-input);
+  border-radius: var(--radius-md);
+
+  background: #fcfcfc;
+  color: var(--text-muted);
+
+  text-align: center;
+}
+
+.absen-empty-state > svg {
+  color: #b1b1b1;
+}
+
+.absen-empty-state strong {
+  color: var(--text-primary);
+
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.absen-empty-state span {
+  max-width: 420px;
+
+  font-size: 12px;
+  line-height: 1.65;
+}
+
+/* Loading Spinner */
+
+.absen-spinner {
+  flex: 0 0 auto;
+
+  animation: absen-spin 0.9s linear infinite;
+}
+
+@keyframes absen-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+
+/* =========================================================
+   12. ATTENDANCE RECAP
+========================================================= */
+
+/* Recap Panel */
+
+.absen-recap-panel {
+  margin-bottom: 0;
+}
+
+/* Recap Filter */
+
+.absen-recap-filter {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 8px;
+
+  margin-bottom: 16px;
+}
+
+/*
+  Filter periode dan tahun tetap berdampingan
+  di seluruh ukuran layar.
+*/
+
+.absen-recap-filter.absen-period-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+
+/* Table Wrapper */
+
+.absen-table-wrapper {
+  width: 100%;
+  max-width: 100%;
+
+  overflow-x: auto;
+  overscroll-behavior-inline: contain;
+
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+
+  background: var(--white);
+
+  scrollbar-width: thin;
+  scrollbar-color: #d2d2d2 #f7f7f7;
+}
+
+.absen-table-wrapper::-webkit-scrollbar {
+  height: 7px;
+}
+
+.absen-table-wrapper::-webkit-scrollbar-track {
+  background: #f7f7f7;
+}
+
+.absen-table-wrapper::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  background: #d2d2d2;
+}
+
+/* Table */
+
+.absen-table {
+  width: 100%;
+  min-width: 760px;
+
+  border-collapse: separate;
+  border-spacing: 0;
+
+  background: var(--white);
+
+  text-align: left;
+}
+
+/* Table Header */
+
+.absen-table th {
+  padding: 13px 12px;
+
+  border-bottom: 1px solid var(--border);
+
+  background: #f8f8f9;
+  color: var(--text-secondary);
+
+  font-size: 11px;
+  line-height: 1.5;
+  font-weight: 700;
+
+  white-space: nowrap;
+}
+
+/* Table Body */
+
+.absen-table td {
+  padding: 13px 12px;
+
+  border-bottom: 1px solid var(--border-light);
+
+  color: var(--text-secondary);
+
+  font-size: 11px;
+  line-height: 1.55;
+
+  vertical-align: middle;
+}
+
+.absen-table tbody tr:last-child td {
+  border-bottom: 0;
+}
+
+.absen-table tbody tr:hover:not(:has(.absen-table-state)) {
+  background: #fffafb;
+}
+
+/*
+  HARI MINGGU
+
+  Mendukung class "absen-sunday-row" pada elemen <tr>
+  dan "absen-sunday-text" pada sel nama hari.
+
+  Jika JSX hanya memasang class pada <tr>,
+  warna sel nama hari dan tanggal tetap merah.
+*/
+
+.absen-table tbody tr.absen-sunday-row {
+  background: var(--sunday-bg);
+}
+
+.absen-table tbody tr.absen-sunday-row td {
+  border-bottom-color: var(--sunday-border);
+}
+
+.absen-table tbody tr.absen-sunday-row td:first-child,
+.absen-table tbody tr.absen-sunday-row td:nth-child(2),
+.absen-table tbody tr.absen-sunday-row td.absen-sunday-text {
+  color: var(--sunday-red);
+  font-weight: 700;
+}
+
+/* Sunday Hover */
+
+.absen-table tbody tr.absen-sunday-row:hover {
+  background: #fff0f2;
+}
+
+/* Explicit Sunday Text Class */
+
+.absen-table td.absen-sunday-text {
+  color: var(--sunday-red);
+  font-weight: 700;
+}
+
+/* Column: Number */
+
+.absen-table td:nth-child(1) {
+  width: 42px;
+
+  color: var(--text-muted);
+  text-align: center;
+}
+
+/* Keep Sunday Number Red */
+
+.absen-table tbody tr.absen-sunday-row td:nth-child(1) {
+  color: var(--sunday-red);
+}
+
+/* Column: Employee Name */
+
+.absen-table td:nth-child(3) {
+  min-width: 160px;
+
+  color: var(--text-primary);
+  font-weight: 600;
+}
+
+/* Loading / Empty Table State */
+
+.absen-table-state {
+  height: 145px;
+
+  text-align: center !important;
+}
+
+.absen-table-state > svg {
+  display: block;
+
+  margin: 0 auto 9px;
+
+  color: #b0b0b0;
+}
+
+.absen-table-state strong,
+.absen-table-state span {
+  display: block;
+}
+
+.absen-table-state strong {
+  margin-bottom: 5px;
+
+  color: var(--text-primary);
+
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+.absen-table-state span {
+  color: var(--text-muted);
+
+  font-size: 11px;
+  line-height: 1.6;
+}
+
+/* Table Footer */
+
+.absen-table-footer {
+  margin-top: 12px;
+
+  color: var(--text-muted);
+
+  font-size: 11px;
+  line-height: 1.6;
+}
+
+
+/* =========================================================
+   13. FOOTER & UTILITIES
+========================================================= */
+
+/* Footer */
+
+.absen-footer {
+  margin-top: 27px;
+  padding: 0 8px;
+
+  color: var(--text-muted);
+
+  font-size: 10px;
+  line-height: 1.7;
+  text-align: center;
+}
+
+.absen-footer span {
+  color: var(--text-secondary);
+  font-weight: 800;
+}
+
+/* Disabled Fieldset */
+
+.input-absen-page fieldset:disabled {
+  opacity: 0.72;
+}
+
+.input-absen-page fieldset:disabled .absen-tab {
+  cursor: not-allowed;
+}
+
+
+/* =========================================================
+   14. RESPONSIVE LAYOUT
+========================================================= */
+
+/* Small Mobile: Maksimal 350px */
+
+@media (max-width: 350px) {
+  .input-absen-page {
+    padding-inline: 9px;
+  }
+
+  .absen-panel {
+    padding: 14px 11px;
+  }
+
+  .absen-brand-subtitle {
+    font-size: 9px;
+  }
+
+  .absen-tab {
+    font-size: 11px;
+  }
+
+  /*
+    Jaga jarak antar kolom pada layar sangat kecil
+    tanpa mengubah grid menjadi satu kolom.
+  */
+
+  .absen-period-grid,
+  .absen-time-grid,
+  .absen-recap-filter.absen-period-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 8px;
+  }
+
+  .absen-period-grid .absen-select {
+    padding-right: 5px;
+    padding-left: 7px;
+
+    font-size: 13px;
+  }
+
+  .absen-time-grid .absen-input-wrap {
+    gap: 4px;
+    padding-inline: 6px;
+  }
+
+  .absen-time-grid .absen-input-wrap input {
+    font-size: 13px;
+  }
+
+  .absen-time-grid .absen-input-icon {
+    width: 14px;
+    height: 14px;
+  }
+}
+
+
+/* Tablet: Mulai 600px */
+
+@media (min-width: 600px) {
+  /* Page */
+
+  .input-absen-page {
+    padding: 28px 22px 36px;
+  }
+
+  /* Brand */
+
+  .absen-brand {
+    margin-bottom: 32px;
+  }
+
+  /* Panels */
+
+  .absen-panel {
+    margin-bottom: 18px;
+    padding: 23px;
+  }
+
+  .absen-recap-panel {
+    margin-bottom: 0;
+  }
+
+  /* Section Heading */
+
+  .absen-section-heading {
+    align-items: center;
+    gap: 12px;
+  }
+
+  .absen-section-icon {
+    width: 42px;
+    height: 42px;
+    flex-basis: 42px;
+  }
+
+  .absen-section-heading h2 {
+    font-size: 16px;
+  }
+
+  .absen-section-heading p {
+    font-size: 12px;
+  }
+
+  /* Default Form Grid */
+
+  .absen-fields-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  /*
+    Grid periode dan jam tetap dua kolom.
+    Aturan ini juga menjaga konsistensi jika ada
+    aturan grid umum lain di kemudian hari.
+  */
+
+  .absen-period-grid,
+  .absen-time-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
+  }
+
+  .absen-period-grid .absen-select {
+    padding-inline: 13px;
+    font-size: 16px;
+  }
+
+  .absen-time-grid .absen-input-wrap {
+    gap: 10px;
+    padding-inline: 13px;
+  }
+
+  .absen-time-grid .absen-input-wrap input {
+    font-size: 16px;
+  }
+
+  .absen-time-grid .absen-input-icon {
+    width: 18px;
+    height: 18px;
+  }
+
+  /* Form Actions */
+
+  .absen-form-actions {
+    flex-direction: row;
+    justify-content: flex-end;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  .absen-form-actions
+    > .absen-button:not(.absen-button-secondary) {
+    order: 0;
+  }
+
+  .absen-form-actions .absen-button {
+    width: auto;
+    min-width: 145px;
+  }
+
+  /* BKO */
+
+  .absen-bko-section {
+    padding: 17px;
+  }
+
+  .absen-bko-section .absen-form > .absen-button {
+    width: auto;
+    min-width: 145px;
+  }
+
+  /* Recap Filter */
+
+  .absen-recap-filter {
+    grid-template-columns: 150px minmax(0, 230px);
+    align-items: center;
+    gap: 12px;
+  }
+
+  .absen-recap-filter.absen-period-grid {
+    grid-template-columns: repeat(2, minmax(0, 190px));
+    gap: 12px;
+  }
+}
+
+
+/* Desktop: Mulai 900px */
+
+@media (min-width: 900px) {
+  /* Page */
+
+  .input-absen-page {
+    padding: 34px 28px 40px;
+  }
+
+  /* Brand */
+
+  .absen-brand {
+    margin-bottom: 36px;
+  }
+
+  /* Heading */
+
+  .absen-page-heading {
+    margin-bottom: 27px;
+  }
+
+  .absen-page-heading h1 {
+    font-size: 32px;
+  }
+
+  /* Panels */
+
+  .absen-panel {
+    padding: 26px;
+  }
+
+  /* Forms */
+
+  .absen-form {
+    gap: 19px;
+  }
+}
+
+
+/* =========================================================
+   15. ACCESSIBILITY
+========================================================= */
+
+/* Keyboard Focus */
+
+.input-absen-page :is(
+  button,
+  input,
+  select,
+  textarea
+):focus-visible {
+  outline: 2px solid var(--kii-red);
+  outline-offset: 3px;
+}
+
+/* Input Inside Wrapper Uses Wrapper Focus */
+
+.input-absen-page .absen-input-wrap input:focus-visible {
+  outline: 0;
+  outline-offset: 0;
+}
+
+/* Password Toggle Focus */
+
+.input-absen-page .absen-input-wrap .absen-password-toggle:focus-visible {
+  outline: 2px solid var(--kii-red);
+  outline-offset: 1px;
+}
+
+/* Reduced Motion */
+
+@media (prefers-reduced-motion: reduce) {
+  .input-absen-page *,
+  .input-absen-page *::before,
+  .input-absen-page *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+  }
+}

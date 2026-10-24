@@ -238,7 +238,16 @@ export default function KaryawanModal({
 const employeeName = getEmployeeName(form);
 const employeePhoto = getEmployeePhoto(form);
 const employeeActive = isEmployeeActive(form.status_aktif);
+
 const currentPhotoPreview = photoPreview || employeePhoto;
+
+console.log("PHOTO DEBUG:", {
+  employee,
+  formFotoUrl: form.foto_url,
+  photoPreview,
+  employeePhoto,
+  currentPhotoPreview,
+});
 
   /* =======================================================
      TABS
